@@ -62,7 +62,7 @@
         "maximum": 11
     },
     "url": "https://github.com/remyke/age-system",
-    "manifest": "https://github.com/remyke/age-system/prep-release/system.json",
+    "manifest": "https://raw.githubusercontent.com/remyke/age-system/prep_release/system.json",
     "download": "https://github.com/remyke/age-system/archive/2.0.3-remyke_fixlabel.zip",
     "bugs": "https://github.com/vkdolea/age-system/issues",
     "readme": "https://github.com/vkdolea/age-system/blob/prep-release/README.md",
