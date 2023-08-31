@@ -252,6 +252,7 @@ ageSystem.actorDerivedDataKey = [
     // 'system.powerPoints.mod',
     'system.powerPoints.max',
     'system.aim.mod',
+    'system.charge.mod',
     'system.initiative',
     'system.resources.total',
 ];
@@ -696,6 +697,7 @@ ageSystem.ageEffectsKeys = {
     "maxConviction": {label: "age-system.bonus.maxConviction", mask: "system.conviction.max", dtype: 'nodice'},
     "maxPowerPoints": {label: "age-system.bonus.maxPowerPoints", mask: "system.powerPoints.max", dtype: 'nodice'},
     "aimMnv": {label: "age-system.bonus.aimMnv", mask: "system.aim.total", dtype: 'nodice'},
+    "chargeMnv": {label: "age-system.bonus.chargeMnv", mask: "system.charge.total", dtype: 'nodice'},
     "armorPenalty": {label: "age-system.bonus.armorPenalty", mask: "system.armor.penalty", dtype: 'nodice'},
     "armorStrain": {label: "age-system.bonus.armorStrain", mask: "system.armor.strain", dtype: 'nodice'},
     "speed": {label: "age-system.bonus.speed", mask: "system.speed.total", dtype: 'nodice'},
@@ -724,7 +726,7 @@ ageSystem.modifiers = {
         main: ["acc", "comm", "cons", "dex", "fight", "int", "per", "str", "will", "accTest", "commTest", "consTest", "dexTest", "fightTest", "intTest", "perTest", "strTest", "willTest"],
         dage: ["comm", "cons", "cunn", "dex", "magic", "per", "str", "will", "commTest", "consTest", "cunnTest", "dexTest", "magicTest", "perTest", "strTest", "willTest"]
     },
-    generalMods: ["powerForce", "aimMnv", "armorPenalty", "itemDamage", "testMod", "attackMod", "actorDamage", "itemActivation", "focus", "defense", "speed",
+    generalMods: ["powerForce", "chargeMnv", "aimMnv", "armorPenalty", "itemDamage", "testMod", "attackMod", "actorDamage", "itemActivation", "focus", "defense", "speed",
         "armorStrain", "defendMnv", "guardupMnv", "allOutAtkMnv", "maxPowerPoints", "allPowerForce", "focusPowerForce"
     ],
     modeToLocalize: ["impactArmor", "powerForce", "maxPowerPoints", "maxHealth"]
