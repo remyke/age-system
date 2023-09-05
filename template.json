@@ -238,6 +238,11 @@
                 "active": false,
                 "mod": 0
             },
+            "charge": {
+                "value": 1,
+                "active": false,
+                "mod": 0
+            },
             "defend": {
                 "defenseBonus": 2,
                 "active": false,

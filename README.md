@@ -73,6 +73,7 @@ Here the description of each one of the Modifiers:
 14. **Power Force (all):** added to Power Force from every single Power & Arcana.
 15. **Power Force (Focus):** added to Power Force from every single Power & Arcana using the informed Focus.
 16. **Aim:** extra bonus added to attack rolls when Aim maneuver is used, besides the standard value.
+16. **Charge:** extra bonus added to attack rolls when Chage maneuver is used, besides the standard value.
 17. **Ability Names:** these bonuses apply to specific Ability.
 17. **Ability Names (test only):** these are applied only to Ability tests (no impact on damage/derived calculation).
 19. **Speed:** adds to Speed Mod field.

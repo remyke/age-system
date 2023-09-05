@@ -268,6 +268,18 @@ export async function ageRollCheck({event = null, actor = null, abl = null, item
             });
             if (itemRolled?.type === "weapon") await actor.update({"system.aim.active": false});
         };
+
+        // Check if CHARGE is active - this bonus will apply to all rolls when it is active
+        const charge = actorData.charge;
+        if (charge.active && !(rollType === ROLL_TYPE.RESOURCES)) {
+            rollData.charge = charge.value + charge.mod;
+            rollFormula += " + @charge";
+            partials.push({
+                label: game.i18n.localize("age-system.charge"),
+                value: rollData.charge
+            });
+            if (itemRolled?.type === "weapon") await actor.update({"system.charge.active": false});
+        };
         
         // Adds penalty for Attack which is converted to damage Bonus and pass info to chat Message
         if (atkDmgTradeOff && !(rollType === ROLL_TYPE.RESOURCES)) {

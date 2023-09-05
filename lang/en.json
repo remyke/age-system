@@ -443,6 +443,7 @@
         "focusInput": "Value",
 
         "aim": "Aim",
+        "charge": "Charge",
         "allOutAttack": "All-Out Attack",
         "defendManeuver": "Defend",
         "guardUp": "Guard Up",
@@ -641,6 +642,7 @@
             "focusPowerForce": "Power Force (Focus)",
             "focusSpellPower": "Spell Power (Focus)",
             "aimMnv": "Aim",
+            "chargeMnv": "Charge",
             "armorPenalty": "Armor Penalty",
             "speed": "Speed",
             "armorStrain": "Armor Strain",

@@ -443,6 +443,7 @@
         "focusInput": "Valor",
 
         "aim": "Mirar",
+        "charge": "Cobrar",
         "allOutAttack": "Ataque Total",
         "defendManeuver": "Defender",
         "guardUp": "Erguer a Guarda",
@@ -641,6 +642,7 @@
             "focusPowerForce": "Força do Poder (Foco)",
             "focusSpellPower": "Força do Feitiço (Foco)",
             "aimMnv": "Mirar",
+            "chargeMnv": "Cobrar",
             "armorPenalty": "Penalidade de Armadura",
             "speed": "Deslocamento",
             "armorStrain": "Tensão de Armadura",

@@ -107,6 +107,18 @@
                 </div>
             </div>
 
+            {{!-- Charge --}}
+            <div class="resource item-list colorset-first-tier">
+                <div class="title">{{localize "age-system.charge"}}</div>
+                <div class="values flexrow">
+                    <input class="value-data circle" type="number" name="system.charge.value" value="{{system.charge.value}}" data-dtype="Number" />
+                    <input type="checkbox" name="system.charge.active" {{checked system.charge.active}} class="checkbox"/>
+                </div>
+                <div class="labels flexrow">
+                    <label>{{localize "age-system.mod"}}</label>
+                </div>
+            </div>
+
         </div>
 
         <ul class="resource item-group favourite colorset-first-tier">
