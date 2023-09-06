@@ -254,6 +254,7 @@ ageSystem.actorDerivedDataKey = [
     'system.aim.mod',
     'system.initiative',
     'system.resources.total',
+    'system.penetrationMagicDmgMod',
 ];
 
 // Ability paths
@@ -664,6 +665,7 @@ ageSystem.ageEffectsKeys = {
     "testMod": {label: "age-system.bonus.testMod", mask: "system.testMod", dtype: 'nodice'},
     "attackMod": {label: "age-system.bonus.attackMod", mask: "system.attackMod", dtype: 'nodice'},
     "actorDamage": {label: "age-system.bonus.actorDamage", mask: "system.dmgMod", dtype: 'formula'},
+    "penetrationMagicDamage": {label: "age-system.bonus.penetrationMagicDamage", mask: "system.penetrationMagicDmgMod", dtype: 'formula'},
     "acc": {label: "age-system.bonus.acc", mask: "system.abilities.acc.total", dtype: 'number'},
     "accTest": {label: "age-system.bonus.accTest", mask: "system.abilities.acc.testMod", dtype: 'number'},
     "comm": {label: "age-system.bonus.comm", mask: "system.abilities.comm.total", dtype: 'number'},

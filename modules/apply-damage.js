@@ -255,6 +255,7 @@ export class DamageHandler {
         uuid: h.document.actorLink ? h.actor.uuid : h.document.uuid,
         data,
         dmgMod: 0,
+        penetrationMagicDmg: 0,
         remainingHP: 0,
         damage: 0,
         ignoreDmg: false,
@@ -395,11 +396,13 @@ export class DamageHandler {
     if (h.ignoreDmg) {
       h.remainingHP = hData.health.value;
       h.totalDmg = 0;
+      h.penetrationMagicDamage = 0;
       h.dmgProtection = dmgProtection;
     } else {
-      h.remainingHP = hData.health.value - reducedDmg;
+      h.remainingHP = hData.health.value - reducedDmg - penetrationMagicDmg;
       if (h.remainingHP < 0) h.remainingHP = 0;
-      h.damage = reducedDmg
+      h.damage = reducedDmg;
+      h.penetrationMagicDamage = penetrationMagicDmg;
       h.totalDmg = Number(totalDmg);
       h.dmgProtection = dmgProtection;
       h.injuryParts = injuryParts;
