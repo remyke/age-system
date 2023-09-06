@@ -241,6 +241,7 @@ export class DamageHandler {
     this._useInjury = healthSys.useInjury;
     this._basicDamage = damageData.totalDamage;
     this._armorPenetration = "none";
+    this._penetrationMagicDmg = damageData.penetrationMagicDmg;
     this._damageType = damageData.dmgType;
     this._damageSource = damageData.dmgSrc;
     this._letPlayerRoll = true;
@@ -399,10 +400,10 @@ export class DamageHandler {
       h.penetrationMagicDamage = 0;
       h.dmgProtection = dmgProtection;
     } else {
-      h.remainingHP = hData.health.value - reducedDmg - penetrationMagicDmg;
+      h.remainingHP = hData.health.value - reducedDmg - this._penetrationMagicDmg;
       if (h.remainingHP < 0) h.remainingHP = 0;
       h.damage = reducedDmg;
-      h.penetrationMagicDamage = penetrationMagicDmg;
+      h.penetrationMagicDmg = this._penetrationMagicDmg;
       h.totalDmg = Number(totalDmg);
       h.dmgProtection = dmgProtection;
       h.injuryParts = injuryParts;

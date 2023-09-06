@@ -167,7 +167,7 @@
             },
             "threat": "",
             "dmgMod": 0,
-            "penetrationMagicDmgMod": 0,
+            "penetrationMagicDmg": 0,
             "testMod": 0,
             "attackMod": 0,
             "statBlockView": false,
