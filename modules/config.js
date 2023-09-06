@@ -726,7 +726,7 @@ ageSystem.modifiers = {
         main: ["acc", "comm", "cons", "dex", "fight", "int", "per", "str", "will", "accTest", "commTest", "consTest", "dexTest", "fightTest", "intTest", "perTest", "strTest", "willTest"],
         dage: ["comm", "cons", "cunn", "dex", "magic", "per", "str", "will", "commTest", "consTest", "cunnTest", "dexTest", "magicTest", "perTest", "strTest", "willTest"]
     },
-    generalMods: ["powerForce", "aimMnv", "armorPenalty", "itemDamage", "testMod", "attackMod", "actorDamage", "itemActivation", "focus", "defense", "speed",
+    generalMods: ["powerForce", "aimMnv", "armorPenalty", "itemDamage", "testMod", "attackMod", "actorDamage", "penetrationMagicDamage", "itemActivation", "focus", "defense", "speed",
         "armorStrain", "defendMnv", "guardupMnv", "allOutAtkMnv", "maxPowerPoints", "allPowerForce", "focusPowerForce"
     ],
     modeToLocalize: ["impactArmor", "powerForce", "maxPowerPoints", "maxHealth"]
