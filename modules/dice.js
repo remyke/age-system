@@ -908,7 +908,7 @@ export async function itemDamage({
         if (iDmg != 0) damageFormula = `${damageFormula} + ${iDmg}`;
 
         // Check if actor has magical effect mod 
-        const pDmg = item?.actor?.system?.penetrationMagicDmgMod;
+        const pDmg = item?.actor?.system?.penetrationMagicDmg;
         if (pDmg != 0) damageFormula = `${damageFormula} + ${pDmg}`;
 
         // Check if Attack to Damage Trade Off is applied
