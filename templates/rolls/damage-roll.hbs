@@ -33,11 +33,24 @@
                     <div class="line-value">÷2</div>
                 </div>
                 {{/if}}
-                {{#if (ne penetrationMagicDmg 0)}}
-                <div class="flexrow roll-mod penetratingMagicDmg italic">
-                    <div class="line-header">{{localize "age-system.bonus.penetratingMagicDmg"}}</div>
-                    <div class="line-value">{{penetrationMagicDmg}}</div>
+                {{#if (ne penetrationMagicDmg '')}}
+                <div class="flexrow roll-mod total-roll">
+                    <h3 class="line-header">{{localize "age-system.bonus.penetratingMagicDmg"}}</h3>
+                    <h3 class="line-value">{{finalValuePenetrationMagicDmg}}</h3>
                 </div>
+                
+                {{#each diceTermsPenetrationMagicDmg as |part key|}}
+                {{#unless part.operator}}
+                <div class="flexrow roll-mod">
+                    <div class="line-header">{{part.options.flavor}}</div>
+                    {{#if part.results}}
+                    <div class="line-value">{{termOperator ../diceTermsPenetrationMagicDmg key}}{{#each part.results as |die|}}{{die.result}}{{#unless @last}}, {{/unless}}{{/each}}</div>
+                    {{else}}
+                    <div class="line-value">{{termOperator ../diceTermsPenetrationMagicDmg key}}{{part.total}}</div>
+                    {{/if}}
+                </div>
+                {{/unless}}
+                {{/each}}
                 {{/if}}
                 
             </div>
