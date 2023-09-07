@@ -984,6 +984,21 @@ export async function itemDamage({
         if (!term.options.flavor) term.options.flavor = term.formula
     }
     
+    
+    // Check if actor has magical effect mod 
+    const pDmg = item?.actor?.system?.penetrationMagicDmg;
+    let pDmgRoll = ""
+    if (pDmg != "")
+    {
+    pDmgRoll = await new Roll(pDmg, rollData).evaluate({async: true});
+
+    for (let t = 0; t < pDmgRoll.terms.length; t++) {
+        const term = pDmgRoll.terms[t];
+        if (!term.options.flavor) term.options.flavor = term.formula
+    }
+    }
+
+    dmgDesc.finalValuePenetrationMagicDmg = pDmg != "" ? pDmgRoll.total : 0;
     // Preparing custom damage chat card
     let chatTemplate = "/systems/age-system/templates/rolls/damage-roll.hbs";
     
@@ -994,6 +1009,8 @@ export async function itemDamage({
         ...rollData,
         // rawRollData: dmgRoll,
         wGroupPenalty: wGroupPenalty,
+        diceTermsPenetrationMagicDmg: pDmg != "" ? pDmgRoll.terms : null,
+        finalValuePenetrationMagicDmg: pDmg != "" ? pDmgRoll.total : 0,
         finalValue: wGroupPenalty? Math.floor(dmgRoll.total/2) : dmgRoll.total,
         diceTerms: dmgRoll.terms,
         colorScheme: `colorset-${game.settings.get("age-system", "colorScheme")}`,

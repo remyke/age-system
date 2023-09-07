@@ -650,7 +650,8 @@
             "active": "Active",
             "charAbl": "Ability",
             "type": "Type",
-            "value": "Value"
+            "value": "Value",
+            "penetrationMagicDamage": "Penetrating magical damage"
         },
 
         "stuntsContainer": "Stunts",
