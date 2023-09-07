@@ -907,10 +907,6 @@ export async function itemDamage({
         const iDmg = item?.system?.itemDmgMod;
         if (iDmg != 0) damageFormula = `${damageFormula} + ${iDmg}`;
 
-        // Check if actor has magical effect mod 
-        const pDmg = item?.actor?.system?.penetrationMagicDmg;
-        if (pDmg != 0) damageFormula = `${damageFormula} + ${pDmg}`;
-
         // Check if Attack to Damage Trade Off is applied
         if (atkDmgTradeOff) {
             damageFormula = `${damageFormula} + @atkDmgTradeOff[${game.i18n.localize("age-system.penaltyToDamage")}]`;
@@ -976,6 +972,11 @@ export async function itemDamage({
         if (!term.options.flavor) term.options.flavor = term.formula
     }
     
+    
+    // Check if actor has magical effect mod 
+    const pDmg = item?.actor?.system?.penetrationMagicDmg;
+    dmgDesc.penetrationMagicDmg = pDmg;
+    
     // Preparing custom damage chat card
     let chatTemplate = "/systems/age-system/templates/rolls/damage-roll.hbs";
     
@@ -986,6 +987,7 @@ export async function itemDamage({
         ...rollData,
         // rawRollData: dmgRoll,
         wGroupPenalty: wGroupPenalty,
+        penetrationMagicDmg: penetrationMagicDmg,
         finalValue: wGroupPenalty? Math.floor(dmgRoll.total/2) : dmgRoll.total,
         diceTerms: dmgRoll.terms,
         colorScheme: `colorset-${game.settings.get("age-system", "colorScheme")}`,
@@ -995,6 +997,7 @@ export async function itemDamage({
         useInjury: healthSys.useInjury
     };
 
+        if (pDmg != 0) damageFormula = `${damageFormula} + ${pDmg}`;
     let chatData = {
         user: game.user.id,
         speaker: {alias: game.user.name},

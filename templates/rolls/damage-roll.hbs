@@ -33,6 +33,12 @@
                     <div class="line-value">÷2</div>
                 </div>
                 {{/if}}
+                {{#if penetrationMagicDmg != 0 }}
+                <div class="flexrow roll-mod penetratingMagicDmg italic">
+                    <div class="line-header">{{localize "age-system.bonus.penetratingMagicDmg"}}</div>
+                    <div class="line-value">{{penetrationMagicDmg}}</div>
+                </div>
+                {{/if}}
                 
             </div>
 
