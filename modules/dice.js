@@ -987,7 +987,7 @@ export async function itemDamage({
         ...rollData,
         // rawRollData: dmgRoll,
         wGroupPenalty: wGroupPenalty,
-        penetrationMagicDmg: penetrationMagicDmg,
+        penetrationMagicDmg: pDmg,
         finalValue: wGroupPenalty? Math.floor(dmgRoll.total/2) : dmgRoll.total,
         diceTerms: dmgRoll.terms,
         colorScheme: `colorset-${game.settings.get("age-system", "colorScheme")}`,
@@ -997,7 +997,6 @@ export async function itemDamage({
         useInjury: healthSys.useInjury
     };
 
-        if (pDmg != 0) damageFormula = `${damageFormula} + ${pDmg}`;
     let chatData = {
         user: game.user.id,
         speaker: {alias: game.user.name},
