@@ -166,8 +166,8 @@
                 "advPoints": 0
             },
             "threat": "",
-            "dmgMod": "",
-            "penetrationMagicDmg": "",
+            "dmgMod": "0",
+            "penetrationMagicDmg": "0",
             "testMod": 0,
             "attackMod": 0,
             "statBlockView": false,
