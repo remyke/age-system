@@ -397,7 +397,7 @@ export class DamageHandler {
     if (h.ignoreDmg) {
       h.remainingHP = hData.health.value;
       h.totalDmg = 0;
-      h.penetrationMagicDamage = 0;
+      h.penetrationMagicDmg = 0;
       h.dmgProtection = dmgProtection;
     } else {
       h.remainingHP = hData.health.value - reducedDmg - this._penetrationMagicDmg;

@@ -41,8 +41,10 @@
                         <input type="number" class="target-damage-mod damage-value" name="handler.harmedOnes.{{i}}.dmgMod" value="{{target.dmgMod}}" data-dtype="Number" />
                         <div class="change-damage increase"><a><i class="fa fa-plus-square" aria-hidden="true"></i></a></div>
                     </div>
-                    <p>{{localize "age-system.penetrationMagicDamage"}}</p>
-                    <p>{{target.finalValuePenetrationMagicDmg}}</p>
+                    {{#if (ne target.penetrationMagicDmg 0)}}
+                    <p>{{localize "age-system.bonus.penetrationMagicDamage"}}</p>
+                    <p>{{target.penetrationMagicDmg}}</p>
+                    {{/if}}
                     {{#unless ../useInjury}}</strong>{{/unless}}
                 </div>
                 <div>
