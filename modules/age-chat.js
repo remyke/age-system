@@ -140,7 +140,7 @@ export async function checkTargetsChat(event) {
     const cardId = card.dataset.messageId;    
     const cardTargetedData = game.messages.get(cardId).flags["age-system"].targetedData
     let targets = []
-    cardTargetedData.targetIds.foreach(i=>{
+    cardTargetedData.targetIds.forEach(i=>{
         targets.push(canvas.tokens.get(i))
     })
     let targetedData = await foundry.utils.deepClone(targets);
@@ -190,7 +190,7 @@ export async function callCheckTargets (targetedData) {
 
 export async function callApplyDamageToTargeted (damageData, targetedData) {
     let targets = []
-    targetedData.targetIds.foreach(i=>{
+    targetedData.targetIds.forEach(i=>{
         targets.push(canvas.tokens.get(i))
     })
     return new ApplyDamageDialog(targetedData.targets, damageData, ageSystem.healthSys.useInjury).render(true);
