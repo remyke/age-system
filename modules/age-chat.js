@@ -11,6 +11,8 @@ export function addChatListeners(html) {
     html.on('click', '.roll-item', rollItemFromChat);
     html.on('contextmenu', '.roll-item', rollItemFromChat);
     html.on('click', '.apply-damage', applyDamageChat);
+    html.on('click', '.check-targets', checkTargetsChat);
+    html.on('click', '.apply-damage-to-pre-targeted', applyDamageToPreTargetedChat);
     html.on('click', '.roll-toughness-test', resistInjury);
     html.on('click', '.apply-injury', inflictInjury);
 };
@@ -130,6 +132,60 @@ export async function applyDamageChat(event) {
         ui.notifications.warn(game.i18n.localize("age-system.WARNING.healthSysNotMatching"));
     };
     callApplyDamage(damageData);
+}
+
+export async function checkTargetsChat(event) {
+    event.preventDefault();
+    const card = event.target.closest(".chat-message");
+    const cardId = card.dataset.messageId;    
+    const cardTargetedData = game.messages.get(cardId).flags["age-system"].targetedData
+    let targetedData = await foundry.utils.deepClone(cardTargetedData);
+    
+    callCheckTargets(targetedData);
+}
+
+export async function applyDamageToPreTargetedChat(event) {
+    event.preventDefault();
+    const card = event.target.closest(".chat-message");
+    const cardId = card.dataset.messageId;
+    const cardData = game.messages.get(cardId).flags["age-system"].damageData ?? game.messages.get(cardId).flags["age-system"].ageroll.rollData; // Compatibility to Damage Chat Card before 1.1.6
+    const cardTargetedData = game.messages.get(cardId).flags["age-system"].targetedData
+    let damageData = await foundry.utils.deepClone(cardData);
+    let targetedData = await foundry.utils.deepClone(cardTargetedData);
+    const cardHealthSys = damageData.healthSys;
+    if (!checkHealth(cardHealthSys, ageSystem.healthSys)) {
+        damageData = {
+            healthSys: ageSystem.healthSys,
+            totalDamage: damageData.totalDamage,
+            dmgType: damageData.dmgType ?? 'wound',
+            dmgSrc: damageData.dmgSrc ?? 'impact',
+            isHealing: false,
+            wGroupPenalty: false
+        }
+        ui.notifications.warn(game.i18n.localize("age-system.WARNING.healthSysNotMatching"));
+    };
+    callApplyDamageToTargeted(damageData, targetedData);
+}
+
+
+export async function callCheckTargeted (targetedData) {
+    
+    const chatTemplate = "/systems/age-system/templates/rolls/check-targets.hbs";
+    const templateData = {
+      targetedData,
+    }
+    let chatData = {
+      user: game.user.id,
+      content: await renderTemplate(chatTemplate, templateData),
+      type: CONST.CHAT_MESSAGE_TYPES.OOC,
+    }
+    await ChatMessage.applyRollMode(chatData, 'gmroll');
+    ChatMessage.create(chatData);
+}
+
+
+export async function callApplyDamageToTargeted (damageData, targetedData) {
+    return new ApplyDamageDialog(targetedData.targets, damageData, ageSystem.healthSys.useInjury).render(true);
 }
 
 /**
