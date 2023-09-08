@@ -1011,7 +1011,7 @@ export async function itemDamage({
                     }
                 },
                 targetedData: {
-                    targets: targets,
+                    targets: targets.id,
                 }
             }
         }
