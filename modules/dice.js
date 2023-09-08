@@ -991,7 +991,10 @@ export async function itemDamage({
         useInjury: healthSys.useInjury
     };
     const targets = controlledTokenByType('char');
-
+    let targetIds = []
+    targets.foreach(i=>{
+        targetIds.push(i)
+    })
     let chatData = {
         user: game.user.id,
         speaker: {alias: game.user.name},
@@ -1011,7 +1014,7 @@ export async function itemDamage({
                     }
                 },
                 targetedData: {
-                    targets: targets.id,
+                    targets: targetIds,
                 }
             }
         }
