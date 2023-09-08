@@ -992,8 +992,8 @@ export async function itemDamage({
     };
     const targets = controlledTokenByType('char');
     let targetIds = []
-    targets.foreach(i=>{
-        targetIds.push(i)
+    targets.forEach(i=>{
+        targetIds.push(i.id)
     })
     let chatData = {
         user: game.user.id,
