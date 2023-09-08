@@ -168,7 +168,7 @@ export async function applyDamageToPreTargetedChat(event) {
 }
 
 
-export async function callCheckTargeted (targetedData) {
+export async function callCheckTargets (targetedData) {
     
     const chatTemplate = "/systems/age-system/templates/rolls/check-targets.hbs";
     const templateData = {
