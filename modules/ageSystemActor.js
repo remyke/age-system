@@ -405,6 +405,9 @@ export class ageSystemActor extends Actor {
         // Aim Maneuver
         data.aim.mod = mods?.aimMnv?.formParts?.detValue ?? 0;
 
+        // Charge Maneuver
+        data.charge.mod = mods?.chargeMnv?.formParts?.detValue ?? 0;
+
         // Power Force
         // This bonus must be treated on each Item
 

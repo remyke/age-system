@@ -167,6 +167,7 @@
             },
             "threat": "",
             "dmgMod": 0,
+            "penetrationMagicDmg": "",
             "testMod": 0,
             "attackMod": 0,
             "statBlockView": false,
@@ -234,6 +235,11 @@
                 "effect": ""
             },
             "aim": {
+                "value": 1,
+                "active": false,
+                "mod": 0
+            },
+            "charge": {
                 "value": 1,
                 "active": false,
                 "mod": 0

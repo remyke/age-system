@@ -124,6 +124,7 @@ export async function applyDamageChat(event) {
         damageData = {
             healthSys: ageSystem.healthSys,
             totalDamage: damageData.totalDamage,
+            penetrationMagicDmg: damageData.penetrationMagicDmg,
             dmgType: damageData.dmgType ?? 'wound',
             dmgSrc: damageData.dmgSrc ?? 'impact',
             isHealing: false,

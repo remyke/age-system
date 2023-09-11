@@ -268,6 +268,18 @@ export async function ageRollCheck({event = null, actor = null, abl = null, item
             });
             if (itemRolled?.type === "weapon") await actor.update({"system.aim.active": false});
         };
+
+        // Check if CHARGE is active - this bonus will apply to all rolls when it is active
+        const charge = actorData.charge;
+        if (charge.active && !(rollType === ROLL_TYPE.RESOURCES)) {
+            rollData.charge = charge.value + charge.mod;
+            rollFormula += " + @charge";
+            partials.push({
+                label: game.i18n.localize("age-system.charge"),
+                value: rollData.charge
+            });
+            if (itemRolled?.type === "weapon") await actor.update({"system.charge.active": false});
+        };
         
         // Adds penalty for Attack which is converted to damage Bonus and pass info to chat Message
         if (atkDmgTradeOff && !(rollType === ROLL_TYPE.RESOURCES)) {
@@ -972,6 +984,21 @@ export async function itemDamage({
         if (!term.options.flavor) term.options.flavor = term.formula
     }
     
+    
+    // Check if actor has magical effect mod 
+    const pDmg = item?.actor?.system?.penetrationMagicDmg;
+    let pDmgRoll = ""
+    if (pDmg != "")
+    {
+    pDmgRoll = await new Roll(pDmg, rollData).evaluate({async: true});
+
+    for (let t = 0; t < pDmgRoll.terms.length; t++) {
+        const term = pDmgRoll.terms[t];
+        if (!term.options.flavor) term.options.flavor = term.formula
+    }
+    }
+
+    dmgDesc.finalValuePenetrationMagicDmg = pDmg != "" ? pDmgRoll.total : 0;
     // Preparing custom damage chat card
     let chatTemplate = "/systems/age-system/templates/rolls/damage-roll.hbs";
     
@@ -982,6 +1009,8 @@ export async function itemDamage({
         ...rollData,
         // rawRollData: dmgRoll,
         wGroupPenalty: wGroupPenalty,
+        diceTermsPenetrationMagicDmg: pDmg != "" ? pDmgRoll.terms : null,
+        finalValuePenetrationMagicDmg: pDmg != "" ? pDmgRoll.total : 0,
         finalValue: wGroupPenalty? Math.floor(dmgRoll.total/2) : dmgRoll.total,
         diceTerms: dmgRoll.terms,
         colorScheme: `colorset-${game.settings.get("age-system", "colorScheme")}`,
