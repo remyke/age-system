@@ -180,7 +180,7 @@ export async function callCheckTargets(targetedData) {
         if (actor.document.documentName === "Token") actor = actor.actor;
         summary.push({
             name: actor.name,
-            img: actor.data.token.img
+            img: actor.img
         });
     });
 
