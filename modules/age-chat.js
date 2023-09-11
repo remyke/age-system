@@ -177,7 +177,7 @@ export async function callCheckTargets(targetedData) {
     const summary = [];
 
     targetedData.forEach(actor => {
-        if (actor.documentName === "Token") actor = actor.actor;
+        if (actor.document.documentName === "Token") actor = actor.actor;
         summary.push({
             name: actor.name,
             img: actor.data.token.img
