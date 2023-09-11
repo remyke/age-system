@@ -175,13 +175,6 @@ export async function applyDamageToPreTargetedChat(event) {
 export async function callCheckTargets(targetedData) {
 
     const summary = [];
-    summary.push({
-        name: actor.name,
-        img: actor.data.token.img,
-        degree,
-        totalInjuries: foundry.utils.deepClone(actor.system.injury.degrees),
-        newMarks: actor.system.injury.marks
-    })
 
     targetedData.foreach(h => {
         let actor = fromUuid(h.uuid);
