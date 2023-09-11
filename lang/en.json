@@ -711,6 +711,8 @@
 
         "ignoreDamage": "Ignore Damage",
         "applyDamage": "Apply Damage",
+        "checkTargets": "Check Targets",
+        "applyCheckDamage": "Apply Checked Damage",
         "armorPiercing": "Armor Piercing",
         "none": "None",
         "halfArmor": "Half Armor",

@@ -1019,7 +1019,11 @@ export async function itemDamage({
         user: game.user,
         useInjury: healthSys.useInjury
     };
-
+    const targets = controlledTokenByType('char');
+    let targetIds = []
+    targets.forEach(i=>{
+        targetIds.push(i.id)
+    })
     let chatData = {
         user: game.user.id,
         speaker: {alias: game.user.name},
@@ -1037,6 +1041,9 @@ export async function itemDamage({
                         actorId: item.actor.uuid,
                         healthSys
                     }
+                },
+                targetedData: {
+                    targets: targetIds,
                 }
             }
         }
@@ -1051,6 +1058,27 @@ export async function itemDamage({
     }
     ChatMessage.create(chatData);
 };
+
+export function controlledTokenByType(type) {
+    if (!Array.isArray(type)) type = [type];
+    let targets = []
+    if (ageSystem.useTargeted) {
+        const t = game.user.targets;
+        for (let i of t.values()) targets.push(i)
+    } else {
+        targets = canvas.tokens.controlled;
+    }
+    const nonChar = []
+    for (let t = 0; t < targets.length; t++) {
+        const el = targets[t];
+        const actorType = el.actor?.type;
+        if (!type.includes(actorType)) nonChar.push(t);
+    }
+    for (let t = nonChar.length-1; t >= 0; t--) {
+        targets.splice(nonChar[t],1)
+    }
+    return targets
+}
 
 export function injuryDegree(sd, marks) {
     if (sd === null | marks === null) return null;

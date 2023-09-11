@@ -4202,6 +4202,31 @@ body *:not(i, .fa, .far, .fas) {
   margin-right: 4px;
   border: none;
 }
+.age-system.check-targets-card .strong {
+  font-weight: 800;
+}
+.age-system.check-targets-card .italic {
+  font-style: italic;
+}
+.age-system.check-targets-card ul {
+  padding: 0;
+}
+.age-system.check-targets-card p {
+  margin: 0 2px;
+  font-size: 12px;
+  text-transform: lowercase;
+  font-variant: small-caps;
+}
+.age-system.check-targets-card div.use-injury div p {
+  text-align: center;
+}
+.age-system.check-targets-card img {
+  flex: 0 0 50px;
+  height: 50px;
+  width: 50px;
+  margin-right: 4px;
+  border: none;
+}
 .age-system-dialog.advancement-config {
   font-size: 12px;
 }
