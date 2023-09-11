@@ -176,11 +176,11 @@ export async function callCheckTargets(targetedData) {
 
     const summary = [];
 
-    targetedData.forEach(actor => {
-        if (actor.document.documentName === "Token") actor = actor.actor;
+    targetedData.forEach(token => {
+        //if (actor.document.documentName === "Token") actor = actor.actor;
         summary.push({
-            name: actor.name,
-            img: actor.img
+            name: token.document.name,
+            img: token.document.texture.src
         });
     });
 
