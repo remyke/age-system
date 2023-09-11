@@ -193,7 +193,7 @@ export async function callApplyDamageToTargeted (damageData, targetedData) {
     targetedData.targets.forEach(i=>{
         targets.push(canvas.tokens.get(i))
     })
-    return new ApplyDamageDialog(targetedData.targets, damageData, ageSystem.healthSys.useInjury).render(true);
+    return new ApplyDamageDialog(targets, damageData, ageSystem.healthSys.useInjury).render(true);
 }
 
 /**
