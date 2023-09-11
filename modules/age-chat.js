@@ -174,7 +174,6 @@ export async function applyDamageToPreTargetedChat(event) {
 
 export async function callCheckTargets(targetedData) {
 
-    const applyInjuryAll = ev.currentTarget.classList.contains('apply-all');
     const summary = [];
     summary.push({
         name: actor.name,
@@ -192,7 +191,7 @@ export async function callCheckTargets(targetedData) {
             img: actor.data.token.img
         });
     });
-    
+
     const chatTemplate = "/systems/age-system/templates/rolls/check-targets.hbs";
     const templateData = {
         summary,
