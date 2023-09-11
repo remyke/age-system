@@ -443,6 +443,7 @@
         "focusInput": "Value",
 
         "aim": "Aim",
+        "charge": "Charge",
         "allOutAttack": "All-Out Attack",
         "defendManeuver": "Defend",
         "guardUp": "Guard Up",
@@ -641,6 +642,7 @@
             "focusPowerForce": "Power Force (Focus)",
             "focusSpellPower": "Spell Power (Focus)",
             "aimMnv": "Aim",
+            "chargeMnv": "Charge",
             "armorPenalty": "Armor Penalty",
             "speed": "Speed",
             "armorStrain": "Armor Strain",
@@ -648,7 +650,8 @@
             "active": "Active",
             "charAbl": "Ability",
             "type": "Type",
-            "value": "Value"
+            "value": "Value",
+            "penetrationMagicDamage": "Penetrating magical damage"
         },
 
         "stuntsContainer": "Stunts",
@@ -708,6 +711,8 @@
 
         "ignoreDamage": "Ignore Damage",
         "applyDamage": "Apply Damage",
+        "checkTargets": "Check Targets",
+        "applyCheckDamage": "Apply Checked Damage",
         "armorPiercing": "Armor Piercing",
         "none": "None",
         "halfArmor": "Half Armor",

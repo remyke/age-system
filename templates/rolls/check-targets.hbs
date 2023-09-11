@@ -1,0 +1,16 @@
+<form class="age-system check-targets-card">
+	<h2>{{localize "age-system.checkTargets"}}</h2>
+	<ul>
+		{{#each summary as |victim i|}}
+		<li class="flexrow">
+			<img src="{{victim.img}}" alt="{{victim.name}}">
+			<div class="flexcol justity-content-center">
+				<p class="strong">{{victim.name}}</p>
+			</div>
+		</li>
+		{{#unless @last}}
+		<hr>
+		{{/unless}}
+		{{/each}}
+	</ul>
+</form>

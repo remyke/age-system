@@ -1,5 +1,5 @@
 import ApplyDamageDialog from "./apply-damage.js";
-import {ageSystem} from "./config.js";
+import { ageSystem } from "./config.js";
 import ConditionsWorkshop from "./conditions-workshop.js";
 import { applyBreather } from "./breather.js";
 
@@ -11,6 +11,8 @@ export function addChatListeners(html) {
     html.on('click', '.roll-item', rollItemFromChat);
     html.on('contextmenu', '.roll-item', rollItemFromChat);
     html.on('click', '.apply-damage', applyDamageChat);
+    html.on('click', '.check-targets', checkTargetsChat);
+    html.on('click', '.apply-damage-to-pre-targeted', applyDamageToPreTargetedChat);
     html.on('click', '.roll-toughness-test', resistInjury);
     html.on('click', '.apply-injury', inflictInjury);
 };
@@ -22,24 +24,24 @@ export function addChatListeners(html) {
  * @param {object[]} options    The Array of Context Menu options
  * @returns {object[]}          The extended options Array including new context choices
  */
- export const addChatMessageContextOptions = function(html, options) {
+export const addChatMessageContextOptions = function (html, options) {
     let canApply = li => {
         const message = game.messages.get(li.data("messageId"));
         return message?.isRoll && message?.isContentVisible && (ageSystem.useTargeted ? game.user.targets.size : canvas.tokens?.controlled.length);
     };
     options.push(
-    {
-        name: game.i18n.localize("age-system.item.healing"),
-        icon: '<i class="fa fa-heartbeat" aria-hidden="true"></i>',
-        condition: canApply,
-        callback: li => applyChatCardDamage(li, {isHealing: true, isNewHP: false})
-    },
-    {
-        name: game.i18n.localize("age-system.applyDamage"),
-        icon: '<i class="fa fa-crosshairs" aria-hidden="true"></i>',
-        condition: canApply,
-        callback: li => applyChatCardDamage(li, {isDamage: true})
-    });
+        {
+            name: game.i18n.localize("age-system.item.healing"),
+            icon: '<i class="fa fa-heartbeat" aria-hidden="true"></i>',
+            condition: canApply,
+            callback: li => applyChatCardDamage(li, { isHealing: true, isNewHP: false })
+        },
+        {
+            name: game.i18n.localize("age-system.applyDamage"),
+            icon: '<i class="fa fa-crosshairs" aria-hidden="true"></i>',
+            condition: canApply,
+            callback: li => applyChatCardDamage(li, { isDamage: true })
+        });
     return options;
 };
 
@@ -56,8 +58,8 @@ function applyChatCardDamage(li, options) {
     const total = cardDamageData?.totalDamage ?? roll.total;
     if (options.isHealing) {
         return Promise.all(controlledTokenByType(['char']).map(t => {
-          const a = t.actor;
-          return ageSystem.healthSys.useInjury ? a.healMarks(total) : a.applyHPchange(total, options);
+            const a = t.actor;
+            return ageSystem.healthSys.useInjury ? a.healMarks(total) : a.applyHPchange(total, options);
         }));
     }
     if (options.isDamage) {
@@ -84,7 +86,7 @@ function applyChatCardDamage(li, options) {
  * @param {Mouse Event} event   Chat card Mouse Click event
  * @returns {Promisse}          Promisse applying Injury to Actor
  */
-export async function inflictInjury(event){
+export async function inflictInjury(event) {
     event.preventDefault();
     const b = event.currentTarget;
     let degree;
@@ -122,6 +124,7 @@ export async function applyDamageChat(event) {
         damageData = {
             healthSys: ageSystem.healthSys,
             totalDamage: damageData.totalDamage,
+            penetrationMagicDmg: damageData.penetrationMagicDmg,
             dmgType: damageData.dmgType ?? 'wound',
             dmgSrc: damageData.dmgSrc ?? 'impact',
             isHealing: false,
@@ -132,12 +135,85 @@ export async function applyDamageChat(event) {
     callApplyDamage(damageData);
 }
 
+export async function checkTargetsChat(event) {
+    event.preventDefault();
+    const card = event.target.closest(".chat-message");
+    const cardId = card.dataset.messageId;
+    const cardTargetedData = game.messages.get(cardId).flags["age-system"].targetedData
+    let targets = []
+    cardTargetedData.targets.forEach(i => {
+        targets.push(canvas.tokens.get(i))
+    })
+    let targetedData = await foundry.utils.deepClone(targets);
+
+    callCheckTargets(targetedData);
+}
+
+export async function applyDamageToPreTargetedChat(event) {
+    event.preventDefault();
+    const card = event.target.closest(".chat-message");
+    const cardId = card.dataset.messageId;
+    const cardData = game.messages.get(cardId).flags["age-system"].damageData ?? game.messages.get(cardId).flags["age-system"].ageroll.rollData; // Compatibility to Damage Chat Card before 1.1.6
+    const cardTargetedData = game.messages.get(cardId).flags["age-system"].targetedData
+    let damageData = await foundry.utils.deepClone(cardData);
+    let targetedData = await foundry.utils.deepClone(cardTargetedData);
+    const cardHealthSys = damageData.healthSys;
+    if (!checkHealth(cardHealthSys, ageSystem.healthSys)) {
+        damageData = {
+            healthSys: ageSystem.healthSys,
+            totalDamage: damageData.totalDamage,
+            dmgType: damageData.dmgType ?? 'wound',
+            dmgSrc: damageData.dmgSrc ?? 'impact',
+            isHealing: false,
+            wGroupPenalty: false
+        }
+        ui.notifications.warn(game.i18n.localize("age-system.WARNING.healthSysNotMatching"));
+    };
+    callApplyDamageToTargeted(damageData, targetedData);
+}
+
+
+export async function callCheckTargets(targetedData) {
+
+    const summary = [];
+
+    targetedData.forEach(token => {
+        //if (actor.document.documentName === "Token") actor = actor.actor;
+        summary.push({
+            name: token.document.name,
+            img: token.document.texture.src
+        });
+    });
+
+    const chatTemplate = "/systems/age-system/templates/rolls/check-targets.hbs";
+    const templateData = {
+        summary,
+    }
+    let chatData = {
+        user: game.user.id,
+        content: await renderTemplate(chatTemplate, templateData),
+        type: CONST.CHAT_MESSAGE_TYPES.OOC,
+    }
+
+    ChatMessage.create(chatData);
+
+}
+
+
+export async function callApplyDamageToTargeted(damageData, targetedData) {
+    let targets = []
+    targetedData.targets.forEach(i => {
+        targets.push(canvas.tokens.get(i))
+    })
+    return new ApplyDamageDialog(targets, damageData, ageSystem.healthSys.useInjury).render(true);
+}
+
 /**
  * Call Apply Damage data containing all applicable Actors selected
  * @param {object} damageData   All details from the damage to be applied to selected Actors
  * @returns {Application}       Apply Damage application is started to select damage details
  */
-export async function callApplyDamage (damageData) {
+export async function callApplyDamage(damageData) {
     const targets = controlledTokenByType('char');
     if (targets.length === 0) return ui.notifications.warn(game.i18n.localize("age-system.WARNING.noValidTokensSelected"));
     return new ApplyDamageDialog(targets, damageData, ageSystem.healthSys.useInjury).render(true);
@@ -163,8 +239,8 @@ export function controlledTokenByType(type) {
         const actorType = el.actor?.type;
         if (!type.includes(actorType)) nonChar.push(t);
     }
-    for (let t = nonChar.length-1; t >= 0; t--) {
-        targets.splice(nonChar[t],1)
+    for (let t = nonChar.length - 1; t >= 0; t--) {
+        targets.splice(nonChar[t], 1)
     }
     return targets
 }
@@ -186,7 +262,7 @@ export function checkHealth(card, game) {
 
 /**
  * Roll damage from a chat card, taking into consideration card's Actor, Item and button selected
- */ 
+ */
 export async function chatDamageRoll(event) {
     event.preventDefault();
     const message = event.type === "contextmenu" ? event.target.closest(".chat-message") : event.currentTarget.closest(".chat-message");
@@ -219,7 +295,7 @@ export async function chatDamageRoll(event) {
 
 /**
  * Roll Fatigue from chat card according to card's Actor and Item
- */ 
+ */
 export async function chatFatigueRoll(event) {
     const message = event.type === "contextmenu" ? event.target.closest(".chat-message") : event.currentTarget.closest(".chat-message");
     const cardId = message.dataset.messageId;
@@ -244,7 +320,7 @@ export async function rollItemFromChat(event) {
     let owner = await fromUuid(cardData.ownerUuid);
     owner = owner?.actor ?? owner;
     const item = owner.items.get(itemId);
-    if (classList.contains("damage")) item.rollDamage({event});
+    if (classList.contains("damage")) item.rollDamage({ event });
     if (classList.contains("attack")) item.roll(event);
 }
 
@@ -285,7 +361,7 @@ function _buttonType(buttons) {
  * @param {object} chatCard         Chat card object containing the Message Data
  * @param {object} chatData         Data containing Message data
  */
-function _handleAgeRollVisibility(html, chatCard, chatData){
+function _handleAgeRollVisibility(html, chatCard, chatData) {
     const element = html.find(".age-system.base-age-roll .feature-controls");
     const flags = chatCard.flags?.["age-system"]?.ageroll;
     for (let e = 0; e < element.length; e++) {
@@ -298,7 +374,7 @@ function _handleAgeRollVisibility(html, chatCard, chatData){
         const whisperTo = chatData.message.whisper;
         const author = chatData.author.id;
         const userId = game.user.id;
-    
+
         if ((whisperTo.includes(userId) || whisperTo.length < 1 || author === userId) && !isBlind) {
             el.querySelector(".blind-roll-card").remove();
         } else {
@@ -317,7 +393,7 @@ function _handleAgeRollVisibility(html, chatCard, chatData){
 }
 
 // Check if user has permission to use card button
-async function _handleItemCardButton(html){
+async function _handleItemCardButton(html) {
     const sectionClass = `.item-chat-controls`
     const data = html.find(sectionClass);
     for (let d = 0; d < data.length; d++) {
@@ -350,7 +426,7 @@ function _permCheck(actorPerm, element) {
  */
 export function ageCommand(chatLog, content, userData) {
     const message = content.split(" ").map(i => i.trim());
-    
+
     if (['/age', '/a'].includes(message[0])) {
         const isGM = game.user.isGM;
         const gmFeats = ['conditions', 'workshop', 'cw'];
@@ -393,7 +469,7 @@ export function ageCommand(chatLog, content, userData) {
                 const newValue = Number(message[2]);
                 if (!Number.isNaN(newValue)) controlledTokenByType(['char', 'organization']).map(t => {
                     const a = t.actor;
-                    return ageSystem.healthSys.useInjury ? a.healMarks(newValue) : a.applyHPchange(newValue, {isHealing: true, isNewHP: false});
+                    return ageSystem.healthSys.useInjury ? a.healMarks(newValue) : a.applyHPchange(newValue, { isHealing: true, isNewHP: false });
                 });
                 break;
             case 'injure':
@@ -406,7 +482,7 @@ export function ageCommand(chatLog, content, userData) {
                 applyBreather('selfroll');
                 break;
             default:
-                ui.notifications.error(game.i18n.format("CHAT.InvalidCommand", {command: routine}));
+                ui.notifications.error(game.i18n.format("CHAT.InvalidCommand", { command: routine }));
                 break;
         }
         return false

@@ -268,6 +268,18 @@ export async function ageRollCheck({event = null, actor = null, abl = null, item
             });
             if (itemRolled?.type === "weapon") await actor.update({"system.aim.active": false});
         };
+
+        // Check if CHARGE is active - this bonus will apply to all rolls when it is active
+        const charge = actorData.charge;
+        if (charge.active && !(rollType === ROLL_TYPE.RESOURCES)) {
+            rollData.charge = charge.value + charge.mod;
+            rollFormula += " + @charge";
+            partials.push({
+                label: game.i18n.localize("age-system.charge"),
+                value: rollData.charge
+            });
+            if (itemRolled?.type === "weapon") await actor.update({"system.charge.active": false});
+        };
         
         // Adds penalty for Attack which is converted to damage Bonus and pass info to chat Message
         if (atkDmgTradeOff && !(rollType === ROLL_TYPE.RESOURCES)) {
@@ -972,6 +984,21 @@ export async function itemDamage({
         if (!term.options.flavor) term.options.flavor = term.formula
     }
     
+    
+    // Check if actor has magical effect mod 
+    const pDmg = item?.actor?.system?.penetrationMagicDmg;
+    let pDmgRoll = ""
+    if (pDmg != "")
+    {
+    pDmgRoll = await new Roll(pDmg, rollData).evaluate({async: true});
+
+    for (let t = 0; t < pDmgRoll.terms.length; t++) {
+        const term = pDmgRoll.terms[t];
+        if (!term.options.flavor) term.options.flavor = term.formula
+    }
+    }
+
+    dmgDesc.finalValuePenetrationMagicDmg = pDmg != "" ? pDmgRoll.total : 0;
     // Preparing custom damage chat card
     let chatTemplate = "/systems/age-system/templates/rolls/damage-roll.hbs";
     
@@ -982,6 +1009,8 @@ export async function itemDamage({
         ...rollData,
         // rawRollData: dmgRoll,
         wGroupPenalty: wGroupPenalty,
+        diceTermsPenetrationMagicDmg: pDmg != "" ? pDmgRoll.terms : null,
+        finalValuePenetrationMagicDmg: pDmg != "" ? pDmgRoll.total : 0,
         finalValue: wGroupPenalty? Math.floor(dmgRoll.total/2) : dmgRoll.total,
         diceTerms: dmgRoll.terms,
         colorScheme: `colorset-${game.settings.get("age-system", "colorScheme")}`,
@@ -990,7 +1019,11 @@ export async function itemDamage({
         user: game.user,
         useInjury: healthSys.useInjury
     };
-
+    const targets = controlledTokenByType('char');
+    let targetIds = []
+    targets.forEach(i=>{
+        targetIds.push(i.id)
+    })
     let chatData = {
         user: game.user.id,
         speaker: {alias: game.user.name},
@@ -1008,6 +1041,9 @@ export async function itemDamage({
                         actorId: item.actor.uuid,
                         healthSys
                     }
+                },
+                targetedData: {
+                    targets: targetIds,
                 }
             }
         }
@@ -1022,6 +1058,27 @@ export async function itemDamage({
     }
     ChatMessage.create(chatData);
 };
+
+export function controlledTokenByType(type) {
+    if (!Array.isArray(type)) type = [type];
+    let targets = []
+    if (ageSystem.useTargeted) {
+        const t = game.user.targets;
+        for (let i of t.values()) targets.push(i)
+    } else {
+        targets = canvas.tokens.controlled;
+    }
+    const nonChar = []
+    for (let t = 0; t < targets.length; t++) {
+        const el = targets[t];
+        const actorType = el.actor?.type;
+        if (!type.includes(actorType)) nonChar.push(t);
+    }
+    for (let t = nonChar.length-1; t >= 0; t--) {
+        targets.splice(nonChar[t],1)
+    }
+    return targets
+}
 
 export function injuryDegree(sd, marks) {
     if (sd === null | marks === null) return null;
