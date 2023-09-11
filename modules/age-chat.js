@@ -176,7 +176,7 @@ export async function callCheckTargets(targetedData) {
 
     const summary = [];
 
-    targetedData.foreach(h => {
+    targetedData.forEach(h => {
         let actor = fromUuid(h.uuid);
         if (actor.documentName === "Token") actor = actor.actor;
         summary.push({
