@@ -6,7 +6,7 @@ export class QuickSettings extends FormApplication {
     this.config = {};
   }
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       id: 'quick-settings',
       template: 'systems/age-system/templates/quick-settings.hbs',
       resizable: false,
@@ -15,7 +15,7 @@ export class QuickSettings extends FormApplication {
       height: '500',
       title: game.i18n.localize('SETTINGS.quicksetting'),
       classes: ["age-system", "dialog", `colorset-${ageSystem.colorScheme}`],
-      resizable: false,
+      //resizable: false,
       closeOnSubmit: false,
       submitOnClose: true,
       submitOnChange: true,
@@ -70,7 +70,7 @@ export class QuickSettings extends FormApplication {
 
   onLoadSettings(ev) {
     if (!this.config.preset) return this.close();
-    const fd = new FormDataExtended(this.form).object;
+    const fd = new foundry.applications.ux.FormDataExtended(this.form).object;
     const sets = {
       ...ageSystem.gameSettings[this.config.preset].settings.defined,
       ...fd
@@ -99,7 +99,7 @@ export class AdvancedSettings extends FormApplication {
     this.config = {};
   }
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       id: 'adv-settings',
       template: 'systems/age-system/templates/adv-settings.hbs',
       resizable: false,
@@ -108,7 +108,7 @@ export class AdvancedSettings extends FormApplication {
       height: 'auto',
       title: game.i18n.localize('SETTINGS.advSettings'),
       classes: ["age-system", "dialog", `colorset-${ageSystem.colorScheme}`],
-      resizable: false,
+      //resizable: false,
       closeOnSubmit: false,
       submitOnClose: true,
       submitOnChange: true,
@@ -158,14 +158,16 @@ export class AdvancedSettings extends FormApplication {
     html.find('button.close').click(e => this.close());
   }
 
+  // TODO - Filter which settings really need reload only prompt user in the correct cases
   onLoadSettings(ev) {
-    const sets = new FormDataExtended(this.form).object;
+    const sets = new foundry.applications.ux.FormDataExtended(this.form).object;
     for (const setting in sets) {
       if (Object.hasOwnProperty.call(sets, setting)) {
         const value = sets[setting];
         game.settings.set("age-system", setting, value)
       }
     }
+    SettingsConfig.reloadConfirm();
     this.close();
   }
 

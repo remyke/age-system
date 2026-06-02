@@ -5,11 +5,7 @@
             <div class="flexrow flex-align-baseline option">
                 <label for=""><strong>{{localize "age-system.trait"}}</strong></label>
                 <select name="trait" class="header-input">
-                    {{#select trait}}
-                    {{#each traitArr as |t|}}
-                    <option value="{{t.key}}">{{t.name}}</option>
-                    {{/each}}
-                    {{/select}}
+                    {{selectOptions traitArr nameAttr="key" labelAttr="name"}}
                 </select>
             </div>
             {{/if}}
@@ -17,11 +13,7 @@
             <div class="flexrow flex-align-baseline option">
                 <label for=""><strong>{{localize "age-system.type"}}</strong></label>
                 <select name="itemOption" class="header-input">
-                    {{#select itemOption}}
-                    {{#each itemOptionObj as |o|}}
-                    <option value="{{@key}}">{{o}}</option>
-                    {{/each}}
-                    {{/select}}
+                    {{selectOptions itemOptionObj}}
                 </select>
             </div> 
             {{/if}}
@@ -50,6 +42,9 @@
                     {{/each}}
                     {{/select}}
                 </select>
+                {{!-- <select name="level" class="header-input">
+                    {{selectOptions advLabel}}
+                </select> --}}
             </div>
             <div class="flexrow flex-align-baseline option">
                 <label for=""><strong>{{localize "age-system.itemProgression"}}</strong></label>
@@ -72,6 +67,7 @@
             {{/if}}
         </section>
 
+        {{!-- Progressive traits setup --}}
         {{#if (eq advType "progressive")}}
         <section class="data-column flexrow">
             <ul class="list-table-content flex-justify-center">
@@ -103,6 +99,8 @@
                 {{/each}}
             </ul>
         </section>
+
+        {{!-- Item advancement configuration --}}
         {{else}}
         <section class="item-drop-area">
             <ol>
@@ -130,6 +128,8 @@
         </section>
         {{/if}}
     </div>
+
+    {{!-- Flow control buttons --}}
     <footer class="flexrow">
         <button class="default-button cancel" type="button">
             <i class="fa-solid fa-xmark"></i>{{localize "age-system.cancel"}}

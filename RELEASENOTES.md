@@ -1,4 +1,99 @@
-# Release Notes
+# Change Log
+## 4.0.3 [2025-07-31]
+### Fixed
+- AGE Importer: cases when texts with negative abilities failed to generate Actors.
+- AGE Importer: added support to capture text for attacks with special damage instead of silent failing Actor generation.
+- Fixed bug preventing correct parsing on item controls on character block sheet.
+- Character block sheet input fields now have proper background color.
+- Toughness Test chat card now showing correct data.
+
+## 4.0.2 [2025-07-26]
+### Changed
+- Buttons on chat cards restyled to ensure main focus on chat cards is summary and not the button section.
+
+### Fixed
+- Fixed a bug preventing Fatigue Text button to pop-up on selected Power rolls.
+- Incorrect or no chat cards poping up on Apply Damage interface and chat cards.
+- Injure damage system now has correct style and buttons on damage chat cards.
+- Removed placeholder text from roll cards template.
+
+## 4.0.1 [2025-07-26]
+### Fixed
+- Small changes on manifest file.
+- Bug preventing zoom control using mouse wheel in certain areas when AGE Tracker is active. Thanks [BoltsJ](https://github.com/BoltsJ)!
+
+## 4.0.0 [2025-07-25]
+### Added
+- Compatibility to Foundry VTT v13.
+- Our friend [p-arth](https://github.com/p-arth) expanded AGE Importer, so now it can import NPC sheets from Fantasy AGE 2ed AND talents from most of AGE System published books. Thanks again, [p-arth](https://github.com/p-arth)!
+
+### Changed
+- AGE Roller is now a Canvas Control buttom.
+- New position for AGE Tracker for Churn/Complication and Serendepity/Daring.
+
+### Fixed
+- Bug causing Plot Damage (Organizations) and Vehicle collision to return error.
+
+## 3.0.3 [2024-08-11]
+### Added
+- Active Effects can now be dragged to another character sheet to copy, just like regular Items.
+
+### Fixed
+- Updated manifest to match v12 grid definition.
+- Removed invalid Ability option when editing Focus sheet.
+- Bug preventing the correct Item Sheet to be rendered when opening Focus, Weapon or Power owned by an Actor.
+- Updated Dice so Nice integration to match v5.
+- Actor and Item `prepareData()` updated according to lateste FVTT v12 definitions.
+
+## 3.0.2 [2024-07-03]
+### Fixed
+- Typo on manifest preventing system update.
+
+## 3.0.1 [2024-07-03]
+### Added
+- Function updated to restart Foundry when certain System Settings are changed.
+
+### Fixed
+- Roll Total is now displaying the expected value instead of omitting total figures.
+- Advanced AGE Settings will now remember the value used on drop-down menus.
+- Error when trying to attack targeted token.
+
+## 3.0.0 [2024-06-16]
+### Added
+- Compatibility to FoundryVTT 12. Not compatible to previous versions. Few deprecated messagens are still poping-up, but they will be removed over the new versions.
+
+### Fixed
+- Talent degree not showing consistently on stat block view.
+- Added relative path on advancement.js to fix issues related to hosted servers.
+
+## 2.0.5 [2024-03-26]
+### Fixed
+- Bug preventing Modifiers to be added to characters.
+
+## 2.0.4 [2024-03-24]
+### Added
+- New macro to enable users to roll `ageRoll` method. This function can be accessed using `game.ageSystem.roll`.
+
+### Changed
+- Resizing handler on sheet's right-hand bottom corner is now invisible until hovering sheet corner with mouse.
+- Removed lines of code and files related to the old Character Sheet.
+- When using the Apply Damage feature to apply Penetrating damage, the option "Ignore Armor" will be selected.
+
+### Fixed
+- Weapon features "Ranged" and "Reloadable" on Options tab now have localization strings.
+- Case causing character sheet to break after using Token Effects / Conditions.
+- Removed Font override preventing users and modules to change Font.
+
+## 2.0.3 [2023-09-07]
+### Added
+- Merged [Pull Request #118](https://github.com/vkdolea/age-system/pull/118) made by [Peter](https://github.com/architech99) to add Peril flavor (FAGE 2) to Complication rolls and adding extra option to select a user created Roll Table instead of the standard 1D6 roll to check for outcome.
+- Another contribution from [Peter](https://github.com/architech99), [Pull Request #120](https://github.com/vkdolea/age-system/pull/120), adding flexibility to change maximum Health and Mana on character block sheet.
+
+### Fixed
+- Added workaround to ensure correct Item Sheet is opened when opening Owned Items.
+- "Current" label for actual values of Health and Power Points is not hardcoded anymore.
+- Portuguese localization fixes.
+- Better color contrast on dropboxes on Item Sheets.
 
 ## 2.0.2 [2023-08-27]
 ### Added

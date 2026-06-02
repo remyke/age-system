@@ -5,10 +5,7 @@ export class ageSystemActor extends Actor {
 
     /** @override */
     prepareData() {
-        // this.reset();
-        this.prepareBaseData();
-        this.prepareEmbeddedDocuments();
-        this.prepareDerivedData();
+        super.prepareData();
         // Sorting Items for final data preparation
         const items = this.items;
         if (this.type === 'char') {
@@ -16,14 +13,14 @@ export class ageSystemActor extends Actor {
             items.forEach(i => {
                 if (i.type === "focus") {
                     i.prepareData();
-                    if(i.sheet?.rendered) i.sheet.render(false);
+                    // i.sheet.render(false); // Removed as this was causing owned Items' sheet to render using Base Sheet instead of AGE System Item Sheet
                 }
             })
             // Then prepare other item types which require further prep
             items.forEach(i => {
                 if (["weapon", "power"].includes(i.type)) {
-                    i.prepareData()
-                    if(i.sheet?.rendered) i.sheet.render(false);
+                    i.prepareData();
+                    // i.sheet.render(false); // Removed as this was causing owned Items' sheet to render using Base Sheet instead of AGE System Item Sheet
                 }
             })
             
@@ -49,7 +46,7 @@ export class ageSystemActor extends Actor {
         const data = actorData.system;
 
         // Check if split Armor is in use
-        data.useBallisticArmor = game.settings.get("age-system", "useBallisticArmor");
+        // data.useBallisticArmor = game.settings.get("age-system", "useBallisticArmor");
 
         // Retrieve wealth mode
         data.useResource = data.useIncome = data.useCurrency = data.useCoins = false;
@@ -95,23 +92,27 @@ export class ageSystemActor extends Actor {
     }
 
     /**
-    * Apply any transformations to the Actor data which are caused by ActiveEffects.
+    * Apply any transformations to the Actor data which are caused by ActiveEffects by adding code in the original FVTT code
     */
     applyActiveEffects() {
         const overrides = {};
+        this.statuses.clear();
 
         // Organize non-disabled effects by their application priority
-        const changes = this.effects.reduce((changes, e) => {
-        if ( e.disabled || e.isSuppressed ) return changes;
-        return changes.concat(e.changes.map(c => {
-            c = foundry.utils.duplicate(c);
-            c.effect = e;
+        const changes = [];
+        for ( const effect of this.allApplicableEffects() ) {
+        if ( !effect.active ) continue;
+        changes.push(...effect.changes.map(change => {
+            const c = foundry.utils.deepClone(change);
+            c.effect = effect;
             c.priority = c.priority ?? (c.mode * 10);
             return c;
         }));
-        }, []);
+        for ( const statusId of effect.statuses ) this.statuses.add(statusId);
+        }
         changes.sort((a, b) => a.priority - b.priority);
 
+        // ---------------------- AGE SYSTEM MODIFICATION STARTS
         // Identify Active Effects to be applied after DerivedData
         const delayedOverrides = [];
         for (let i = changes.length-1; i >= 0; i--) {
@@ -122,17 +123,17 @@ export class ageSystemActor extends Actor {
             }
         }
         this.delayedOverrides = delayedOverrides;
+        // ---------------------- AGE SYSTEM MODIFICATION ENDS
 
         // Apply all changes
-        for ( let change of changes ) {
-            if ( !change.key ) continue;
-            const changes = change.effect.apply(this, change);
-            Object.assign(overrides, changes);
+        for ( const change of changes ) {
+        if ( !change.key ) continue;
+        const changes = change.effect.apply(this, change);
+        Object.assign(overrides, changes);
         }
 
         // Expand the set of final overrides
         this.overrides = foundry.utils.expandObject(overrides);
-        // if (this.delayedOverrides) this.overrides = foundry.utils.mergeObject(this.overrides.dOverrides);
     }
 
     _applyDelayedActiveEffects(paths) {
@@ -178,7 +179,7 @@ export class ageSystemActor extends Actor {
         data.useConviction = game.settings.get("age-system", "useConviction");
 
         // Check if Toughness is in use
-        data.useToughness = game.settings.get("age-system", "useToughness");
+        // data.useToughness = game.settings.get("age-system", "useToughness");
 
         // Check if Fatigue is in use
         data.useFatigue = game.settings.get("age-system", "useFatigue");
@@ -272,7 +273,7 @@ export class ageSystemActor extends Actor {
         this.items.forEach(i => {
             const iMods = i.system.modifiersByType;
             const active = i.system.activate || i.system.equiped;
-            if (iMods !== {} && active) {
+            if (!foundry.utils.isEmpty(iMods) && active) {
                 for (const k in iMods) {
                     if (Object.hasOwnProperty.call(iMods, k)) {
                         if (mods[k]) {
@@ -715,7 +716,7 @@ export class ageSystemActor extends Actor {
           flavor2: `${game.i18n.localize("age-system.toughnessTest")}`
         };
         const toughTest = await Dice.ageRollCheck(rollData);
-        const data = toughTest.data.flags["age-system"].ageroll.rollData
+        const data = toughTest.flags["age-system"].ageroll.rollData
         if (applyInjury && data.isSuccess !== null && !data.isSuccess) await this.applyInjury(data.injuryDegree);
         return toughTest;
     }
@@ -901,14 +902,14 @@ export class ageSystemActor extends Actor {
         const charData = this.system;
         if (options.abl !== 'no-abl') formula += ` + ${Math.max(charData.abilities[options.abl].total, 0)}`;
         if (options.addLevel) formula += ageSystem.healthSys.useInjury ? ` + ${Math.floor(charData.level/4)}` : ` + ${charData.level}`;
-        let roll = await new Roll(formula, this.actorRollData()).evaluate({async: true});
+        let roll = new Roll(formula, this.actorRollData()).evaluateSync();
 		roll.toMessage({flavor: `${this.name} | ${game.i18n.localize("age-system.breather")}`}, {rollMode});
         if (options.autoApply) return ageSystem.healthSys.useInjury ? this.healMarks(roll.total) : this.applyHPchange(roll.total, {isHealing: true, isNewHP: false});
     }
 
     async breatherSettings(data) {
         const template = "/systems/age-system/templates/rolls/breather-settings.hbs";
-        const html = await renderTemplate(template, data);
+        const html = await foundry.applications.handlebars.renderTemplate(template, data);
         return new Promise(resolve => {
             const data = {
                 title: game.i18n.localize("age-system.breather"),
@@ -923,7 +924,7 @@ export class ageSystemActor extends Actor {
                         icon: `<i class="fa fa-check" aria-hidden="true"></i>`,
                         label: game.i18n.localize("age-system.confirm"),
                         callback: html => {
-                            const fd = new FormDataExtended(html[0].querySelector("form"));
+                            const fd = new foundry.applications.ux.FormDataExtended(html[0].querySelector("form"));
                             resolve(fd.object)
                         }
                     }
@@ -945,7 +946,6 @@ export class ageSystemActor extends Actor {
         let value = diffHP.value;
         const type = diffHP.type;
         if ( !value ) return;
-        if (type !== 'injury') value = value.signedString();
 
         let color;
         switch (type) {
@@ -962,6 +962,7 @@ export class ageSystemActor extends Actor {
                 break;
         }
 
+        if (type !== 'injury') value = value.signedString();
         const tokens = this.isToken ? [this.token?.object] : this.getActiveTokens(true);
         for ( let t of tokens ) {
             if (t.visible || t.renderable) {
@@ -1016,7 +1017,7 @@ export class ageSystemActor extends Actor {
     }
 
     // Data to add Character ref. into rolls
-    actorRollData() {
+    actorRollData(levelAbl = null) {
         if (!this) return null;
         if (this.type !== 'char') return null;
         const data = this.system;
@@ -1034,6 +1035,9 @@ export class ageSystemActor extends Actor {
             cunn: data.abilities.cunn.total ?? 0,
             level: data.level ?? 0
         }
+        if (levelAbl) {
+            // Add code to replace Ability values by the ones recently progressed in the Level Up routing.
+        };
         return charData;
     };
 };

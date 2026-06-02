@@ -3,7 +3,7 @@ import {ageSystem} from "../config.js";
 import { sortObjArrayByName } from "../setup.js";
 import {dropChar, newItemData} from "./helper.js";
 
-export default class ageSystemVehicleSheet extends ActorSheet {
+export default class ageSystemVehicleSheet extends foundry.appv1.sheets.ActorSheet {
     get isSynth() {
         return (this.token && !this.token.actorLink);
     }  
@@ -13,7 +13,7 @@ export default class ageSystemVehicleSheet extends ActorSheet {
     }  
 
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             width: 680,
             height: 755,
             resizable: true,

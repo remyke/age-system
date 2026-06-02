@@ -19,7 +19,7 @@ export default class ConditionsWorkshop extends Application {
   }
 
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['age-system-dialog', 'age-system'],
       id: 'age-conditions-workshop',
       template: 'systems/age-system/templates/conditions-workshop.hbs',
@@ -87,7 +87,7 @@ export default class ConditionsWorkshop extends Application {
   async _onReadFromFile() {
     new Dialog({
       title: `Import Custom Effects`,
-      content: await renderTemplate("templates/apps/import-data.html", {
+      content: await foundry.applications.handlebars.renderTemplate("templates/apps/import-data.html", {
         hint1: game.i18n.format("DOCUMENT.ImportDataHint1", {document: game.i18n.localize("age-system.customEffectsSet")})
       }),
       buttons: {

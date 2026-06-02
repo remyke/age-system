@@ -6,11 +6,10 @@ import {newItemData} from "./helper.js";
 export default class ageSystemSheetCharacter extends ActorSheet {
     
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
-            // resizable: false,
-            width: 680,
-            height: 800,
-            classes: ["age-system", "sheet", "char", "standard"],
+        return foundry.utils.mergeObject(super.defaultOptions, {
+            height: 875,
+            width: 700,
+            classes: ["age-system", "sheet", "char-sheet-alt"],
             tabs: [{
                 navSelector: ".add-sheet-tabs",
                 contentSelector: ".sheet-tab-section",
@@ -19,8 +18,26 @@ export default class ageSystemSheetCharacter extends ActorSheet {
         });
     }
 
+    // static DEFAULT_OPTIONS = {
+    //     classes: ["age-system", "sheet", "char-sheet-alt"],
+    //     position: {
+    //         width: 700,
+    //         height: 875
+    //     },
+    //     window: {
+    //         resizable: true,
+    //         title: `age-system.SHEETS.charStandard` // Just the localization key
+    //     }
+    // }
+
+    // static PARTS = {
+    //     form: {
+    //         template: `systems/age-system/templates/sheets/char/char-sheet.hbs`
+    //     }
+    // }
+
     get template() {
-        return `systems/age-system/templates/sheets/${this.actor.type}-sheet.hbs`;
+        return `systems/age-system/templates/sheets/char/char-sheet.hbs`;
     }
 
     get observerRoll () {
@@ -30,7 +47,7 @@ export default class ageSystemSheetCharacter extends ActorSheet {
     /* -------------------------------------------- */
 
     /** @inheritdoc */
-    getData(options) {
+    async getData(options) {
         const isOwner = this.document.isOwner;
         const isEditable = this.isEditable;
     
@@ -136,13 +153,21 @@ export default class ageSystemSheetCharacter extends ActorSheet {
 
     async _onToggleSheet(event) {
         event.preventDefault()
-        let newSheet = 'age-system.ageSystemSheetCharStatBlock'
+        let newSheet = 'age-system.ageSystemSheetCharStatBlock';
         const original = this.actor.getFlag('core', 'sheetClass') || Object.values(CONFIG.Actor.sheetClasses['char']).filter(s => s.default)[0].id
-        if (original != 'age-system.ageSystemSheetCharAlt') newSheet = 'age-system.ageSystemSheetCharAlt'
+        if (original == newSheet ) newSheet = 'age-system.ageSystemSheetCharacter';
         this.actor.openSheet(newSheet)
     }
     
     activateListeners(html) {
+        // Add class to TinyMCE
+        const editor = html.find(".persona .resource .editor");
+        for (let i = 0; i < editor.length; i++) {editor[i].classList += ' values'}
+        
+        // Add colorset class to entity-link inside TinyMCE editor
+        const entityLink = html.find("a.entity-link");
+        for (let i = 0; i < entityLink.length; i++) {entityLink[i].classList += ` colorset-second-tier`}
+        
         html.find(".tooltip-container").hover(this._onTooltipHover.bind(this));
         // Remove unncessary white space and line breaks from Textarea fields
         const freeText = html.find("textarea.free-text");
@@ -154,6 +179,7 @@ export default class ageSystemSheetCharacter extends ActorSheet {
             })
         }    
         if (this.isEditable) {
+            new foundry.applications.ux.ContextMenu.implementation(html, ".main-data", this.itemContextMenu, {jQuery: false});
             html.find(".item-edit").click(this._onItemEdit.bind(this));
             html.find(".item-delete").click(this._onItemDelete.bind(this));
             html.find(".last-up").change(this._onLastUpSelect.bind(this));
@@ -166,6 +192,8 @@ export default class ageSystemSheetCharacter extends ActorSheet {
             html.find(".refresh-injury-marks").click(this._onRefreshMarks.bind(this));
             html.find(".heal-all-injuries").click(this._onFullHeal.bind(this));
             html.find(".roll-breather").click(this._onRollBreather.bind(this));
+            html.find("span.effect-add").click(this._onAddEffect.bind(this));
+
             // Listeners to be used to make the adjustment on Health/Defense/Toughness for different Game Modes
             html.find(".game-mode-details").change(this._onAdjustHealth.bind(this));
             html.find(".game-mode .override").click(this._onLockGameMode.bind(this));
@@ -193,6 +221,7 @@ export default class ageSystemSheetCharacter extends ActorSheet {
             html.find(".roll-toughness").click(this._onRollToughness.bind(this));
             
             let handler = ev => this._onDragStart(ev);
+            
             // Set HMTL elements with class item-box as draggable elements.
             let items = html.find(".drag-to-macro");
             for (let i = 0; i < items.length; i++) {
@@ -203,8 +232,8 @@ export default class ageSystemSheetCharacter extends ActorSheet {
         };
 
         if (this.actor.isOwner) {
-            new ContextMenu(html, ".focus-options", this.focusContextMenu);
-            new ContextMenu(html, ".item-card .main-data img", this.itemContextMenu);
+            new foundry.applications.ux.ContextMenu.implementation(html, ".focus-options", this.focusContextMenu, {jQuery: false});
+            new foundry.applications.ux.ContextMenu.implementation(html, ".item-card .main-data img", this.itemContextMenu, {jQuery: false});
             html.find(".item-equip").click(this._onItemActivate.bind(this));
             html.find(".item-card .main-data").click(this._onItemEdit.bind(this));
             html.find(".defend-maneuver").change(this._onDefendSelect.bind(this));
@@ -407,7 +436,7 @@ export default class ageSystemSheetCharacter extends ActorSheet {
         const newEffect = {
             name: game.i18n.localize("age-system.item.newItem"),
             origin: this.actor.uuid,
-            icon: `icons/svg/aura.svg`,
+            img: `icons/svg/aura.svg`,
             disabled: true,
             duration: {rounds: 1}
         };
@@ -528,7 +557,8 @@ export default class ageSystemSheetCharacter extends ActorSheet {
         let e = event.currentTarget;
         let itemId = e.dataset.itemId ?? e.closest(".feature-controls").dataset.itemId;
         const item = this.actor.items.get(itemId);
-        return item.sheet.render(true);
+        return item.sheet.render(true); /** This line of code can return when I discover why Owned Items are not always opening the correct Item Sheet */
+        // return item.openSheet('age-system.ageSystemSheetItem');
     };
 
     _onItemDelete(event) {
@@ -553,7 +583,7 @@ export default class ageSystemSheetCharacter extends ActorSheet {
             name: game.i18n.localize("age-system.ageRollOptions"),
             icon: '<i class="fas fa-dice"></i>',
             callback: e => {
-                const focus = this.actor.items.get(e.data("item-id"));
+                const focus = this._selectItemFromHTML(e);
                 const ev = new MouseEvent('click', {altKey: true});
                 focus.roll(ev);
             }
@@ -561,16 +591,14 @@ export default class ageSystemSheetCharacter extends ActorSheet {
         {
             name: game.i18n.localize("age-system.chatCard.roll"),
             icon: '<i class="far fa-eye"></i>',
-            callback: e => {
-                const i = this.actor.items.get(e.data("item-id")).showItem(e.shiftKey);
-            }
+            callback: e => this._selectItemFromHTML(e).showItem(e.shiftKey)
         },
         {
             name: game.i18n.localize("age-system.settings.changeRollContext"),
             icon: '<i class="fas fa-exchange-alt"></i>',
             // TODO - try to add the Shift + Click rolling to GM inside this callback
             callback: e => {
-                const focus = this.actor.items.get(e.data("item-id"));
+                const focus = this._selectItemFromHTML(e);
                 const ev = new MouseEvent('click', {});
                 Dice.ageRollCheck({event: ev, itemRolled: focus, actor: this.actor, selectAbl: true, rollType: ageSystem.ROLL_TYPE.FOCUS});
             }
@@ -578,17 +606,12 @@ export default class ageSystemSheetCharacter extends ActorSheet {
         {
             name: game.i18n.localize("age-system.settings.edit"),
             icon: '<i class="fas fa-edit"></i>',
-            callback: e => {
-                const item = this.actor.items.get(e.data("item-id"));
-                item.sheet.render(true);
-            }
+            callback: e => this._selectItemFromHTML(e).sheet.render(true)
         },
         {
             name: game.i18n.localize("age-system.settings.delete"),
             icon: '<i class="fas fa-trash"></i>',
-            callback: e => {
-                const i = this.actor.items.get(e.data("item-id")).delete();
-            }
+            callback: e => this._selectItemFromHTML(e).delete()
         }
     ];
 
@@ -596,29 +619,33 @@ export default class ageSystemSheetCharacter extends ActorSheet {
         {
             name: game.i18n.localize("age-system.showOnChat"),
             icon: '<i class="far fa-eye"></i>',
-            callback: e => {
-                const data = e[0].closest(".feature-controls").dataset;
-                const item = this.actor.items.get(data.itemId);
-                item.showItem(e.shiftKey)
-            }
+            callback: e => this._selectItemFromHTML(e).showItem(e.shiftKey)
         },
         {
             name: game.i18n.localize("age-system.settings.edit"),
             icon: '<i class="fas fa-edit"></i>',
-            callback: e => {
-                const data = e[0].closest(".feature-controls").dataset;
-                const item = this.actor.items.get(data.itemId);
-                item.sheet.render(true);
-            }
+            callback: e => this._selectItemFromHTML(e).sheet.render(true)
         },
         {
             name: game.i18n.localize("age-system.settings.delete"),
             icon: '<i class="fas fa-trash"></i>',
-            callback: e => {
-                const data = e[0].closest(".feature-controls").dataset;
-                const item = this.actor.items.get(data.itemId);
-                item.delete();
-            }
+            callback: e => this._selectItemFromHTML(e).delete()
         }
     ];
+
+    _selectItemFromHTML(html, {selector="itemId", maxIterations=5}={}) {
+        let el = html.length ? html[0] : html;
+        let id;
+        for (let i = 0; i < maxIterations; i++) {
+            if (el.dataset[selector]) {
+                id = el.dataset[selector];
+                break;
+            }
+            el = el.parentNode;
+            if (!el) return null;
+        }
+        const entity = id ? this.actor.items.get(id) : null;
+        return entity
+    }
+
 }

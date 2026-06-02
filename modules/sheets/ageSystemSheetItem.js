@@ -3,7 +3,7 @@ import { modifiersList, sortObjArrayByName } from "../setup.js";
 import { focusList } from "../settings.js";
 import {AdvancementAdd} from "../advancement.js";
 
-export default class ageSystemItemSheet extends ItemSheet {
+export default class ageSystemItemSheet extends foundry.appv1.sheets.ItemSheet {
     constructor(...args) {
         super(...args);
     
@@ -60,9 +60,9 @@ export default class ageSystemItemSheet extends ItemSheet {
     };
    
     static get defaultOptions() {        
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             height: 500,
-            width: 775,
+            width: 805,
             classes: ["age-system", "sheet", "item", "colorset-second-tier"],
             tabs: [{
                 navSelector: ".add-sheet-tabs",

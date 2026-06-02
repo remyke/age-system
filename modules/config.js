@@ -41,9 +41,7 @@ ageSystem.abilitiesTotal = {
     "per": "age-system.per",
     "str": "age-system.str",
     "will": "age-system.will",
-
     "cunn": "age-system.cunn",
-    "dex": "age-system.dex",
     "magic": "age-system.magic"    
 }
 
@@ -199,29 +197,29 @@ ageSystem.actorIcons = {
 }
 
 const uiElementsPath = "systems/age-system/resources/imgs/ui-elements/";
-ageSystem.uiElements = {
-    ageRoller: `${uiElementsPath}cube.svg`
-}
 
+// Advancement Data
 const advIconPath =  "systems/age-system/resources/imgs/adv-icon/";
-ageSystem.advIcon = {
-    // health: `${advIconPath}heart-key.svg`,
-    // ability: `${advIconPath}orb-direction.svg`,
-    item: `${advIconPath}family-tree.svg`,
-    progressive: `${advIconPath}progression.svg`,
-}
-
-// Advancement Data - progressive values
-ageSystem.adv = {
-    type: {
-        progressive: ['health', 'conviction', 'advAbility', 'powerPoints', 'defenseAndToughness'/*, 'toughness', 'defense'*/],
-        item: ['spec', 'stunts', 'talent', 'power', 'focus', 'relationship']
+ageSystem.advData ={
+    stances: {
+        type: {
+            progressive: ['health', 'conviction', 'advAbility', 'powerPoints', 'defenseAndToughness'/*, 'toughness', 'defense'*/],
+            item: ['spec', 'stunts', 'talent', 'power', 'focus', 'relationship']
+        },
+        health: new Array(20).fill('1 + @cons'),
+        powerPoints: new Array(20).fill("0"),
+        conviction: [1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1],
+        advAbility: new Array(20).fill(1),
+        defenseAndToughness: [0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1],
     },
-    health: new Array(20).fill('1 + @cons'),
-    powerPoints: new Array(20).fill("0"),
-    conviction: [1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1],
-    advAbility: new Array(20).fill(1),
-    defenseAndToughness: [0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1],
+    abilityScoreCost: [1, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3],
+    icon: {
+        // health: `${advIconPath}heart-key.svg`,
+        // ability: `${advIconPath}orb-direction.svg`,
+        item: `${advIconPath}family-tree.svg`,
+        progressive: `${advIconPath}progression.svg`,
+    }
+
 }
 
 /**
@@ -340,7 +338,7 @@ ageSystem.statusEffects = {
     },
     {
         name: "age-system.conditions.blinded",
-        id: "blinded",
+        id: "blind", //original é o 'blinded'
         icon: "icons/svg/blind.svg",
         flags: {
             "age-system": {
@@ -352,7 +350,7 @@ ageSystem.statusEffects = {
     },
     {
         name: "age-system.conditions.deafened",
-        id: "deafened",
+        id: "deaf",
         icon: "icons/svg/deaf.svg",
         flags: {
             "age-system": {
@@ -741,7 +739,7 @@ ageSystem.modkeys = {
 }
 
 // Age Tracker & Roller Initial Positions
-ageSystem.ageTrackerPos = {xPos: "260px", yPos: "69px"};
+ageSystem.ageTrackerPos = {xPos: "1050px", yPos: "0px"};
 ageSystem.ageRollerPos = {xPos: "836px", yPos: "10px"};
 
 // Initializing variable to load focus Compendiaum
@@ -749,6 +747,10 @@ ageSystem.focus = [];
 
 // List with world's Item compendia
 ageSystem.itemCompendia = [];
+
+// Object map with world's RollTables
+ageSystem.complicationRollTable = "none";
+ageSystem.rollTables = [];
 
 // Roll Types definition
 ageSystem.ROLL_TYPE = {
@@ -862,6 +864,7 @@ ageSystem.advSettings = [
     'useFatigue',
     'useConviction',
     'complication',
+    'complicationRollTable',
     'serendipity',
     'weaponGroups',
 ]
@@ -911,6 +914,7 @@ ageSystem.gameSettings = {
                 useConviction: false,
                 usePowerPoints: true,
                 complication: 'none',
+                complicationRollTable: 'none',
                 serendipity: false,
                 powerFlavor: 'spell'
             },
@@ -937,6 +941,7 @@ ageSystem.gameSettings = {
                 useConviction: false,
                 usePowerPoints: false,
                 complication: 'churn',
+                complicationRollTable: 'none',
                 serendipity: false
             }
         }
@@ -958,6 +963,7 @@ ageSystem.gameSettings = {
                 occupation: 'profession',
                 ancestryOpt: 'ancestry',
                 complication: 'none',
+                complicationRollTable: 'none',
                 serendipity: false,
                 stuntAttack: 2
             },
@@ -983,6 +989,7 @@ ageSystem.gameSettings = {
                 useConviction: true,
                 usePowerPoints: false,
                 complication: 'none',
+                complicationRollTable: 'none',
                 serendipity: false
             },
             user: ['weaponGroups']

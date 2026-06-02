@@ -2,7 +2,6 @@
 import {ageSystem} from "./modules/config.js";
 import ageSystemSheetItem from "./modules/sheets/ageSystemSheetItem.js";
 import ageSystemSheetCharacter from "./modules/sheets/ageSystemSheetCharacter.js";
-import ageSystemSheetCharAlt from "./modules/sheets/ageSystemSheetCharAlt.js";
 import ageSystemSheetCharStatBlock from "./modules/sheets/ageSystemSheetCharStatBlock.js";
 import ageSystemSheetVehicle from "./modules/sheets/ageSystemSheetVehicle.js";
 import ageSystemSheetSpaceship from "./modules/sheets/ageSystemSheetSpaceship.js";
@@ -11,10 +10,13 @@ import ageActiveEffectConfig from "./modules/sheets/ageActiveEffectConfig.js";
 import {ageSystemActor} from "./modules/ageSystemActor.js";
 import {ageTokenDocument} from "./modules/ageToken.js";
 import {ageSystemItem} from "./modules/ageSystemItem.js";
-import { createAgeMacro, removeDoubledMods } from "./modules/macros.js";
+import { createAgeMacro} from "./modules/macros.js";
 import { rollOwnedItem } from "./modules/macros.js";
 import { AgeRoller } from "./modules/age-roller.js";
 import { AgeTracker } from "./modules/age-tracker.js";
+import { applyBreather } from "./modules/breather.js";
+import AgeImporter from "./modules/age-importer.js";
+import ConditionsWorkshop from "./modules/conditions-workshop.js";
 
 import * as Dice from "./modules/dice.js";
 import * as Settings from "./modules/settings.js";
@@ -24,6 +26,7 @@ import * as migrations from "./modules/migration.js";
 
 async function preloadHandlebarsTemplates() {
     const path = `systems/age-system/templates/partials/`;
+    const pathRedux = `systems/age-system/templates/`;
     const templatePaths = [
         `${path}itemcontrols/class.hbs`,
         `${path}itemcontrols/equipment.hbs`,
@@ -37,32 +40,32 @@ async function preloadHandlebarsTemplates() {
         `${path}ability-focus-select.hbs`,
         `${path}active-bonuses.hbs`,
         `${path}bonuses-sheet.hbs`,
-        `${path}char-sheet-alt-main.hbs`,
-        `${path}char-sheet-alt-persona.hbs`,
-        `${path}char-sheet-alt-stunts.hbs`,
-        `${path}char-sheet-alt-social.hbs`,
-        `${path}char-sheet-alt-equip.hbs`,
-        `${path}char-sheet-alt-talents.hbs`,
-        `${path}char-sheet-alt-powers.hbs`,
-        `${path}char-sheet-alt-effects.hbs`,
-        `${path}char-sheet-alt-options.hbs`,
-        `${path}char-sheet-alt-adv.hbs`,
-        `${path}char-sheet-nav-bar.hbs`,
-        `${path}char-sheet-injury-bar.hbs`,
-        `${path}char-stat-block-column1.hbs`,
-        `${path}conditions-block.hbs`,
         `${path}cost-resource-block.hbs`,
         `${path}dmg-block-sheet.hbs`,
         `${path}item-card-buttons.hbs`,
         `${path}item-options-sheet.hbs`,
-        `${path}play-aid-bar.hbs`,
-        `${path}weapon-group-block.hbs`
+        `${path}weapon-group-block.hbs`,
+
+        `${pathRedux}sheets/char/adv.hbs`,
+        `${pathRedux}sheets/char/effects.hbs`,
+        `${pathRedux}sheets/char/equip.hbs`,
+        `${pathRedux}sheets/char/main.hbs`,
+        `${pathRedux}sheets/char/options.hbs`,
+        `${pathRedux}sheets/char/persona.hbs`,
+        `${pathRedux}sheets/char/powers.hbs`,
+        `${pathRedux}sheets/char/social.hbs`,
+        `${pathRedux}sheets/char/stunts.hbs`,
+        `${pathRedux}sheets/char/talents.hbs`,
+        
+        `${pathRedux}sheets/char-block/column1.hbs`,
+        `${pathRedux}sheets/char-block/injury-bar.hbs`,
+        `${pathRedux}sheets/char-block/play-aid-bar.hbs`,
     ];
 
-    return loadTemplates(templatePaths);
+    return foundry.applications.handlebars.loadTemplates(templatePaths);
 };
 
-Hooks.once("init", async function() {
+Hooks.once("init", function() {
     const ageSystemText = `
      ___   ____________   _____            __               
     /   | / ____/ ____/  / ___/__  _______/ /____  ____ ___ 
@@ -78,7 +81,6 @@ Hooks.once("init", async function() {
     game.ageSystem = {
         applications: {
             ageSystemSheetCharacter,
-            ageSystemSheetCharAlt,
             ageSystemSheetCharStatBlock,
             ageSystemSheetVehicle,
             ageSystemSheetSpaceship,
@@ -90,6 +92,7 @@ Hooks.once("init", async function() {
         dice: Dice,
         migrations: migrations,
         rollOwnedItem,
+        roll: Dice.ageRollCheck,
         // removeDoubledMods, // to be used in cases users has migration problems
         documents: {
             ageSystemActor,
@@ -98,8 +101,10 @@ Hooks.once("init", async function() {
         }
     };
 
+    const Actors = foundry.documents.collections.Actors;
+    const ActorSheet = foundry.appv1.sheets.ActorSheet;
     Actors.unregisterSheet("core", ActorSheet);
-    Actors.registerSheet("age-system", ageSystemSheetCharAlt, {
+    Actors.registerSheet("age-system", ageSystemSheetCharacter, {
         types: ["char"],
         makeDefault: true,
         label: "age-system.SHEETS.charStandard"
@@ -124,16 +129,25 @@ Hooks.once("init", async function() {
         label: "age-system.SHEETS.orgStandard"
     });
     
+    const Items = foundry.documents.collections.Items;
+    const ItemSheet = foundry.appv1.sheets.ItemSheet;
     Items.unregisterSheet("core", ItemSheet);
     Items.registerSheet("age-system", ageSystemSheetItem, {
+        types: [
+            "equipment",
+            "focus",
+            "weapon",
+            "power",
+            "talent",
+            "stunts",
+            "relationship",
+            "honorifics",
+            "membership",
+            "shipfeatures",
+            "class"
+        ],
         makeDefault: true,
         label: "age-system.SHEETS.itemStandard"
-    });
-
-    game.ageSystem.ageRoller = new AgeRoller({
-        popOut: false,
-        minimizable: false,
-        resizable: false,
     });
 
     game.ageSystem.ageTracker = new AgeTracker({
@@ -145,17 +159,14 @@ Hooks.once("init", async function() {
     // Define extra data for Age System (Actors, Items, ActiveEffectConfig)
     CONFIG.Actor.documentClass = ageSystemActor;
     CONFIG.Item.documentClass = ageSystemItem;
-    CONFIG.Token.documentClass = ageTokenDocument;
     CONFIG.ageSystem = ageSystem;
-    // Saving this customization for a later implementation
-    // CONFIG.Token.objectClass = ageToken;
-    // CONFIG.ActiveEffect.sheetClass = ageActiveEffectConfig;
 
     // Load partials for Handlebars
-    preloadHandlebarsTemplates();
+    preloadHandlebarsTemplates(); // Find correct v13 conidition
 
     // Register System Settings
-    await Settings.registerSystemSettings();
+    Settings.registerSystemSettings();
+    
     // Identify Ability set in use
     const abilitySelection = game.settings.get("age-system", "abilitySelection");
     const abilityOptions = ageSystem.abilitiesSettings;
@@ -231,9 +242,9 @@ Hooks.once("init", async function() {
         return items.filter(p => p.type === "equipment" || p.type === "weapon")
     });
 
-    // Handlebar to itentify if Weapon Group is know
+    // Handlebar to itentify if Weapon Group is knowN
     Handlebars.registerHelper('haswgroup', function(wGroup, groupArray) {
-        if (!groupArray === []) return false;
+        if (!Array.isArray(groupArray)) return false;
         return groupArray.includes(wGroup) ? true : false;
     });
 
@@ -350,13 +361,7 @@ Hooks.once("ready", async function() {
     const userTrackerFlag = await game.user.getFlag("age-system", "ageTrackerPos");
     const useTracker = (game.settings.get("age-system", "serendipity") || game.settings.get("age-system", "complication") !== "none") ? true : false;
     if (!userTrackerFlag) await game.user.setFlag("age-system", "ageTrackerPos", ageSystem.ageTrackerPos);
-    if (useTracker) game.ageSystem.ageTracker.refresh();
-
-    // Age Roller
-    // Handle flag
-    const rollerFlag = await game.user.getFlag("age-system", "ageRollerPos");
-    if (!rollerFlag) await game.user.setFlag("age-system", "ageRollerPos", ageSystem.ageRollerPos);
-    game.ageSystem.ageRoller.refresh();
+    if (useTracker) game.ageSystem.ageTracker.render(true);
 
     // Safe copy of original Status Effects
     ageSystem.statusEffects.original = foundry.utils.deepClone(CONFIG.statusEffects);
@@ -378,6 +383,9 @@ Hooks.once("ready", async function() {
     
     // Register System Settings related to Focus Compendium
     ageSystem.itemCompendia = Settings.allCompendia("Item");
+    const rollTables = Settings.allRollTables();
+    ageSystem.rollTables = { ...ageSystem.rollTables, ...rollTables };
+
     Settings.loadCompendiaSettings();
     const setCompendium = game.settings.get("age-system", "masterFocusCompendium");
     ageSystem.focus = Settings.focusList(setCompendium);
@@ -410,7 +418,7 @@ Hooks.once("ready", async function() {
 
     // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
     Hooks.on("hotbarDrop", (bar, data, slot) => {
-        if (data === {}) return false;
+        if (typeof data !== 'object' || data == null) return false;
         const item = fromUuidSync(data.uuid);
         const itemType = item.type;
         const rollTypes = ['weapon', 'focus'];
@@ -424,18 +432,18 @@ Hooks.once("ready", async function() {
     if ( !game.user.isGM ) return;
     const currentVersion = game.settings.get("age-system", "systemMigrationVersion");
     const NEEDS_MIGRATION_VERSION = "2.0.2";
-    const needsMigration = !currentVersion || isNewerVersion(NEEDS_MIGRATION_VERSION, currentVersion);
+    const needsMigration = !currentVersion || foundry.utils.isNewerVersion(NEEDS_MIGRATION_VERSION, currentVersion);
     if ( !needsMigration ) return;
     migrations.migrateWorld();
 });
 
-
-Hooks.on('chatMessage', (chatLog, content, userData) => AgeChat.ageCommand(chatLog, content, userData))
-// Hooks.on("renderageSystemItemSheet", (app, html, data) => {Setup.nameItemSheetWindow(app)});
+Hooks.on('chatMessage', (chatLog, content, userData) => AgeChat.ageCommand(chatLog, content, userData));
 Hooks.on("renderageSystemSheetCharacter", (app, html, data) => {Setup.hidePrimaryAblCheckbox(html)});
-Hooks.on("renderChatLog", (app, html, data) => {    AgeChat.addChatListeners(html)});
-Hooks.on("renderChatMessage", (app, html, data) => {AgeChat.sortCustomAgeChatCards(app, html, data)});
-Hooks.on("getChatLogEntryContext", AgeChat.addChatMessageContextOptions);
+Hooks.on("renderChatMessageHTML", (app, html, data) => {
+    AgeChat.addChatListeners(html);
+    AgeChat.sortCustomAgeChatCards(app, html, data);
+});
+Hooks.on("getChatMessageContextOptions", AgeChat.addChatMessageContextOptions);
 Hooks.on('renderActorSheet', (sheet, html, data) => Setup.prepSheet(sheet, html, data));
 Hooks.on('renderItemSheet', (sheet, html, data) => Setup.prepSheet(sheet, html, data));
 Hooks.once('diceSoNiceReady', () => {
@@ -444,19 +452,129 @@ Hooks.once('diceSoNiceReady', () => {
     for (const type in colorset) {
         if (colorset.hasOwnProperty(type)) {
             const colorCode = colorset[type].name;
-            const colorName = colorset[type].description;
-            const newChoice = {[colorCode]: colorName}
-            colorChoices = {
-            ...colorChoices,
-            ...newChoice
+            if (colorCode != "custom") {
+                const colorName = colorset[type].description;
+                const newChoice = {[colorCode]: colorName}
+                colorChoices = {
+                    ...colorChoices,
+                    ...newChoice
+                }
             };
         };
     };
+
     // Register Stunt So Nice setting
     Settings.stuntSoNice(colorChoices, Object.keys(game.dice3d.box.dicefactory.systems));
+    
     // Identify if user has registered Dice so Nice Stunt Die option
     const stuntSoNiceFlag = game.user.getFlag("age-system", "stuntSoNice");
     if (stuntSoNiceFlag) game.settings.set("age-system", "stuntSoNice", stuntSoNiceFlag);
-    if (!stuntSoNiceFlag) game.user.setFlag("age-system", "stuntSoNice", game.settings.get("age-system", "stuntSoNice"));
+    else game.user.setFlag("age-system", "stuntSoNice", game.settings.get("age-system", "stuntSoNice"));
 });
-Hooks.on('renderSettingsConfig', (SettingsConfig, html, data) => Settings.updateFocusCompendia());
+Hooks.on('renderSettingsConfig', (SettingsConfig, html, data) => {
+    Settings.updateFocusCompendia();
+    // Settings.updateCompTable(); // TODO - this function will be useful only when dynamic choices for System Settings is implemented
+});
+// Adding AGE Roller as Canvas Control menu.
+Hooks.on(`getSceneControlButtons`, controls => {
+    controls["ageroller"] = {
+        "name": "ageroller",
+        "title": "AGE Roller",
+        "icon": "fa-duotone fa-dice",
+        "order": 99,
+        "activeTool": "age",
+        "tools": {
+            "age": {
+                "name": "age",
+                "title": "AGE Toolbox",
+                "icon": "fa-solid fa-toolbox",
+                "order": 0,
+                "button": false
+            },
+            "ageroll": {
+                "name": "ageroll",
+                "order": 1,
+                "title": "Roll 3D6",
+                "icon": "fa-duotone fa-light fa-dice",
+                "button": true,
+                onChange: (event, active) => {
+                    const rollData = {
+                        event,
+                        flavor: game.user.name,
+                        flavor2: game.i18n.localize("age-system.chatCard.looseRoll")
+                    }
+                    Dice.ageRollCheck(rollData);
+                },
+            },
+            "singleroll": {
+                "name": "singleroll",
+                "order": 2,
+                "title": "Roll 1D6",
+                "icon": "fa-duotone fa-light fa-dice-six",
+                "button": true,
+                "activate": true,
+                onChange: async (event, active) => {
+                    let roll = await new Roll("1d6").evaluate();
+                    return roll.toMessage({}, {rollMode: event.shiftKey ? "blindroll" : ""});
+                }
+            },
+            "d66": {
+                "name": "d66",
+                "order": 3,
+                "title": "D66",
+                "icon": "fa-regular fa-2",
+                "button": true,
+                onChange: async (event, active) => {
+                    let roll = await new Roll("1d6*10 + 1d6").evaluate();
+                    return roll.toMessage({}, {rollMode: event.shiftKey ? "blindroll" : ""})
+                }
+            },
+            "d666": {
+                "name": "d666",
+                "order": 4,
+                "title": "D666",
+                "icon": "fa-regular fa-3",
+                "button": true,
+                onChange: async (event, active) => {
+                    let roll = await new Roll("1d6*100 + 1d6*10 + 1d6").evaluate();
+                    return roll.toMessage({}, {rollMode: event.shiftKey ? "blindroll" : ""})
+                }
+            },
+            // Figure out a way to select token when using this tool!!!
+            "breather": {
+                "name": "breather",
+                "order": 5,
+                "title": "age-system.breather",
+                "icon": "fa-regular fa-briefcase-medical",
+                "button": true,
+                onChange: (event, active) => applyBreather('selfroll')
+            },
+            "conditions": {
+                "name": "conditions",
+                "order": 6,
+                "title": "age-system.conditionsWorkshop",
+                "icon": "fa-solid fa-list",
+                "button": true,
+                "visible": game.user.isGM,
+                onChange: (event, active) => new ConditionsWorkshop().render(true)
+            },
+            "importer": {
+                "name": "importer",
+                "order": 7,
+                "title": "age-system.ageImporter",
+                "icon": "fa-regular fa-file-import",
+                "button": true,
+                "visible": game.user.isGM,
+                onChange: (event, active) => new AgeImporter().render(true)
+            },
+            "help": {
+                "name": "help",
+                "order": 8,
+                "title": "AGE System (unofficial) Wiki",
+                "icon": "fa-regular fa-circle-info",
+                "button": true,
+                onChange: (e, a) => window.open(ageSystem.wiki, '_blank')
+            }
+        }
+    }
+});

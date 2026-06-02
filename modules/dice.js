@@ -1,6 +1,8 @@
 import { ageSystem } from "./config.js";
 import { sortObjArrayByName } from "./setup.js";
 
+const renderTemplate = foundry.applications.handlebars.renderTemplate;
+
 /**
  * Helper function to reduce a Formula
  * @param {String} formula Formula String to be reduced to dice components and a single constant value
@@ -8,8 +10,13 @@ import { sortObjArrayByName } from "./setup.js";
  * @returns {Object} Object with parts.shortFormula, parts.nonDet, parts.det, parts.detValue
  */
 export function resumeFormula(formula, data = {}) {
-    if (!formula) return null
-    const simRoll = new Roll(formula, data);
+    if (!formula) return null;
+    let simRoll;
+    try {
+        simRoll = new Roll(formula, data);
+    } catch (e) {
+        return null;
+    };
     const terms = simRoll.terms;    
     const parts = {
         det: "",
@@ -19,10 +26,6 @@ export function resumeFormula(formula, data = {}) {
         const e = terms[t];
         let f = e.formula;
         if (e.flavor) f = f.replace(`[${e.flavor}]`, '');
-        // Compatibility with 0.8.x
-        if (!isNewerVersion(ageSystem.coreVersion, "0.8.9")) {
-            e.isDeterministic = e instanceof Die || e instanceof ParentheticalTerm ? false : true
-        }
         if (!e.isDeterministic) {
             if (t != 0) parts.nonDet += `${terms[t-1].formula}`;
             parts.nonDet += `${f}`;
@@ -385,7 +388,7 @@ export async function ageRollCheck({event = null, actor = null, abl = null, item
     }
 
     // Finally, the Age Roll!
-    const ageRoll = await new Roll(rollFormula, rollData).evaluate({async: true});
+    const ageRoll = await new Roll(rollFormula, rollData).evaluate();
 
     // If rollTN is used, check if roll fails or succeed
     let isSuccess = null
@@ -407,6 +410,7 @@ export async function ageRollCheck({event = null, actor = null, abl = null, item
     rollData = {
         ...rollData,
         // Informs card's color scheme
+        rolls: [ageRoll],
         colorScheme: `colorset-${game.settings.get("age-system", "colorScheme")}`,
         flavor,
         flavor2,
@@ -414,7 +418,6 @@ export async function ageRollCheck({event = null, actor = null, abl = null, item
         actorId,
         isToken,
         isSuccess,
-        roll: ageRoll,
         ageRollSummary: rollSummary,
         rollTN,
         focusId,
@@ -429,8 +432,8 @@ export async function ageRollCheck({event = null, actor = null, abl = null, item
         user: game.user.id,
         speaker: {alias: game.user.name},
         content: await renderTemplate(chatTemplate, rollData),
-        roll: ageRoll,
-        type: CONST.CHAT_MESSAGE_TYPES.ROLL,
+        rolls: [ageRoll],
+        style: CONST.CHAT_MESSAGE_STYLES.OTHER,
         flags: {
             "age-system": {
                 "ageroll": {
@@ -444,12 +447,14 @@ export async function ageRollCheck({event = null, actor = null, abl = null, item
     // Configuration of Stunt Die if using Dice so Nice
     if (game.modules.get("dice-so-nice") && game.modules.get("dice-so-nice").active) {
         const stuntDieColorset = game.settings.get("age-system", "stuntSoNice");
-        chatData.roll.terms[2].options = {
-            colorset: stuntDieColorset ?? "bronze",
-            appearance: {
-                system: game.user.flags["dice-so-nice"]?.appearance?.global?.system ?? "standard"
+        chatData.rolls.forEach(r => {
+            r.dice[1].options = {
+                appearance: {
+                    colorset: stuntDieColorset ?? "foundry",
+                    system: game.user.flags["dice-so-nice"]?.appearance?.global?.system ?? "standard"
+                }
             }
-        }
+        })
     };
 
     if (!chatData.sound) chatData.sound = CONFIG.sounds.dice;
@@ -509,7 +514,7 @@ async function getAgeRollOptions(itemRolled, data = {}) {
                     label: game.i18n.localize("age-system.roll"),
                     icon: `<i class="fa-light fa-dice"></i>`,
                     callback: html => {
-                        const fd = new FormDataExtended(html[0].querySelector("form"));
+                        const fd = new foundry.applications.ux.FormDataExtended(html[0].querySelector("form"));
                         resolve(fd.object)
                     }
                 },
@@ -546,7 +551,7 @@ async function getDamageRollOptions(addFocus, stuntDmg, data = {}) {
                     label: game.i18n.localize("age-system.roll"),
                     icon: `<i class="fa-light fa-dice"></i>`,
                     callback: html => {
-                        const fd = new FormDataExtended(html[0].querySelector("form"));
+                        const fd = new foundry.applications.ux.FormDataExtended(html[0].querySelector("form"));
                         resolve(fd.object);
                     }
                 },
@@ -666,7 +671,7 @@ export async function vehicleDamage ({
     //     dieSize: dieSize
     // };
     let messageData = {
-        flavor: `${vehicle.data.name} | ${game.i18n.localize(`age-system.${damageSource}`)}`,
+        flavor: `${vehicle.system.name} | ${game.i18n.localize(`age-system.${damageSource}`)}`,
         speaker: ChatMessage.getSpeaker()
     };
 
@@ -725,7 +730,7 @@ export async function vehicleDamage ({
         messageData.flavor += ` | +${extraDice}`;             
     };
 
-    let dmgRoll = await new Roll(damageFormula, rollData).evaluate({async: true});
+    let dmgRoll = await new Roll(damageFormula, rollData).evaluate();
 
     return dmgRoll.toMessage(messageData, {whisper: audience, rollMode: isBlind});
 
@@ -769,7 +774,7 @@ export async function plotDamage (actor) {
         rollData.extraDice = extraDice;
     };
 
-    let dmgRoll = await new Roll(formula, rollData).evaluate({async: true});
+    let dmgRoll = await new Roll(formula, rollData).evaluate();
     
     // Preparing custom damage chat card
     let chatTemplate = "/systems/age-system/templates/rolls/damage-roll.hbs";
@@ -796,8 +801,8 @@ export async function plotDamage (actor) {
         user: game.user.id,
         speaker: {alias: game.user.name},
         content: await renderTemplate(chatTemplate, rollData),
-        roll: dmgRoll,
-        type: CONST.CHAT_MESSAGE_TYPES.ROLL,
+        rolls: [dmgRoll],
+        style: CONST.CHAT_MESSAGE_STYLES.OTHER,
         flags: {
             "age-system": {
                 ageroll: {
@@ -977,7 +982,7 @@ export async function itemDamage({
         rollData.modeDamage = modeDamage;
     };
 
-    let dmgRoll = await new Roll(damageFormula, rollData).evaluate({async: true});
+    let dmgRoll = await new Roll(damageFormula, rollData).evaluate();
 
     for (let t = 0; t < dmgRoll.terms.length; t++) {
         const term = dmgRoll.terms[t];
@@ -1017,7 +1022,8 @@ export async function itemDamage({
         flavor: item ? `${item.name} | ${ownerName}` : damageDesc,
         flavor2: item ? damageDesc : null,
         user: game.user,
-        useInjury: healthSys.useInjury
+        useInjury: healthSys.useInjury,
+        isHealing: dmgDesc.isHealing
     };
     const targets = controlledTokenByType('char');
     let targetIds = []
@@ -1028,8 +1034,8 @@ export async function itemDamage({
         user: game.user.id,
         speaker: {alias: game.user.name},
         content: await renderTemplate(chatTemplate, rollData),
-        roll: dmgRoll,
-        type: CONST.CHAT_MESSAGE_TYPES.ROLL,
+        rolls: [dmgRoll],
+        style: CONST.CHAT_MESSAGE_STYLES.OTHER,
         flags: {
             "age-system": {
                 ageroll: {

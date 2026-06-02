@@ -83,6 +83,18 @@ Here the description of each one of the Modifiers:
 23. **Armor Strain:** this is the extra Power/Spell/Magic Points necessary to cast a spell when wearing the item bearing this mod.
 
 ## Credits
+## Contributors
+A few brave joined forces to improve this system code and this is the place where their names are registered never to be forgotten:
+
+- [ForjaSalvaje](https://github.com/ForjaSalvaje)
+- [Peter](https://github.com/architech99)
+- [lipefl](https://github.com/lipefl)
+- [p-arth](https://github.com/p-arth)
+- [lozanoje](https://github.com/lozanoje)
+- [Txus](https://github.com/Txus5012)
+- [jaypoulz](https://github.com/jaypoulz)
+- [BoltsJ](https://github.com/BoltsJ)
+
 ### Icons
 Icons were used from [game-icons.net](https://game-icons.net). These icons were published under [CC BY 3.0](http://creativecommons.org/licenses/by/3.0/) license. Here is a list of all icons used:
 - [Sensuousness](https://game-icons.net/1x1/lorc/sensuousness.html) (Character icon), by [Lorc](https://lorcblog.blogspot.com/).
@@ -99,7 +111,6 @@ Icons were used from [game-icons.net](https://game-icons.net). These icons were 
 - [Rank 3](https://game-icons.net/1x1/skoll/rank-3.html) (Honorifics icon), by [Skoll](https://game-icons.net) (his link reference is game-icons.net itself).
 - [Fist](https://game-icons.net/1x1/skoll/fist.html) (Weapon icon), by [Skoll](https://game-icons.net) (his link reference is game-icons.net itself).
 - [Processor](https://game-icons.net/1x1/lorc/processor.html) (Spaceship Features icon), by [Lorc](https://lorcblog.blogspot.com/).
-- [Cubes](https://game-icons.net/1x1/lorc/cubes.html) (Age Roller icon), by [Lorc](https://lorcblog.blogspot.com/).
 
 ### Token Stats Icons
 Icons made by:

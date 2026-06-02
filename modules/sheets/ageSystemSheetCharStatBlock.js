@@ -1,12 +1,9 @@
-import * as Dice from "../dice.js";
-import {ageSystem} from "../config.js";
-import { sortObjArrayByName } from "../setup.js";
 import ageSystemSheetCharacter from "./ageSystemSheetCharacter.js";
 
 export default class ageSystemSheetCharStatBlock extends ageSystemSheetCharacter {
     
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             // resizable: false,
             width: 400,
             height: 650,
@@ -20,16 +17,15 @@ export default class ageSystemSheetCharStatBlock extends ageSystemSheetCharacter
     }
 
     get template() {
-        return `systems/age-system/templates/sheets/${this.actor.type}-stat-block.hbs`;
+        return `systems/age-system/templates/sheets/char-block/char-stat-block.hbs`;
     }
 
     /* -------------------------------------------- */
     /** @inheritdoc */
     getData(options) {
-        return {
-            ...super.getData(options),
-            isBlock: true
-        }
+        const data = super.getData(options);
+        data.isBlock = true; // This is used to identify if the sheet is a Stat Block
+        return data
     };
     
     activateListeners(html) {

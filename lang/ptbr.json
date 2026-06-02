@@ -104,6 +104,7 @@
     "SETTINGS.colorTheGrey": "O Cinza",
     "SETTINGS.colorRedWarrior": "Guerreiro Vermelho",
     "SETTINGS.colorNeverDead": "Nunca Morto",
+    "SETTINGS.colorBlackWhite": "Preto & Branco",
 
     "SETTINGS.gameMode": "Modo de Jogo",
     "SETTINGS.gameModeHint": "Selecione o estilo de jogo (de acordo com Modern AGE) ou nenhum se o cenário não o usa",
@@ -130,19 +131,24 @@
     "SETTINGS.masterFocusCompendium": "Selecione Compêndio com opções de Foco",
     "SETTINGS.masterFocusCompendiumHint": "Os nomes dos itens dentro deste Compêndio serão exibidos como sugestão de Foco nas fichas",
 
+    "SETTINGS.complicationRollTable": "Complication Effects",
+    "SETTINGS.complicationRollTableDefault": "Roll 1d6",
+    "SETTINGS.complicationRollTableHint": "This table will be rolled when determining if Peril/Complications/Churn is activated. Choose none to roll the standard 1d6.",
+
     "SETTINGS.healthMode": "Selecione o tipo de Vitalidade",
     "SETTINGS.healthModeHint": "A maioria dos jogos AGE usa Saúde, enquanto The Expanse usa Destino",
     "SETTINGS.healthModehealth": "Saúde",
     "SETTINGS.healthModefortune": "Destino",
 
-    "SETTINGS.complication": "Usar Complicação ou Turbulência",
-    "SETTINGS.complicationHint": "Usar Complicação (Modern AGE), Turbulência (The Expanse) ou nenhum",
+    "SETTINGS.complication": "Usar contador de Complicação",
+    "SETTINGS.complicationHint": "Usar Complicação (Modern AGE), Turbulência (The Expanse), Perigo (Fantasy AGE 2e) ou nenhum",
     "SETTINGS.complicationNone": "Nenhum",
+    "SETTINGS.compPeril": "Perigo",
     "SETTINGS.compcomplication": "Complicação",
     "SETTINGS.compchurn": "Turbulência",
 
-    "SETTINGS.serendipity": "Use Serendipidade️",
-    "SETTINGS.serendipityHint": "Usar regra opcional de Modern AGE para Serendipidade️",
+    "SETTINGS.serendipity": "Use Serendipidade️ ou Bravura",
+    "SETTINGS.serendipityHint": "Usar regra opcional de Serendipidade️ (Modern AGE) ou Bravura (Fatansy AGE 2e)",
 
     "SETTINGS.observerRoll": "Permitir rolagem de Observadores",
     "SETTINGS.observerRollHint": "Permitir que jogadores com permissão Observador possam rolar das fichas observadas ou do chat",
@@ -456,6 +462,7 @@
         "fortune": "Destino",
         "conviction": "Convicção",
         "speed": "Deslocamento",
+        "current": "Atual",
 
         "armor": "Armadura",
         "ballistic": "Balística",
@@ -570,11 +577,15 @@
             "semiAuto": "SA",
             "fullAuto": "AA"
         },
+        "ranged": "Longo Alcance",
+        "reloadable": "Recarregável",
 
         "move": "Movimento",
         "level": "Nível",
+        "newLevel": "Novo Nível",
         "xp": "EXP",
         "currentLevel": "EXP Atual",
+        "next": "Próximo",
         "nextLevel": "EXP Próx. Nvl.",
         "advPoints": "Pto de Avanço",
         "mod": "Mod",
@@ -627,7 +638,7 @@
             "ballisticArmor": "Armadura Balística",
             "defendMnv": "Manobra Defesa",
             "guardupMnv": "Manobra Erguer a Guarda",
-            "allOutAtk": "Manobra Ataque Total",
+            "allOutAtkMnv": "Manobra Ataque Total",
             "maxHealth": "Saúde Máxima",
             "maxFortune": "Destino Máximo",
             "maxConviction": "Convicção Máxima",
@@ -668,7 +679,7 @@
             "desc": "Descrição",
             "weight": "Peso",
             "cost": "Custo",
-            "purchaseTN": "NA para Compra",
+            "purchaseTN": "NA Renda",
             "quantity": "Quantidade",
             "reload": "Recarregar",
             "capacity": "Capacidade",
@@ -710,12 +721,15 @@
 
         "ignoreDamage": "Desprezar Dano",
         "applyDamage": "Infligir Dano",
+        "applyHealing": "Aplicar Cura",
         "armorPiercing": "Penetração de Armadura",
         "none": "Nenhuma",
         "halfArmor": "Metade da Armadura",
         "ignoreArmor": "Ignora Armadura",
         "damageSummary": "Sumário de Dano",
+        "healingSummary": "Sumário de Cura",
         "noCharHurt": "Nenhum ferimento ou dano infligido",
+        "noCharHealed": "Nenhuma cura aplicada",
         "autoApplyInjury": "Infligir Ferimento",
         "autoApplyAll": "Infligir Ferimento a Todos",
         "letPlayerRoll": "Jogadores rolam Resistência",
@@ -784,8 +798,11 @@
         "customEffects": "Efeitos Personalizados",
         "customEffectsSet": "Conjunto de Efeitos Personalizados",
         "attkHeader": "Arma Ataque Dano",
+        "attkNote": "Nota para a arma {attack}",
+        "seeDescription": "Veja descrição",
 
         "advancement": "Progressão",
+        "advancementPlural": "Progressões",
         "improvements": "Melhorias",
         "advancementNew": "Selecionar nova Progressão",
         "levelName": "Nível {level}",
@@ -805,6 +822,8 @@
         "itemOptionAll": "Receber todos os Items",
         "dragAdvItem": "Arraste e solte Items para a Progressão no espaço abaixo",
         "add": "Adicionar",
-        "leveledImprovements": "Melhorias Obtidas"
+        "leveledImprovements": "Melhorias Obtidas",
+        "newAblScore": "Nova Habilidade",
+        "newAdvance": "Nova Progressão"
     }
 }
