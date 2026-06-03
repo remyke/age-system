@@ -128,7 +128,7 @@ export class ageSystemActor extends Actor {
         // Apply all changes
         for ( const change of changes ) {
         if ( !change.key ) continue;
-        const changes = change.effect.apply(this, change);
+        const changes = change.effect.applyChange(this, change);
         Object.assign(overrides, changes);
         }
 
@@ -142,7 +142,7 @@ export class ageSystemActor extends Actor {
         // Apply all changes
         for ( let change of changes ) {
             if ( !change.key || !paths.includes(change.key)) continue;
-            const changes = change.effect.apply(this, change);
+            const changes = change.effect.applyChange(this, change);
             Object.assign(dOverrides, changes);
         }
     
