@@ -117,7 +117,7 @@ export default class ageSystemSheetOrg extends foundry.appv1.sheets.ActorSheet {
 
     focusContextMenu = [
         {
-            name: game.i18n.localize("age-system.ageRollOptions"),
+            label: game.i18n.localize("age-system.ageRollOptions"),
             icon: '<i class="fas fa-dice"></i>',
             callback: e => {
                 const focus = this.actor.items.get(e.data("item-id"));
@@ -126,14 +126,14 @@ export default class ageSystemSheetOrg extends foundry.appv1.sheets.ActorSheet {
             }
         },
         {
-            name: game.i18n.localize("age-system.chatCard.roll"),
+            label: game.i18n.localize("age-system.chatCard.roll"),
             icon: '<i class="far fa-eye"></i>',
             callback: e => {
                 const i = this.actor.items.get(e.data("item-id")).showItem(e.shiftKey);
             }
         },
         {
-            name: game.i18n.localize("age-system.settings.changeRollContext"),
+            label: game.i18n.localize("age-system.settings.changeRollContext"),
             icon: '<i class="fas fa-exchange-alt"></i>',
             // TODO - try to add the Shift + Click rolling to GM inside this callback
             callback: e => {
@@ -143,7 +143,7 @@ export default class ageSystemSheetOrg extends foundry.appv1.sheets.ActorSheet {
             }
         },
         {
-            name: game.i18n.localize("age-system.settings.edit"),
+            label: game.i18n.localize("age-system.settings.edit"),
             icon: '<i class="fas fa-edit"></i>',
             callback: e => {
                 const item = this.actor.items.get(e.data("item-id"));
@@ -151,7 +151,7 @@ export default class ageSystemSheetOrg extends foundry.appv1.sheets.ActorSheet {
             }
         },
         {
-            name: game.i18n.localize("age-system.settings.delete"),
+            label: game.i18n.localize("age-system.settings.delete"),
             icon: '<i class="fas fa-trash"></i>',
             callback: e => {
                 const i = this.actor.items.get(e.data("item-id")).delete();

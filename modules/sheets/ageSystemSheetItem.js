@@ -96,7 +96,7 @@ export default class ageSystemItemSheet extends foundry.appv1.sheets.ItemSheet {
                 const feat = data.config.featuresType[f];
                 data.config.featuresTypeLocal.push({
                     key: feat,
-                    name: game.i18n.localize(`age-system.spaceship.${feat}`)
+                    label: game.i18n.localize(`age-system.spaceship.${feat}`)
                 });
             }
             data.config.featuresTypeLocal = sortObjArrayByName(data.config.featuresTypeLocal, "name");
@@ -279,7 +279,7 @@ export default class ageSystemItemSheet extends foundry.appv1.sheets.ItemSheet {
 
     advContextMenu = [
         {
-            name: game.i18n.localize("age-system.settings.edit"),
+            label: game.i18n.localize("age-system.settings.edit"),
             icon: '<i class="fas fa-edit"></i>',
             callback: e => {
                 const data = e[0].dataset;
@@ -287,7 +287,7 @@ export default class ageSystemItemSheet extends foundry.appv1.sheets.ItemSheet {
             }
         },
         {
-            name: game.i18n.localize("age-system.settings.delete"),
+            label: game.i18n.localize("age-system.settings.delete"),
             icon: '<i class="fas fa-trash"></i>',
             callback: e => {
                 const data = e[0].dataset;

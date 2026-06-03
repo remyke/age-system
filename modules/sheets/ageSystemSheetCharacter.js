@@ -434,7 +434,7 @@ export default class ageSystemSheetCharacter extends ActorSheet {
 
     async _onAddEffect(event) {
         const newEffect = {
-            name: game.i18n.localize("age-system.item.newItem"),
+            label: game.i18n.localize("age-system.item.newItem"),
             origin: this.actor.uuid,
             img: `icons/svg/aura.svg`,
             disabled: true,
@@ -580,7 +580,7 @@ export default class ageSystemSheetCharacter extends ActorSheet {
 
     focusContextMenu = [
         {
-            name: game.i18n.localize("age-system.ageRollOptions"),
+            label: game.i18n.localize("age-system.ageRollOptions"),
             icon: '<i class="fas fa-dice"></i>',
             callback: e => {
                 const focus = this._selectItemFromHTML(e);
@@ -589,12 +589,12 @@ export default class ageSystemSheetCharacter extends ActorSheet {
             }
         },
         {
-            name: game.i18n.localize("age-system.chatCard.roll"),
+            label: game.i18n.localize("age-system.chatCard.roll"),
             icon: '<i class="far fa-eye"></i>',
             callback: e => this._selectItemFromHTML(e).showItem(e.shiftKey)
         },
         {
-            name: game.i18n.localize("age-system.settings.changeRollContext"),
+            label: game.i18n.localize("age-system.settings.changeRollContext"),
             icon: '<i class="fas fa-exchange-alt"></i>',
             // TODO - try to add the Shift + Click rolling to GM inside this callback
             callback: e => {
@@ -604,12 +604,12 @@ export default class ageSystemSheetCharacter extends ActorSheet {
             }
         },
         {
-            name: game.i18n.localize("age-system.settings.edit"),
+            label: game.i18n.localize("age-system.settings.edit"),
             icon: '<i class="fas fa-edit"></i>',
             callback: e => this._selectItemFromHTML(e).sheet.render(true)
         },
         {
-            name: game.i18n.localize("age-system.settings.delete"),
+            label: game.i18n.localize("age-system.settings.delete"),
             icon: '<i class="fas fa-trash"></i>',
             callback: e => this._selectItemFromHTML(e).delete()
         }
@@ -617,17 +617,17 @@ export default class ageSystemSheetCharacter extends ActorSheet {
 
     itemContextMenu = [
         {
-            name: game.i18n.localize("age-system.showOnChat"),
+            label: game.i18n.localize("age-system.showOnChat"),
             icon: '<i class="far fa-eye"></i>',
             callback: e => this._selectItemFromHTML(e).showItem(e.shiftKey)
         },
         {
-            name: game.i18n.localize("age-system.settings.edit"),
+            label: game.i18n.localize("age-system.settings.edit"),
             icon: '<i class="fas fa-edit"></i>',
             callback: e => this._selectItemFromHTML(e).sheet.render(true)
         },
         {
-            name: game.i18n.localize("age-system.settings.delete"),
+            label: game.i18n.localize("age-system.settings.delete"),
             icon: '<i class="fas fa-trash"></i>',
             callback: e => this._selectItemFromHTML(e).delete()
         }
