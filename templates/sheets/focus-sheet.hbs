@@ -45,9 +45,9 @@
                     <div class="flexcol minimum-length">
                         <select name="system.useAbl" class="header-input">
                             {{#if system.isOrg}}
-                            {{selectOptions config.abiliesOrg selected=value localize=true}}
+                            {{selectOptions config.abiliesOrg selected=system.useAbl localize=true}}
                             {{else}}
-                            {{selectOptions config.abilities selected=value localize=true}}
+                            {{selectOptions config.abilities selected=system.useAbl localize=true}}
                             {{/if}}
                         </select>
                         <label class="label-under">{{localize "age-system.abl"}}</label>
