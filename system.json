@@ -3,7 +3,7 @@
     "title": "AGE System (unofficial)",
     "description": "Unofficial AGE System implementation for most of AGE subsystems",
     "version": "4.0.4-compatibility14.1",
-    "download": "https://github.com/remyke/age-system/archive/4.0.4-compatibimity14.1.zip",
+    "download": "https://github.com/remyke/age-system/archive/4.0.4-compatibility14.1.zip",
     "compatibility": {
         "minimum": "14.363",
         "verified": "14"
