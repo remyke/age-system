@@ -39,11 +39,7 @@
                     {{/select}}
                 </select>
                 <select name="system.systems.{{sysName}}.useAbl" class="system-abl">
-                    {{#select system.useAbl}}
-                    {{#each ../data.config.abilities as |name type|}}
-                    <option value="{{type}}">{{name}}</option>
-                    {{/each}}
-                    {{/select}}
+                    {{selectOptions ../data.config.abilities selected=system.useAbl localize=true}}
                 </select>
                 <input name="system.systems.{{sysName}}.useFocus" class="system-focus" type="text" value="{{system.useFocus}}" placeholder="{{localize "age-system.focus"}}" list="{{../this.actor.type}}-{{../this.actor.id}}-list"/>
             </li>

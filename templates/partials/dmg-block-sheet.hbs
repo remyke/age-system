@@ -40,12 +40,8 @@
                 {{/if}}
                 <span>{{localize "age-system.settings.plusSign"}}</span>
                 <select name="system.dmgAbl">
-                    {{#select system.dmgAbl}}
                     <option value="no-abl">—</option>
-                    {{#each config.abilities as |name type|}}
-                    <option value="{{type}}">{{localize name}}</option>
-                    {{/each}}
-                    {{/select}}
+                    {{selectOptions config.abilities selected=system.dmgAbl localize=true}}
                 </select>
             </div>
         </div>
@@ -53,19 +49,11 @@
         <div class="flexrow">
             {{#if config.healthSys.useBallistic}}
             <select name="system.dmgType">
-                {{#select system.dmgType}}
-                {{#each config.damageType as |name type|}}
-                <option value="{{type}}">{{localize name}}</option>
-                {{/each}}
-                {{/select}}
+                {{selectOptions config.damageType selected=system.dmgType localize=true}}
             </select>
             {{/if}}
             <select name="system.dmgSource">
-                {{#select system.dmgSource}}
-                {{#each config.damageSource as |name source|}}
-                <option value="{{source}}">{{localize name}}</option>
-                {{/each}}
-                {{/select}}
+                {{selectOptions config.damageSource selected=system.dmgSource localize=true}}
             </select>
         </div>
         {{/if}}
@@ -90,12 +78,8 @@
                 {{/if}}
                 <span>{{localize "age-system.settings.plusSign"}}</span>
                 <select name="system.damageResisted.dmgAbl">
-                    {{#select system.damageResisted.dmgAbl}}
                     <option value="no-abl">—</option>
-                    {{#each config.abilities as |name type|}}
-                    <option value="{{type}}">{{localize name}}</option>
-                    {{/each}}
-                    {{/select}}
+                    {{selectOptions config.abilities selected=system.damageResisted.dmgAbl localize=true}}
                 </select>
             </div>
         </div>

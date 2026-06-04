@@ -36,11 +36,7 @@
                     <a class="roll-maneuver"><i class="fas fa-dice"></i></a>
                 </div>
                 <select name="system.handling.useAbl" class="data-input">
-                    {{#select system.handling.useAbl}}
-                    {{#each data.config.abilities as |name type|}}
-                    <option value="{{type}}">{{localize name}}</option>
-                    {{/each}}
-                    {{/select}}
+                    {{selectOptions data.config.abilities selected=system.handling.useAbl localize=true}}
                 </select>
                 <input type="text" name="system.handling.useFocus" value="{{system.handling.useFocus}}" list="{{name}}-{{actor.id}}-list" placeholder="{{localize "age-system.focus"}}">
                 <datalist id="{{name}}-{{actor.id}}-list">

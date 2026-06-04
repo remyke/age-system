@@ -151,12 +151,8 @@
                             <label>{{config.POWER_FLAVOR.force}}</label>
                             <span class="minimal-input">{{system.itemForce}}</span>
                             <select name="system.itemForceAbl" class="extra-input">
-                                {{#select system.itemForceAbl}}
                                 <option value="no-abl">—</option>
-                                {{#each config.abilities as |name type|}}
-                                <option value="{{type}}">{{localize name}}</option>
-                                {{/each}}
-                                {{/select}}
+                                {{selectOptions config.abilities selected=system.itemForceAbl localize=true}}
                             </select>
 
                             {{#unless (and system.inputFatigueTN system.useFatigue fatigueSet)}}
@@ -174,12 +170,8 @@
                         <li class="colorset-third-tier flexrow">
                             <label for="">{{localize "age-system.ablFatigue"}}</label>
                             <select name="system.ablFatigue">
-                                {{#select system.ablFatigue}}
                                 <option value="no-abl">—</option>
-                                {{#each config.abilities as |name type|}}
-                                <option value="{{type}}">{{localize name}}</option>
-                                {{/each}}
-                                {{/select}}
+                                {{selectOptions config.abilities selected=system.ablFatigue localize=true}}
                             </select>
                         </li>
                         {{/if}}
@@ -189,12 +181,8 @@
                             <label>{{localize "age-system.item.testResist"}}</label>
                             {{!-- Ability to Resist Power --}}
                             <select name="system.testAbl" class="extra-input">
-                                {{#select system.testAbl}}
                                 <option value="no-abl">-</option>
-                                {{#each config.abilities as |name type|}}
-                                <option value="{{type}}">{{localize name}}</option>
-                                {{/each}}
-                                {{/select}}
+                                {{selectOptions config.abilities selected=system.testAbl localize=true}}
                             </select>
                             {{!-- Focus to Resist Power --}}
                             <input name="system.testFocus" type="text" value="{{system.testFocus}}" placeholder="{{localize "age-system.focus"}}" list="{{item.type}}-{{item._id}}-list-resist"/>
@@ -224,12 +212,8 @@
                             {{/if}}
                             <div class="extra-input">
                                 <span>+<select name="system.dmgAbl">
-                                    {{#select system.dmgAbl}}
                                     <option value="no-abl">—</option>
-                                    {{#each config.abilities as |name type|}}
-                                    <option value="{{type}}">{{localize name}}</option>
-                                    {{/each}}
-                                    {{/select}}
+                                    {{selectOptions config.abilities selected=system.dmgAbl localize=true}}
                                 </select></span>
                             </div>
                         </li>
@@ -244,12 +228,8 @@
                             {{/if}}
                             <div class="extra-input">
                                 <span>+<select name="system.damageResisted.dmgAbl">
-                                    {{#select system.damageResisted.dmgAbl}}
                                     <option value="no-abl">—</option>
-                                    {{#each config.abilities as |name type|}}
-                                    <option value="{{type}}">{{localize name}}</option>
-                                    {{/each}}
-                                    {{/select}}
+                                    {{selectOptions config.abilities selected=system.damageResisted.dmgAbl localize=true}}
                                 </select></span>
                             </div>
                         </li>
@@ -260,19 +240,11 @@
                             <label class="colorset-third-tier">{{localize "age-system.type"}}</label>
                             {{#if config.healthSys.useBallistic}}
                             <select name="system.dmgType">
-                                {{#select system.dmgType}}
-                                {{#each config.damageType as |name type|}}
-                                <option value="{{type}}">{{localize name}}</option>
-                                {{/each}}
-                                {{/select}}
+                                {{selectOptions config.damageType selected=system.dmgType localize=true}}
                             </select>
                             {{/if}}
                             <select name="system.dmgSource">
-                                {{#select system.dmgSource}}
-                                {{#each config.damageSource as |name source|}}
-                                <option value="{{source}}">{{localize name}}</option>
-                                {{/each}}
-                                {{/select}}
+                                {{selectOptions config.damageSource selected=system.dmgSource localize=true}}
                             </select>
                         </li>
                         {{/if}}
