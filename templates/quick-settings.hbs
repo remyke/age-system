@@ -17,10 +17,13 @@
         <div class="form-fields">
             {{#if isSelect}}
             <select name="{{key}}">
-                {{#select value}}
                 {{#each choices as |name type|}}
                 {{#unless (and (eq ../key 'gameMode') (eq type 'none'))}}
+                {{#if eq value type}}
+                <option value="{{type}}" selected>{{localize name}}</option>
+                {{else}}
                 <option value="{{type}}">{{localize name}}</option>
+                {{/if}}
                 {{/unless}}
                 {{/each}}
                 {{/select}}
