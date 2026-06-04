@@ -38,7 +38,11 @@
                 <select name="level" class="header-input">
                     {{#select level}}
                     {{#each adv}}
+                    {{#if levelarr(@index) level}}
+                    <option value="{{levelarr @index}}" selected>{{levelarr @index}}</option>
+                    {{else}}
                     <option value="{{levelarr @index}}">{{levelarr @index}}</option>
+                    {{/if}}
                     {{/each}}
                     {{/select}}
                 </select>
@@ -53,7 +57,11 @@
                         {{#select tType}}
                         {{#each traitArr as |tt|}}
                         {{#if (ne tt.key 'power')}}
+                        {{#if eq tType tt.key}}
+                        <option value="{{tt.key}}" selected>{{tt.name}}</option>
+                        {{else}}
                         <option value="{{tt.key}}">{{tt.name}}</option>
+                        {{/if}}
                         {{/if}}
                         {{/each}}
                         {{/select}}
