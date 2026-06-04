@@ -179,7 +179,7 @@ export default class ageSystemSheetCharacter extends ActorSheet {
             })
         }    
         if (this.isEditable) {
-            new foundry.applications.ux.ContextMenu.implementation(html, ".main-data", this.itemContextMenu, {jQuery: false});
+            new foundry.applications.ux.ContextMenu.implementation(html[0], ".main-data", this.itemContextMenu, {jQuery: false});
             html.find(".item-edit").click(this._onItemEdit.bind(this));
             html.find(".item-delete").click(this._onItemDelete.bind(this));
             html.find(".last-up").change(this._onLastUpSelect.bind(this));
