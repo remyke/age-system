@@ -37,13 +37,8 @@
                 <label for=""><strong>{{localize "age-system.level"}}</strong></label>
                 <select name="level" class="header-input">
                     {{#each adv}}
-                    {{#if levelarr(@index) level}}
-                    <option value="{{levelarr @index}}" selected>{{levelarr @index}}</option>
-                    {{else}}
-                    <option value="{{levelarr @index}}">{{levelarr @index}}</option>
-                    {{/if}}
+                    <option value="{{levelarr @index}}"{{#if (eq levelarr(@index) level)}} selected{{/if}}>{{levelarr @index}}</option>
                     {{/each}}
-                    {{/select}}
                 </select>
                 {{!-- <select name="level" class="header-input">
                     {{selectOptions advLabel}}
@@ -55,14 +50,9 @@
                     <select name="tType" class="header-input">
                         {{#each traitArr as |tt|}}
                         {{#if (ne tt.key 'power')}}
-                        {{#if eq tType tt.key}}
-                        <option value="{{tt.key}}" selected>{{tt.name}}</option>
-                        {{else}}
-                        <option value="{{tt.key}}">{{tt.name}}</option>
-                        {{/if}}
+                        <option value="{{tt.key}}"{{#if (eq tType tt.key)}} selected{{/if}}>{{tt.name}}</option>
                         {{/if}}
                         {{/each}}
-                        {{/select}}
                     </select>
                     <button class="addItemProg" type="button" style="flex: 0;">
                         {{localize "age-system.add"}}

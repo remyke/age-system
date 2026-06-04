@@ -30,8 +30,8 @@
                 {{else}}
                 <input type="number" name="system.nrDice" value="{{system.nrDice}}" data-dtype="Number" />
                 <select name="system.diceType" class="dice-size">
-                    <option value="6"{{#if "6" system.diceType}}" selected"{{/if}}>{{localize "age-system.settings.d6"}}</option>
-                    <option value="3"{{#if "3" system.diceType}}" selected"{{/if}}>{{localize "age-system.settings.d3"}}</option>
+                    <option value="6"{{#if (eq "6" system.diceType)}} selected{{/if}}>{{localize "age-system.settings.d6"}}</option>
+                    <option value="3"{{#if (eq "3" system.diceType)}} selected{{/if}}>{{localize "age-system.settings.d3"}}</option>
                 </select>
                 <span>{{localize "age-system.settings.plusSign"}}</span>
                 <input type="number" name="system.extraValue" value="{{system.extraValue}}" data-dtype="Number" />
@@ -66,8 +66,8 @@
                 {{else}}
                 <input type="number" name="system.damageResisted.nrDice" value="{{system.damageResisted.nrDice}}" data-dtype="Number" />
                 <select name="system.damageResisted.diceType" class="dice-size">
-                    <option value="6"{{#if "6" system.damageResisted.diceType}}" selected"{{/if}}>{{localize "age-system.settings.d6"}}</option>
-                    <option value="3"{{#if "3" system.damageResisted.diceType}}" selected"{{/if}}>{{localize "age-system.settings.d3"}}</option>
+                    <option value="6"{{#if (eq "6" system.damageResisted.diceType)}} selected{{/if}}>{{localize "age-system.settings.d6"}}</option>
+                    <option value="3"{{#if (eq "3" system.damageResisted.diceType)}} selected{{/if}}>{{localize "age-system.settings.d3"}}</option>
                 </select>
                 <span>{{localize "age-system.settings.plusSign"}}</span>
                 <input type="number" name="system.damageResisted.extraValue" value="{{system.damageResisted.extraValue}}" data-dtype="Number" />

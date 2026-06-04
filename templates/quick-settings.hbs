@@ -19,14 +19,9 @@
             <select name="{{key}}">
                 {{#each choices as |name type|}}
                 {{#unless (and (eq ../key 'gameMode') (eq type 'none'))}}
-                {{#if eq value type}}
-                <option value="{{type}}" selected>{{localize name}}</option>
-                {{else}}
-                <option value="{{type}}">{{localize name}}</option>
-                {{/if}}
+                <option value="{{type}}"{{#if (eq value type)}} selected{{/if}}>{{localize name}}</option>
                 {{/unless}}
                 {{/each}}
-                {{/select}}
             </select>
             {{else}}
             {{#if (eq type 'Boolean')}}
