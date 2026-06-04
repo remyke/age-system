@@ -47,11 +47,13 @@
             <li>
                 <label>{{localize "age-system.item.cast"}}</label>
                 <select name="system.castTime" class="data-input">
-                {{#select system.castTime}}
                     {{#each config.actionsToCast as |actionsToCast|}}
-                    <option value="{{@key}}">{{localize actionsToCast}}</option>
+                    {{#if eq @key system.castTime}}
+                    <option value="{{@key}}" selected>{{localize actionsToCast}}</option>
+                    {{else}}
+                    <option value="{{@key}}" selected>{{localize actionsToCast}}</option>
+                    {{/if}}
                     {{/each}}
-                {{/select}}
                 </select>
             </li>
 
