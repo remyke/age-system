@@ -281,16 +281,16 @@ export default class ageSystemItemSheet extends ItemSheet {
         {
             label: game.i18n.localize("age-system.settings.edit"),
             icon: '<i class="fas fa-edit"></i>',
-            callback: e => {
-                const data = e[0].dataset;
+            onClick: (event, target) => {
+                const data = target.dataset;
                 this.object._onChangeAdvancement(data, 'edit');
             }
         },
         {
             label: game.i18n.localize("age-system.settings.delete"),
             icon: '<i class="fas fa-trash"></i>',
-            callback: e => {
-                const data = e[0].dataset;
+            onClick: (event, target) => {
+                const data = target.dataset;
                 this.object._onChangeAdvancement(data, 'remove');
             }
         }
