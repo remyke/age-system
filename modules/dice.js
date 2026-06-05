@@ -446,7 +446,8 @@ export async function ageRollCheck({event = null, actor = null, abl = null, item
     };
 
     if (!chatData.sound) chatData.sound = CONFIG.sounds.dice;
-    return ChatMessage.create(chatData, {messageMode: rollMode});
+    ChatMessage.applyMode(chatData, foundry.dice.Roll._mapLegacyRollMode(rollMode));
+    return ChatMessage.create(chatData);
 };
 
 // Check if the roll has Weapon Group penalty
