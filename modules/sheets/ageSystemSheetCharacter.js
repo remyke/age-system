@@ -235,7 +235,7 @@ export default class ageSystemSheetCharacter extends ActorSheet {
             new foundry.applications.ux.ContextMenu.implementation(html[0], ".focus-options", this.focusContextMenu, {jQuery: false});
             new foundry.applications.ux.ContextMenu.implementation(html[0], ".item-card .main-data img", this.itemContextMenu, {jQuery: false});
             html.find(".item-equip").click(this._onItemActivate.bind(this));
-            html.find(".item-card .main-data").click(this._onItemEdit.bind(this));
+            html[0].find(".item-card .main-data").click(this._onItemEdit.bind(this));
             html.find(".defend-maneuver").change(this._onDefendSelect.bind(this));
             html.find(".guardup-maneuver").change(this._onGuardUpSelect.bind(this));
             html.find(".conditions .item-name").click(this._onChangeCondition.bind(this));
