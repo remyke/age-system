@@ -446,7 +446,7 @@ export async function ageRollCheck({event = null, actor = null, abl = null, item
     };
 
     if (!chatData.sound) chatData.sound = CONFIG.sounds.dice;
-    return ChatMessage.create(chatData, {rollMode});
+    return ChatMessage.create(chatData, {messageMode: rollMode});
 };
 
 // Check if the roll has Weapon Group penalty
@@ -720,7 +720,7 @@ export async function vehicleDamage ({
 
     let dmgRoll = await new Roll(damageFormula, rollData).evaluate();
 
-    return dmgRoll.toMessage(messageData, {whisper: audience, rollMode: isBlind});
+    return dmgRoll.toMessage(messageData, {whisper: audience, messageMode: isBlind});
 
 }
 

@@ -523,7 +523,7 @@ Hooks.on(`getSceneControlButtons`, controls => {
                 "activate": true,
                 onChange: async (event, active) => {
                     let roll = await new Roll("1d6").evaluate();
-                    return roll.toMessage({}, {rollMode: event.shiftKey ? "blindroll" : ""});
+                    return roll.toMessage({}, {messageMode: event.shiftKey ? "blindroll" : ""})
                 }
             },
             "d66": {
@@ -534,7 +534,7 @@ Hooks.on(`getSceneControlButtons`, controls => {
                 "button": true,
                 onChange: async (event, active) => {
                     let roll = await new Roll("1d6*10 + 1d6").evaluate();
-                    return roll.toMessage({}, {rollMode: event.shiftKey ? "blindroll" : ""})
+                    return roll.toMessage({}, {messageMode: event.shiftKey ? "blindroll" : ""})
                 }
             },
             "d666": {
@@ -545,7 +545,7 @@ Hooks.on(`getSceneControlButtons`, controls => {
                 "button": true,
                 onChange: async (event, active) => {
                     let roll = await new Roll("1d6*100 + 1d6*10 + 1d6").evaluate();
-                    return roll.toMessage({}, {rollMode: event.shiftKey ? "blindroll" : ""})
+                    return roll.toMessage({}, {messageMode: event.shiftKey ? "blindroll" : ""})
                 }
             },
             // Figure out a way to select token when using this tool!!!

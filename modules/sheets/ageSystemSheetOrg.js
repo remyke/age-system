@@ -53,7 +53,7 @@ export default class ageSystemSheetOrg extends foundry.appv1.sheets.ActorSheet {
     };
     
     activateListeners(html) {
-        new foundry.applications.ux.ContextMenu.implementation(html[0], ".focus-options", this.focusContextMenu);
+        new foundry.applications.ux.ContextMenu.implementation(html[0], ".focus-options", this.focusContextMenu, {jQuery: false});
         super.activateListeners(html);
 
         if (this.actor.isOwner || this.observerRoll) {

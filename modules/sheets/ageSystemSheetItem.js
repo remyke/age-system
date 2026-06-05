@@ -171,7 +171,7 @@ export default class ageSystemItemSheet extends foundry.appv1.sheets.ItemSheet {
 
         // Actions by sheet owner only
         if (this.item.isOwner) {
-            if (this.item.type === "class") new foundry.applications.ux.ContextMenu.implementation(html[0], ".advance", this.advContextMenu);
+            if (this.item.type === "class") new foundry.applications.ux.ContextMenu.implementation(html[0], ".advance", this.advContextMenu, {jQuery: false});
         };
 
         // Add class to TinyMCE
