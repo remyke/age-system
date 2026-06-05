@@ -102,8 +102,7 @@ Hooks.once("init", function() {
     };
 
     const Actors = foundry.documents.collections.Actors;
-    const ActorSheet = foundry.appv1.sheets.ActorSheet;
-    Actors.unregisterSheet("core", ActorSheet);
+    Actors.unregisterSheet("core", globalThis.ActorSheet);
     Actors.registerSheet("age-system", ageSystemSheetCharacter, {
         types: ["char"],
         makeDefault: true,
@@ -130,8 +129,7 @@ Hooks.once("init", function() {
     });
     
     const Items = foundry.documents.collections.Items;
-    const ItemSheet = foundry.appv1.sheets.ItemSheet;
-    Items.unregisterSheet("core", ItemSheet);
+    Items.unregisterSheet("core", globalThis.ItemSheet);
     Items.registerSheet("age-system", ageSystemSheetItem, {
         types: [
             "equipment",
