@@ -632,7 +632,7 @@ export async function updateFocusCompendia() {
 
   // Identify if Item Compendipia were added or deleted and warn user that new option will appear only after System Refresh (F5)
   // TODO - add dynamic choices for System Setting
-  if (!foundry.utils.objectsEqual(list, actualChoices)) {
+  if (!foundry.utils.equals(list, actualChoices)) {
     const newPacks = [];
     const oldPacks = [];
     for (const p in actualChoices) if (!list[p]) oldPacks.push(actualChoices[p]);
