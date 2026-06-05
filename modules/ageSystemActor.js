@@ -932,7 +932,7 @@ export class ageSystemActor extends Actor {
                 default: "normal",
                 close: () => resolve({cancelled: true}),
             }
-            new Dialog(dialogData, null).render(true);
+            new Dialog(dialogData).render(true);
         });
     }
 

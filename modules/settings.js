@@ -228,7 +228,7 @@ export const registerSystemSettings = async function() {
       ageSystem.healthSys.mode = game.settings.get("age-system", "gameMode"),
       [...game.actors.contents, ...Object.values(game.actors.tokens)]
         .filter((o) => {
-          return o.data.type === "char";
+          return o.type === "char";
         })
         .forEach((o) => {
           o.prepareData();

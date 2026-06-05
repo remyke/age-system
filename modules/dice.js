@@ -516,7 +516,7 @@ async function getAgeRollOptions(itemRolled, data = {}) {
             default: "normal",
             close: () => resolve({cancelled: true}),
         }
-        new Dialog(dialogData, null).render(true);
+        new Dialog(dialogData).render(true);
     });
 };
 
@@ -553,7 +553,7 @@ async function getDamageRollOptions(addFocus, stuntDmg, data = {}) {
             default: "normal",
             close: () => resolve({cancelled: true}),
         }
-        new Dialog(dialogData, null).render(true);
+        new Dialog(dialogData).render(true);
     });
 };
 

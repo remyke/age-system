@@ -136,7 +136,7 @@ export default class ageSystemItemSheet extends ItemSheet {
 
         // Check if Use Fatigue setting is TRUE
         data.fatigueSet = game.settings.get("age-system", "useFatigue");
-        data.system = data.data.system;
+        data.system = this.item.system;
 
         // If it is a Talent, check if it uses expanded talent degrees
         if(this.item.type === "talent") {
