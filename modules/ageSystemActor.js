@@ -105,7 +105,10 @@ export class ageSystemActor extends Actor {
         changes.push(...effect.changes.map(change => {
             const c = foundry.utils.deepClone(change);
             c.effect = effect;
-            c.priority = c.priority ?? (c.mode * 10);
+            // Convert string type to numeric for priority calculation (Foundry v14+)
+            const typeMap = { CUSTOM: 0, MULTIPLY: 1, ADD: 2, DOWNGRADE: 3, UPGRADE: 4, OVERRIDE: 5 };
+            const modeNum = typeof c.type === 'string' ? (typeMap[c.type] ?? 0) : (c.type ?? 0);
+            c.priority = c.priority ?? (modeNum * 10);
             return c;
         }));
         for ( const statusId of effect.statuses ) this.statuses.add(statusId);

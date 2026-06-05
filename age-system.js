@@ -188,16 +188,24 @@ Hooks.once("init", function() {
         return outStr;
     });
 
-    Handlebars.registerHelper('effectModeName', function(modeNumber) {
-        const modeNames = [
-            "EFFECT.MODE_CUSTOM",
-            "EFFECT.MODE_MULTIPLY",
-            "EFFECT.MODE_ADD",
-            "EFFECT.MODE_DOWNGRADE",
-            "EFFECT.MODE_UPGRADE",
-            "EFFECT.MODE_OVERRIDE"
-        ];
-        return game.i18n.localize(modeNames[modeNumber]);
+    Handlebars.registerHelper('effectModeName', function(modeValue) {
+        // Handle both old numeric and new string type values
+        const modeNames = {
+            0: "EFFECT.MODE_CUSTOM",
+            1: "EFFECT.MODE_MULTIPLY",
+            2: "EFFECT.MODE_ADD",
+            3: "EFFECT.MODE_DOWNGRADE",
+            4: "EFFECT.MODE_UPGRADE",
+            5: "EFFECT.MODE_OVERRIDE",
+            "CUSTOM": "EFFECT.MODE_CUSTOM",
+            "MULTIPLY": "EFFECT.MODE_MULTIPLY",
+            "ADD": "EFFECT.MODE_ADD",
+            "DOWNGRADE": "EFFECT.MODE_DOWNGRADE",
+            "UPGRADE": "EFFECT.MODE_UPGRADE",
+            "OVERRIDE": "EFFECT.MODE_OVERRIDE"
+        };
+        const localizeKey = modeNames[modeValue] || "EFFECT.MODE_CUSTOM";
+        return game.i18n.localize(localizeKey);
     });
 
     // Handlebar to set dice icon based on numeric value
