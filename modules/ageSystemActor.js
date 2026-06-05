@@ -911,7 +911,7 @@ export class ageSystemActor extends Actor {
         const template = "/systems/age-system/templates/rolls/breather-settings.hbs";
         const html = await foundry.applications.handlebars.renderTemplate(template, data);
         return new Promise(resolve => {
-            const data = {
+            const dialogData = {
                 title: game.i18n.localize("age-system.breather"),
                 content: html,
                 buttons: {
@@ -932,7 +932,7 @@ export class ageSystemActor extends Actor {
                 default: "normal",
                 close: () => resolve({cancelled: true}),
             }
-            new Dialog(data, null).render(true);
+            new Dialog(dialogData, null).render(true);
         });
     }
 
