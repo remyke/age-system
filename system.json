@@ -55,7 +55,7 @@
     },
     "initiative": "3d6 + @initiative",
     "bugs": "https://github.com/remyke/age-system/issues",
-    "readme": "https://github.com/remyke/age-system/blob/4.0.4-compatibility14.1/README.md",
+    "readme": "https://github.com/remyke/age-system/blob/remyke_compability14/README.md",
     "flags": {
         "needsMigrationVersion": "0.12.5"
     }
