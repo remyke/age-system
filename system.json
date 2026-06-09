@@ -3,13 +3,13 @@
     "title": "AGE System (unofficial)",
     "description": "Unofficial AGE System implementation for most of AGE subsystems",
     "version": "4.0.4-compatibility14.1",
-    "download": "https://github.com/remyke/age-system/archive/4.0.4-compatibility14.1.zip",
+    "download": "https://github.com/remyke/age-system/archive/refs/heads/remyke_compability14.zip",
     "compatibility": {
         "minimum": "14.363",
         "verified": "14"
     },
     "url": "https://github.com/remyke/age-system",
-    "manifest": "https://raw.githubusercontent.com/remyke/age-system/4.0.4-compatibility14.1/system.json",
+    "manifest": "https://raw.githubusercontent.com/remyke/age-system/refs/heads/remyke_compability14/system.json",
     "media": [
         {
           "type": "cover",
