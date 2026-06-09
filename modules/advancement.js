@@ -627,7 +627,7 @@ export class AgeProgUI extends FormApplication { // Realizar adequação para le
     const helper = this.newLevel.helper.health; 
 		const roll = await new Roll(helper.formula).evaluate();
     helper.total = roll.total;
-		roll.toMessage({flavor: ageSystem.healthSys.healthName}, {rollMode: "public"});
+		roll.toMessage({flavor: ageSystem.healthSys.healthName}, {messageMode: "publicroll"});
     this.render(true);
   }
 

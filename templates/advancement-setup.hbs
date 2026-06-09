@@ -36,11 +36,9 @@
             <div class="flexrow flex-align-baseline option">
                 <label for=""><strong>{{localize "age-system.level"}}</strong></label>
                 <select name="level" class="header-input">
-                    {{#select level}}
                     {{#each adv}}
-                    <option value="{{levelarr @index}}">{{levelarr @index}}</option>
+                    <option value="{{levelarr @index}}"{{#if (eq levelarr(@index) level)}} selected{{/if}}>{{levelarr @index}}</option>
                     {{/each}}
-                    {{/select}}
                 </select>
                 {{!-- <select name="level" class="header-input">
                     {{selectOptions advLabel}}
@@ -50,13 +48,11 @@
                 <label for=""><strong>{{localize "age-system.itemProgression"}}</strong></label>
                 <div class="field-data flexrow flex-align-baseline">
                     <select name="tType" class="header-input">
-                        {{#select tType}}
                         {{#each traitArr as |tt|}}
                         {{#if (ne tt.key 'power')}}
-                        <option value="{{tt.key}}">{{tt.name}}</option>
+                        <option value="{{tt.key}}"{{#if (eq tType tt.key)}} selected{{/if}}>{{tt.name}}</option>
                         {{/if}}
                         {{/each}}
-                        {{/select}}
                     </select>
                     <button class="addItemProg" type="button" style="flex: 0;">
                         {{localize "age-system.add"}}

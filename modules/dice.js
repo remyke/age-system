@@ -446,7 +446,8 @@ export async function ageRollCheck({event = null, actor = null, abl = null, item
     };
 
     if (!chatData.sound) chatData.sound = CONFIG.sounds.dice;
-    return ChatMessage.create(chatData, {rollMode});
+    ChatMessage.applyMode(chatData, foundry.dice.Roll._mapLegacyRollMode(rollMode));
+    return ChatMessage.create(chatData);
 };
 
 // Check if the roll has Weapon Group penalty
@@ -494,7 +495,7 @@ async function getAgeRollOptions(itemRolled, data = {}) {
     });
 
     return new Promise(resolve => {
-        const data = {
+        const dialogData = {
             title: game.i18n.localize("age-system.ageRollOptions"),
             content: html,
             buttons: {
@@ -515,7 +516,7 @@ async function getAgeRollOptions(itemRolled, data = {}) {
             default: "normal",
             close: () => resolve({cancelled: true}),
         }
-        new Dialog(data, null).render(true);
+        new Dialog(dialogData).render(true);
     });
 };
 
@@ -531,7 +532,7 @@ async function getDamageRollOptions(addFocus, stuntDmg, data = {}) {
     });
 
     return new Promise(resolve => {
-        const data = {
+        const dialogData = {
             title: game.i18n.localize("age-system.damageOptions"),
             content: html,
             buttons: {
@@ -552,7 +553,7 @@ async function getDamageRollOptions(addFocus, stuntDmg, data = {}) {
             default: "normal",
             close: () => resolve({cancelled: true}),
         }
-        new Dialog(data, null).render(true);
+        new Dialog(dialogData).render(true);
     });
 };
 
@@ -720,7 +721,7 @@ export async function vehicleDamage ({
 
     let dmgRoll = await new Roll(damageFormula, rollData).evaluate();
 
-    return dmgRoll.toMessage(messageData, {whisper: audience, rollMode: isBlind});
+    return dmgRoll.toMessage(messageData, {whisper: audience, messageMode: isBlind});
 
 }
 

@@ -102,8 +102,7 @@ Hooks.once("init", function() {
     };
 
     const Actors = foundry.documents.collections.Actors;
-    const ActorSheet = foundry.appv1.sheets.ActorSheet;
-    Actors.unregisterSheet("core", ActorSheet);
+    Actors.unregisterSheet("core", globalThis.ActorSheet);
     Actors.registerSheet("age-system", ageSystemSheetCharacter, {
         types: ["char"],
         makeDefault: true,
@@ -130,8 +129,7 @@ Hooks.once("init", function() {
     });
     
     const Items = foundry.documents.collections.Items;
-    const ItemSheet = foundry.appv1.sheets.ItemSheet;
-    Items.unregisterSheet("core", ItemSheet);
+    Items.unregisterSheet("core", globalThis.ItemSheet);
     Items.registerSheet("age-system", ageSystemSheetItem, {
         types: [
             "equipment",
@@ -188,16 +186,24 @@ Hooks.once("init", function() {
         return outStr;
     });
 
-    Handlebars.registerHelper('effectModeName', function(modeNumber) {
-        const modeNames = [
-            "EFFECT.MODE_CUSTOM",
-            "EFFECT.MODE_MULTIPLY",
-            "EFFECT.MODE_ADD",
-            "EFFECT.MODE_DOWNGRADE",
-            "EFFECT.MODE_UPGRADE",
-            "EFFECT.MODE_OVERRIDE"
-        ];
-        return game.i18n.localize(modeNames[modeNumber]);
+    Handlebars.registerHelper('effectModeName', function(modeValue) {
+        // Handle both old numeric and new string type values
+        const modeNames = {
+            0: "EFFECT.MODE_CUSTOM",
+            1: "EFFECT.MODE_MULTIPLY",
+            2: "EFFECT.MODE_ADD",
+            3: "EFFECT.MODE_DOWNGRADE",
+            4: "EFFECT.MODE_UPGRADE",
+            5: "EFFECT.MODE_OVERRIDE",
+            "CUSTOM": "EFFECT.MODE_CUSTOM",
+            "MULTIPLY": "EFFECT.MODE_MULTIPLY",
+            "ADD": "EFFECT.MODE_ADD",
+            "DOWNGRADE": "EFFECT.MODE_DOWNGRADE",
+            "UPGRADE": "EFFECT.MODE_UPGRADE",
+            "OVERRIDE": "EFFECT.MODE_OVERRIDE"
+        };
+        const localizeKey = modeNames[modeValue] || "EFFECT.MODE_CUSTOM";
+        return game.i18n.localize(localizeKey);
     });
 
     // Handlebar to set dice icon based on numeric value
@@ -515,7 +521,7 @@ Hooks.on(`getSceneControlButtons`, controls => {
                 "activate": true,
                 onChange: async (event, active) => {
                     let roll = await new Roll("1d6").evaluate();
-                    return roll.toMessage({}, {rollMode: event.shiftKey ? "blindroll" : ""});
+                    return roll.toMessage({}, {messageMode: event.shiftKey ? "blindroll" : ""})
                 }
             },
             "d66": {
@@ -526,7 +532,7 @@ Hooks.on(`getSceneControlButtons`, controls => {
                 "button": true,
                 onChange: async (event, active) => {
                     let roll = await new Roll("1d6*10 + 1d6").evaluate();
-                    return roll.toMessage({}, {rollMode: event.shiftKey ? "blindroll" : ""})
+                    return roll.toMessage({}, {messageMode: event.shiftKey ? "blindroll" : ""})
                 }
             },
             "d666": {
@@ -537,7 +543,7 @@ Hooks.on(`getSceneControlButtons`, controls => {
                 "button": true,
                 onChange: async (event, active) => {
                     let roll = await new Roll("1d6*100 + 1d6*10 + 1d6").evaluate();
-                    return roll.toMessage({}, {rollMode: event.shiftKey ? "blindroll" : ""})
+                    return roll.toMessage({}, {messageMode: event.shiftKey ? "blindroll" : ""})
                 }
             },
             // Figure out a way to select token when using this tool!!!

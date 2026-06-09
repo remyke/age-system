@@ -3,7 +3,7 @@ import { modifiersList, sortObjArrayByName } from "../setup.js";
 import { focusList } from "../settings.js";
 import {AdvancementAdd} from "../advancement.js";
 
-export default class ageSystemItemSheet extends foundry.appv1.sheets.ItemSheet {
+export default class ageSystemItemSheet extends ItemSheet {
     constructor(...args) {
         super(...args);
     
@@ -96,7 +96,7 @@ export default class ageSystemItemSheet extends foundry.appv1.sheets.ItemSheet {
                 const feat = data.config.featuresType[f];
                 data.config.featuresTypeLocal.push({
                     key: feat,
-                    name: game.i18n.localize(`age-system.spaceship.${feat}`)
+                    label: game.i18n.localize(`age-system.spaceship.${feat}`)
                 });
             }
             data.config.featuresTypeLocal = sortObjArrayByName(data.config.featuresTypeLocal, "name");
@@ -136,7 +136,7 @@ export default class ageSystemItemSheet extends foundry.appv1.sheets.ItemSheet {
 
         // Check if Use Fatigue setting is TRUE
         data.fatigueSet = game.settings.get("age-system", "useFatigue");
-        data.system = data.data.system;
+        data.system = this.item.system;
 
         // If it is a Talent, check if it uses expanded talent degrees
         if(this.item.type === "talent") {
@@ -171,7 +171,7 @@ export default class ageSystemItemSheet extends foundry.appv1.sheets.ItemSheet {
 
         // Actions by sheet owner only
         if (this.item.isOwner) {
-            if (this.item.type === "class") new ContextMenu(html, ".advance", this.advContextMenu);
+            if (this.item.type === "class") new foundry.applications.ux.ContextMenu.implementation(html[0], ".advance", this.advContextMenu, {jQuery: false});
         };
 
         // Add class to TinyMCE
@@ -279,18 +279,18 @@ export default class ageSystemItemSheet extends foundry.appv1.sheets.ItemSheet {
 
     advContextMenu = [
         {
-            name: game.i18n.localize("age-system.settings.edit"),
+            label: game.i18n.localize("age-system.settings.edit"),
             icon: '<i class="fas fa-edit"></i>',
-            callback: e => {
-                const data = e[0].dataset;
+            onClick: (event, target) => {
+                const data = target.dataset;
                 this.object._onChangeAdvancement(data, 'edit');
             }
         },
         {
-            name: game.i18n.localize("age-system.settings.delete"),
+            label: game.i18n.localize("age-system.settings.delete"),
             icon: '<i class="fas fa-trash"></i>',
-            callback: e => {
-                const data = e[0].dataset;
+            onClick: (event, target) => {
+                const data = target.dataset;
                 this.object._onChangeAdvancement(data, 'remove');
             }
         }
