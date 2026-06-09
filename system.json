@@ -2,14 +2,22 @@
     "id": "age-system",
     "title": "AGE System (unofficial)",
     "description": "Unofficial AGE System implementation for most of AGE subsystems",
-    "version": "4.0.4-compatibility14.1",
-    "download": "https://github.com/remyke/age-system/archive/refs/heads/remyke_compability14.zip",
+    "version": "4.0.4",
+    "download": "https://github.com/vkdolea/age-system/archive/4.0.4.zip",
     "compatibility": {
         "minimum": "14.363",
         "verified": "14"
     },
-    "url": "https://github.com/remyke/age-system",
-    "manifest": "https://raw.githubusercontent.com/remyke/age-system/refs/heads/remyke_compability14/system.json",
+    "url": "https://github.com/vkdolea/age-system",
+    "manifest": "https://raw.githubusercontent.com/vkdolea/age-system/prep-release/system.json",
+    "authors": [
+		{
+			"name": "VK Dolea",
+			"discord": "vkdolea#7974",
+			"reddit":"u/vkdolea",
+			"ko-fi":"vkdolea"
+		}
+    ],
     "media": [
         {
           "type": "cover",
@@ -54,8 +62,8 @@
         "units": "yd"
     },
     "initiative": "3d6 + @initiative",
-    "bugs": "https://github.com/remyke/age-system/issues",
-    "readme": "https://github.com/remyke/age-system/blob/remyke_compability14/README.md",
+    "bugs": "https://github.com/vkdolea/age-system/issues",
+    "readme": "https://github.com/vkdolea/age-system/blob/prep-release/README.md",
     "flags": {
         "needsMigrationVersion": "0.12.5"
     }
