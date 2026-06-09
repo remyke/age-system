@@ -9,7 +9,7 @@
         "verified": "14"
     },
     "url": "https://github.com/remyke/age-system",
-    "manifest": "https://raw.githubusercontent.com/remyke/age-system/prep-release/system.json",
+    "manifest": "https://raw.githubusercontent.com/remyke/age-system/prep-release-local/system.json",
     "media": [
         {
           "type": "cover",
@@ -55,7 +55,7 @@
     },
     "initiative": "3d6 + @initiative",
     "bugs": "https://github.com/remyke/age-system/issues",
-    "readme": "https://github.com/remyke/age-system/blob/prep-release/README.md",
+    "readme": "https://github.com/remyke/age-system/blob/prep-release-local/README.md",
     "flags": {
         "needsMigrationVersion": "0.12.5"
     }
