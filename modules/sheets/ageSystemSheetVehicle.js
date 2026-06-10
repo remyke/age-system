@@ -42,14 +42,20 @@ export default class ageSystemVehicleSheet extends ActorSheet {
         data.config = CONFIG.ageSystem;
         data.passengers = sortObjArrayByName(this.actor.system.passengers, "name");
 
-        data.velocityChoises = Object.entries(data.config.velocityCategory).map(([key, value]) => {
-            return {key, value: game.i18n.format(`age-system.${key}`)}
-        }).concat([{key: "velCustom", value: game.i18n.format("age-system.velCustom")}]);
+        data.velocityChoises = {
+            ...Object.fromEntries(
+                Object.entries(data.config.velocityCategory).map(([key, value]) => {
+                    return {key, value: game.i18n.format(`age-system.${key}`)}
+                })
+            ),
+            "velCustom": game.i18n.format("age-system.velCustom")
+        };
 
-        data.conductorChoices = {"": game.i18n.format("age-system.noAction"),
-             "synth-vehicle": "Token"}.concat(Object.entries(data.passengers).map(([id, name]) => {
-            return {key: id, value: name}
-        }));
+        data.conductorChoices = {
+            "": game.i18n.format("age-system.noAction"),
+            "synth-vehicle": "Token",
+            ...data.passengers
+        };
 
         // return data;
         return {
