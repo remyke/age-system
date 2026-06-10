@@ -49,11 +49,13 @@ export default class ageSystemVehicleSheet extends ActorSheet {
             {key: "velCustom", value: game.i18n.format("age-system.velCustom")}
         ];
 
-        data.conductorChoices = {
-            "": game.i18n.format("age-system.noAction"),
-            "synth-vehicle": "Token",
-            ...data.passengers
-        };
+        data.conductorChoices = [
+            {key: "", value: game.i18n.format("age-system.noAction")},
+            {key: "synth-vehicle", value: "Token"},
+            ...Object.entries(data.passengers).map(([key, passenger]) => {
+                return {key: passenger.id, value: passenger.name}
+            })
+        ];
 
         // return data;
         return {
