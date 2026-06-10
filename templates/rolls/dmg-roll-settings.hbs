@@ -12,9 +12,10 @@
     <div class="form-group">
         <label>{{localize "age-system.setStuntDmg"}}</label>
         <select name="setStuntDamage">
-            <option value="0"{{#if (eq "0" data.diceType)}} selected{{/if}}>-</option>
+            {{!-- <option value="0"{{#if (eq "0" data.diceType)}} selected{{/if}}>-</option>
             <option value="1"{{#if (eq "1" data.diceType)}} selected{{/if}}>1{{localize "age-system.settings.d6"}}</option>
-            <option value="2"{{#if (eq "2" data.diceType)}} selected{{/if}}>2{{localize "age-system.settings.d6"}}</option>
+            <option value="2"{{#if (eq "2" data.diceType)}} selected{{/if}}>2{{localize "age-system.settings.d6"}}</option> --}}
+            {{selectOptions {0: "", 1: "1" + localize "age-system.settings.stuntDmg1", 2: "2" + localize "age-system.settings.stuntDmg2"} selected=data.diceType localize=true}}
         </select>
     </div>
 
