@@ -528,7 +528,8 @@ async function getDamageRollOptions(addFocus, stuntDmg, data = {}) {
         selectAbl: data.selectAbl,
         abilities: data.actorType === "char" ? ageSystem.abilities : ageSystem.abilitiesOrg,
         useFocus: data.actorType === "organization",
-        setDmgExtraDice: data.setDmgExtraDice ?? 0
+        setDmgExtraDice: data.setDmgExtraDice ?? 0,
+        stuntDiceChoices: {0: "-", 1: "1" + game.i18n.localize("age-system.settings.d6"), 2: "2" + game.i18n.localize("age-system.settings.d6")}
     });
 
     return new Promise(resolve => {
