@@ -44,9 +44,7 @@
             <li>
                 <label>{{localize "age-system.rof.rof"}}</label>
                 <select name="system.rof">
-                    {{#each config.rof as |rof|}}
-                    <option value="{{@key}}"{{#if (eq @key system.rof)}} selected{{/if}}>{{localize rof}}</option>
-                    {{/each}}
+                    {{selectOptions config.rof selected=system.rof localize=true}}
                 </select>             
             </li>
             {{#unless (or (eq system.rof "none") (eq system.rof "singleShot"))}}
@@ -63,9 +61,7 @@
                 <div>{{localize (concat "age-system." system.reload)}}</div>
                 {{else}}
                 <select name="system.reload" {{#if inChat}}disabled{{/if}}>
-                    {{#each config.reloadDuration as |reloadDuration|}}
-                    <option value="{{@key}}"{{#if (eq @key system.relaod)}} selected{{/if}}>{{localize reloadDuration}}</option>
-                    {{/each}}
+                    {{selectOptions config.reloadDuration selected=system.reload localize=true}}
                 </select>    
                 {{/if}}                   
             </li>

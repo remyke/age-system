@@ -6,9 +6,6 @@
             <li>
                 <label>{{localize "age-system.talentDegree"}}</label>
                 <select name="system.degree">
-                    {{!-- {{#each config.talentDegrees.inUse as |degree|}}
-                    <option value="{{@key}}"{{#if (eq @key system.degree)}} selected{{/if}}>{{degree}}</option>
-                    {{/each}} --}}
                     {{selectOptions config.talentDegrees.inUse selected=system.degree}}
                 </select>
             </li>
@@ -17,8 +14,6 @@
             <li>
                 <label>{{localize "age-system.type"}} </label>
                 <select name="system.type">
-                    {{!-- <option value="talent"{{#if (eq "talent" system.type)}} selected{{/if}}>{{localize "TYPES.Item.talent"}}</option>
-                    <option value="spec"{{#if (eq "spec" system.type)}} selected{{/if}}>{{localize "age-system.item.spec"}}</option> --}}
                     {{selectOptions talenSpecChoices selected=system.type localize=true}}
                 </select>
             </li>

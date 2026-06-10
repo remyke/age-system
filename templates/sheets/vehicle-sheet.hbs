@@ -19,9 +19,7 @@
             <div class="flexrow conductor-selection">
                 <label class="conductor">{{localize "age-system.conductor"}}</label>
                 <select class="conductor" name="system.conductor">
-                    <option value=""{{#if (eq "" system.conductor)}} selected{{/if}}>{{localize "age-system.noAction"}}</option>
-                    <option value="synth-vehicle"{{#if (eq "synth-vehicle" system.conductor)}} selected{{/if}}>Token</option>
-                    {{selectOptions data.passengers selected=system.conductor valueAttr="id" labelAttr="name"}}
+                    {{selectOptions data.conductorChoices selected=system.conductor}}
                 </select>
             </div>
 
@@ -48,19 +46,10 @@
                     <label>{{localize "age-system.velocity"}}</label>
                     <div class="flexrow no-flexwrap">
                         <select name="system.velocity.category">
-                            {{#each data.config.velocityCategory as |category|}}
-                            <option value="{{@key}}"{{#if (eq @key system.velocity.category)}} selected{{/if}}>{{localize (concat "age-system." @key)}}</option>
-                            {{/each}}
-                            <option value="velCustom"{{#if (eq "velCustom" system.velocity.category)}} selected{{/if}}>{{localize (concat "age-system.velCustom")}}</option>
+                            {{selectOptions data.velocityChoises selected=system.velocity.category localize=true}}
                         </select>
                         <span>/</span>
                         <input type="number" name="system.velocity.catMod" value="{{system.velocity.catMod}}" data-dtype="Number">
-                        {{#each data.config.velocityCategory as |category|}}
-                        <label>{{@key}}  ---  {{system.velocity.category}}  ---  {{localize (concat "age-system." @key)}}</label>
-                        {{/each}}
-                        {{#each data.config.velocityCategory as |category key|}}
-                        <label>{{key}}  ---  {{system.velocity.category}}  ---  {{localize (concat "age-system." key)}}</label>
-                        {{/each}}
                     </div>
                 </div>
 

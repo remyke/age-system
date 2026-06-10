@@ -141,7 +141,7 @@ export default class ageSystemItemSheet extends ItemSheet {
         // If it is a Talent, check if it uses expanded talent degrees
         if(this.item.type === "talent") {
             data.expandedDegrees = ageSystem.talentDegrees.inUse.length > 3;
-            data.talenSpecChoices = {talent: "age-system.talent", spec: "age-system.item.spec"};
+            data.talenSpecChoices = {talent: "TYPES.Item.talent", spec: "age-system.item.spec"};
         }
         return data
     };    
