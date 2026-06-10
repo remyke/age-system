@@ -48,11 +48,19 @@
                     <label>{{localize "age-system.velocity"}}</label>
                     <div class="flexrow no-flexwrap">
                         <select name="system.velocity.category">
-                            <option value="{{@key}}"{{#if (eq @key system.valocity.category)}} selected{{/if}}>{{localize (concat "age-system." @key)}}</option>
-                            <option value="velCustom"{{#if (eq "velCustom" system.valocity.category)}} selected{{/if}}>{{localize (concat "age-system.velCustom")}}</option>
-                        </select>    
+                            {{#each data.config.velocityCategory as |category|}}
+                            <option value="{{@key}}"{{#if (eq @key system.velocity.category)}} selected{{/if}}>{{localize (concat "age-system." @key)}}</option>
+                            {{/each}}
+                            <option value="velCustom"{{#if (eq "velCustom" system.velocity.category)}} selected{{/if}}>{{localize (concat "age-system.velCustom")}}</option>
+                        </select>
                         <span>/</span>
                         <input type="number" name="system.velocity.catMod" value="{{system.velocity.catMod}}" data-dtype="Number">
+                        {{#each data.config.velocityCategory as |category|}}
+                        <label>{{@key}}  ---  {{system.velocity.category}}  ---  {{localize (concat "age-system." @key)}}</label>
+                        {{/each}}
+                        {{#each data.config.velocityCategory as |category key|}}
+                        <label>{{key}}  ---  {{system.velocity.category}}  ---  {{localize (concat "age-system." key)}}</label>
+                        {{/each}}
                     </div>
                 </div>
 
