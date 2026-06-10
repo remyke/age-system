@@ -529,7 +529,18 @@ async function getDamageRollOptions(addFocus, stuntDmg, data = {}) {
         abilities: data.actorType === "char" ? ageSystem.abilities : ageSystem.abilitiesOrg,
         useFocus: data.actorType === "organization",
         setDmgExtraDice: data.setDmgExtraDice ?? 0,
-        stuntDiceChoices: {0: "-", 1: "1" + game.i18n.localize("age-system.settings.d6"), 2: "2" + game.i18n.localize("age-system.settings.d6")}
+        stuntDiceChoices: {0: "-", 1: "1" + game.i18n.localize("age-system.settings.d6"), 2: "2" + game.i18n.localize("age-system.settings.d6")},
+        extraDiceChoices: {0: "-",
+             1: "1" + game.i18n.localize("age-system.settings.d6"),
+             2: "2" + game.i18n.localize("age-system.settings.d6"),
+             3: "3" + game.i18n.localize("age-system.settings.d6"),
+             4: "4" + game.i18n.localize("age-system.settings.d6"),
+             5: "5" + game.i18n.localize("age-system.settings.d6"),
+             6: "6" + game.i18n.localize("age-system.settings.d6"),
+             7: "7" + game.i18n.localize("age-system.settings.d6"),
+             8: "8" + game.i18n.localize("age-system.settings.d6"),
+             9: "9" + game.i18n.localize("age-system.settings.d6"),
+             10: "10" + game.i18n.localize("age-system.settings.d6")}
     });
 
     return new Promise(resolve => {

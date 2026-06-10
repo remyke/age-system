@@ -12,9 +12,6 @@
     <div class="form-group">
         <label>{{localize "age-system.setStuntDmg"}}</label>
         <select name="setStuntDamage">
-            {{!-- <option value="0"{{#if (eq "0" data.diceType)}} selected{{/if}}>-</option>
-            <option value="1"{{#if (eq "1" data.diceType)}} selected{{/if}}>1{{localize "age-system.settings.d6"}}</option>
-            <option value="2"{{#if (eq "2" data.diceType)}} selected{{/if}}>2{{localize "age-system.settings.d6"}}</option> --}}
             {{selectOptions stuntDiceChoices selected=data.diceType}}
         </select>
     </div>
@@ -22,17 +19,7 @@
     <div class="form-group">
         <label>{{localize "age-system.setDmgExtraDice"}}</label>
         <select name="setDmgExtraDice">
-            <option value="0"{{#if (eq "0" setDmgExtraDice)}} selected{{/if}}>-</option>
-            <option value="1"{{#if (eq "1" setDmgExtraDice)}} selected{{/if}}>1{{localize "age-system.settings.d6"}}</option>
-            <option value="2"{{#if (eq "2" setDmgExtraDice)}} selected{{/if}}>2{{localize "age-system.settings.d6"}}</option>
-            <option value="3"{{#if (eq "3" setDmgExtraDice)}} selected{{/if}}>3{{localize "age-system.settings.d6"}}</option>
-            <option value="4"{{#if (eq "4" setDmgExtraDice)}} selected{{/if}}>4{{localize "age-system.settings.d6"}}</option>
-            <option value="5"{{#if (eq "5" setDmgExtraDice)}} selected{{/if}}>5{{localize "age-system.settings.d6"}}</option>
-            <option value="6"{{#if (eq "6" setDmgExtraDice)}} selected{{/if}}>6{{localize "age-system.settings.d6"}}</option>
-            <option value="7"{{#if (eq "7" setDmgExtraDice)}} selected{{/if}}>7{{localize "age-system.settings.d6"}}</option>
-            <option value="8"{{#if (eq "8" setDmgExtraDice)}} selected{{/if}}>8{{localize "age-system.settings.d6"}}</option>
-            <option value="9"{{#if (eq "9" setDmgExtraDice)}} selected{{/if}}>9{{localize "age-system.settings.d6"}}</option>
-            <option value="10"{{#if (eq "10" setDmgExtraDice)}} selected{{/if}}>10{{localize "age-system.settings.d6"}}</option>
+            {{selectOptions extraDiceChoices selected=setDmgExtraDice}}
         </select>
     </div>
 
