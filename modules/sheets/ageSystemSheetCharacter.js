@@ -434,7 +434,7 @@ export default class ageSystemSheetCharacter extends ActorSheet {
 
     async _onAddEffect(event) {
         const newEffect = {
-            label: game.i18n.localize("age-system.item.newItem"),
+            name: game.i18n.localize("age-system.item.newItem"),
             origin: this.actor.uuid,
             img: `icons/svg/aura.svg`,
             disabled: true,
