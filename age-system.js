@@ -319,13 +319,13 @@ Hooks.once("init", function() {
     });
 
     Handlebars.registerHelper("filterChoicesWithExternalAndValueExclude", function(items, options) {
-        const value = options.hash[value] || "value";
-        const label = options.hash[label] || "label";
+        const value = options.hash.value || "value";
+        const label = options.hash.label || "label";
 
-        const externalExclusion = options.hash[externalExclude];
-        const externalExclusionValue = options.hash[externalExcludeValue];
+        const externalExclusion = options.hash.externalExclude;
+        const externalExclusionValue = options.hash.externalExcludeValue;
 
-        const exclude = options.hash[exclude];
+        const exclude = options.hash.exclude;
 
         return items
             .filter(i => {
@@ -351,8 +351,8 @@ Hooks.once("init", function() {
 
     // Handlebar helper to create selectOptions choices
     Handlebars.registerHelper("levelOptions", function (items, options) {
-        const transformValue = options.hash[transformValue];
-        const transformLabel = options.hash[transformLabel];
+        const transformValue = options.hash.transformValue;
+        const transformLabel = options.hash.transformLabel;
 
         return items.map((_, index) => {
             return {

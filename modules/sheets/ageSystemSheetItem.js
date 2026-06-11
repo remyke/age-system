@@ -145,7 +145,7 @@ export default class ageSystemItemSheet extends ItemSheet {
         }
 
         // If is is a Stunt prepare choices for stunt type
-        if(this.item.type === "stunt") {
+        if(this.item.type === "stunts") {
             data.stuntCostTypeChoices = {
                 fixed: "age-system.fixed",
                 variable: "age-system.variable"
