@@ -17,7 +17,7 @@
         <div class="form-fields">
             {{#if isSelect}}
             <select name="{{key}}">
-                {{selectOptions (filterChoicesWithExternalAndValueExclude value=type label=name externalExclusion=../key externalExclusionValue="gameMode" exclude="none") selected=value localize=true}}
+                {{selectOptions (filterChoicesWithExternalAndValueExclude choices value=type label=name externalExclusion=../key externalExclusionValue="gameMode" exclude="none") selected=value localize=true}}
             </select>
             {{else}}
             {{#if (eq type 'Boolean')}}
