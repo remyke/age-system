@@ -42,7 +42,7 @@
                 {{log "../data"}} {{log ../data}}
                 {{log "../system"}} {{log ../system}}
                 <select name="system.systems.{{sysName}}.operator" class="system-operator">
-                    {{selectOptions ../operatorChoices selected=system.operator localize=true}}
+                    {{selectOptions ../data.operatorChoices selected=system.operator localize=true}}
                 </select>
                 <select name="system.systems.{{sysName}}.useAbl" class="system-abl">
                     {{selectOptions ../data.config.abilities selected=system.useAbl localize=true}}
