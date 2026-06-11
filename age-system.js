@@ -343,12 +343,12 @@ Hooks.once("init", function() {
         );
     });
 
-    const transform = {
-        levelarr: levelarr,
-    }
-
     // Handlebar helper to create selectOptions choices
     Handlebars.registerHelper("levelOptions", function (items, options) {
+        const transform = {
+            levelarr: levelarr,
+        }
+
         const transformValue = transform[options.hash.transformValue];
         const transformLabel = transform[options.hash.transformLabel];
 
