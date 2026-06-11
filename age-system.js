@@ -327,24 +327,24 @@ Hooks.once("init", function() {
 
         const exclude = options.hash.exclude;
 
-        return items
-            .filter(i => {
+        return Object.entries(items)
+            .filter(([key, i]) => {
                 // Exclude when external values match and this item's value matches
                 if (
                     externalExclusion !== undefined &&
                     externalExclusionValue !== undefined &&
                     externalExclusion === externalExclusionValue &&
                     exclude !== undefined &&
-                    i[value] === exclude
+                    i === exclude
                 ) {
                     return false;
                 }
 
                 return true;
             })
-            .map(i => ({
-                value: i[value],
-                label: i[label]
+            .map(([key, i]) => ({
+                value: key,
+                label: i
             })
         );
     });
