@@ -322,8 +322,8 @@ Hooks.once("init", function() {
         const value = options.hash.value || "value";
         const label = options.hash.label || "label";
 
-        const externalExclusion = options.hash.externalExclude;
-        const externalExclusionValue = options.hash.externalExcludeValue;
+        const externalExclusion = options.hash.externalExclusion;
+        const externalExclusionValue = options.hash.externalExclusionValue;
 
         const exclude = options.hash.exclude;
 
