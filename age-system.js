@@ -189,12 +189,12 @@ Hooks.once("init", function() {
     Handlebars.registerHelper('effectModeName', function(modeValue) {
         // Handle both old numeric and new string type values
         const modeNames = {
-            "custom": "EFFECT.MODE_CUSTOM",
-            "multiply": "EFFECT.MODE_MULTIPLY",
-            "add": "EFFECT.MODE_ADD",
-            "downgrade": "EFFECT.MODE_DOWNGRADE",
-            "upgrade": "EFFECT.MODE_UPGRADE",
-            "override": "EFFECT.MODE_OVERRIDE"
+            "custom": "CUSTOM",
+            "multiply": "MULTIPLY",
+            "add": "ADD",
+            "downgrade": "DOWNGRADE",
+            "upgrade": "UPGRADE",
+            "override": "OVERRIDE"
         };
         const localizeKey = modeNames[modeValue] || "EFFECT.MODE_CUSTOM";
         return game.i18n.localize(localizeKey);
