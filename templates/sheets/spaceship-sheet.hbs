@@ -68,6 +68,12 @@
                         <label class="competence-label">{{localize "age-system.spaceship.competence"}}</label>
                         {{log "data.spaceshipCrewCompetenceChoices" data.spaceshipCrewCompetenceChoices}}
                         {{log "system.crew.competence" system.crew.competence}}
+                        {{log "system" system}}
+                        {{log "../system" ../system}}
+                        {{log "data" data}}
+                        {{log "../data" ../data}}
+                        {{log "config" config}}
+                        {{log "../config" ../config}}
                         <select class="competence-list" name="system.crew.competence">
                             {{selectOptions data.spaceshipCrewCompetenceChoices selected=system.crew.competence localize=true}}
                         </select>
