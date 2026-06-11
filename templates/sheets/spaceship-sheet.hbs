@@ -66,10 +66,10 @@
 
                     <div class="flexrow flex-align-center flex-justify-center crew-competence">
                         <label class="competence-label">{{localize "age-system.spaceship.competence"}}</label>
-                        {{log "spaceshipCrewCompetenceChoices" spaceshipCrewCompetenceChoices}}
+                        {{log "data.spaceshipCrewCompetenceChoices" data.spaceshipCrewCompetenceChoices}}
                         {{log "system.crew.competence" system.crew.competence}}
                         <select class="competence-list" name="system.crew.competence">
-                            {{selectOptions spaceshipCrewCompetenceChoices selected=system.crew.competence localize=true}}
+                            {{selectOptions data.spaceshipCrewCompetenceChoices selected=system.crew.competence localize=true}}
                         </select>
                     </div>
                 </div>
