@@ -26,11 +26,17 @@
                 <p class="system-focus">{{localize "age-system.focus"}}</p>
             </li>
             {{#each system.systems as |system sysName|}}
-            {{log sysName}}
+            {{log "system"}} {{log system}}
+            {{log "sysName"}}   {{log sysName}}
             <li class="feature-controls {{sysName}} flexrow" data-sys-name={{sysName}}>
                 <p class="system-role">{{localize (concat "age-system.spaceship.operator." sysName)}} 
                     <a class="system-roll roll-maneuver data-sys-name={{sysName}}" data-sys-box="1"><i class="fas fa-dice"></i></a>
                 </p>
+                {{log "operatorChoices"}} {{log operatorChoices}}
+                {{log "system.operator"}} {{log system.operator}}
+                {{log "system.useAbl"}} {{log system.useAbl}}
+                {{log "data.config.abilities"}} {{log data.config.abilities}}
+                {{log "../data.config.abilities"}} {{log ../data.config.abilities}}
                 <select name="system.systems.{{sysName}}.operator" class="system-operator">
                     {{selectOptions operatorChoices selected=system.operator localize=true}}
                 </select>
