@@ -88,9 +88,9 @@
                     <div class="flexrow flex-align-center size">
                         <label class="hull-label">{{localize "age-system.spaceship.size"}}</label>
                         {{log "system.size" system.size}}
-                        {{log "data.ageSpaceshipSheet" data.ageSpaceshipSheet}}
+                        {{log "data.spaceshipSizeChoices" data.spaceshipSizeChoices}}
                         <select class="ship-size" name="system.size" class="dice-size">
-                            {{SelectOptions data.ageSpaceshipSheet system.size localize=true}}
+                            {{SelectOptions data.spaceshipSizeChoices system.size localize=true}}
                         </select>
                     </div>
                     <div class="flexrow flex-align-center">
