@@ -20,8 +20,7 @@
             <li>
                 <label>{{localize "age-system.item.cost"}}</label>
                 <select name="system.costType">
-                    <option value="fixed"{{#if (eq "fixed" system.costType)}} selected{{/if}}>{{localize "age-system.fixed"}}</option>
-                    <option value="variable"{{#if (eq "variable" system.costType)}} selected{{/if}}>{{localize "age-system.variable"}}</option>
+                    {{selectOptions system.stuntCostTypeChoices system.costType localize=true}}
                 </select>
             </li>
 

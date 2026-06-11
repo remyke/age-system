@@ -47,6 +47,27 @@ export default class ageSpaceshipSheet extends ActorSheet {
         data.notSynth = !(this.token && !this.token.actorLink);
         data.isSynth = !data.notSynth;
 
+        data.ageSpaceshipSheet = [
+            ...Object.entries(CONFIG.ageSystem.spaceshipSize).map(([size, sizeKey]) => {
+                return {key: size, value: `age-system.spaceship.sizeType.${sizeKey}`}
+            })
+        ];
+
+        // Prepare choices for operator
+        data.operatorChoices = [
+            {key: "crew", value: game.i18n.localize("age-system.spaceship.crew")},
+            ...Object.entries(data.passengers).map(([key, passenger]) => {
+                return {key: passenger.id, value: passenger.name}
+            })
+        ];
+        
+        // Prepare choices for crew competence
+        data.spaceshipCrewCompetenceChoices = [
+            ...Object.entries(CONFIG.ageSystem.spaceshipCrewCompetence).map(([compet, competKey]) => {
+                return {key: compet, value: game.i18n.format(`age-system.spaceship.competenceLevel.${competKey}`)+compet}
+            })
+        ];
+
         // return data;
         return {
             actor: this.object,

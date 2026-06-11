@@ -143,6 +143,22 @@ export default class ageSystemItemSheet extends ItemSheet {
             data.expandedDegrees = ageSystem.talentDegrees.inUse.length > 3;
             data.talenSpecChoices = {talent: "TYPES.Item.talent", spec: "age-system.item.spec"};
         }
+
+        // If is is a Stunt prepare choices for stunt type
+        if(this.item.type === "stunts") {
+            data.stuntCostTypeChoices = {
+                fixed: "age-system.fixed",
+                variable: "age-system.variable"
+            }
+        }
+
+        // If it is a ShipFeature, prepare choices for feature type
+        if(this.item.type === "shipfeatures") {
+            data.shipFeaturesQualityChoices = {
+                quality: "age-system.spaceship.quality",
+                flaw: "age-system.spaceship.flaw"
+            };
+        }
         return data
     };    
     

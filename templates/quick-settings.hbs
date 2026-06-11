@@ -17,11 +17,7 @@
         <div class="form-fields">
             {{#if isSelect}}
             <select name="{{key}}">
-                {{#each choices as |name type|}}
-                {{#unless (and (eq ../key 'gameMode') (eq type 'none'))}}
-                <option value="{{type}}"{{#if (eq value type)}} selected{{/if}}>{{localize name}}</option>
-                {{/unless}}
-                {{/each}}
+                {{selectOptions (filterChoicesWithExternalAndValueExclude value=type label=name externalExclusion=../key externalExclusionValue='gameMode' exclude='none') selected=value localize=true}}
             </select>
             {{else}}
             {{#if (eq type 'Boolean')}}

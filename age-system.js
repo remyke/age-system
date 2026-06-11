@@ -297,6 +297,72 @@ Hooks.once("init", function() {
         else return options.inverse(this);
     });
 
+    // Handlebar helper to filter selectOptionChoices
+    Handlebars.registerHelper("filterChoicesWithValueOrLabelExclude", function(items, config = {}) {
+        const {
+            value = "value",
+            label = "label",
+            excludeValue,
+            excludeLabel
+        } = config.hash;
+
+        return items
+            .filter(i => {
+                if (excludeValue !== undefined && i[value] === excludeValue) return false;
+                if (excludeLabel !== undefined && i[label] === excludeLabel) return false;
+                return true;
+            })
+            .map(i => ({
+            value: i[value],
+            label: i[label]
+            }));
+    });
+
+    Handlebars.registerHelper("filterChoicesWithExternalAndValueExclude", function(items, options) {
+        const value = options.hash.value || "value";
+        const label = options.hash.label || "label";
+
+        const externalExclusion = options.hash.externalExclude;
+        const externalExclusionValue = options.hash.externalExcludeValue;
+
+        const exclude = options.hash.exclude;
+
+        return items
+            .filter(i => {
+                // Exclude when external values match and this item's value matches
+                if (
+                    externalExclusion !== undefined &&
+                    externalExclusionValue !== undefined &&
+                    externalExclusion === externalExclusionValue &&
+                    exclude !== undefined &&
+                    i[value] === exclude
+                ) {
+                    return false;
+                }
+
+                return true;
+            })
+            .map(i => ({
+                value: i[value],
+                label: i[label]
+            })
+        );
+    });
+
+    // Handlebar helper to create selectOptions choices
+    Handlebars.registerHelper("levelOptions", function (items, options) {
+        const transformValue = options.hash.transformValue;
+        const transformLabel = options.hash.transformLabel;
+
+        return items.map((_, index) => {
+            return {
+            value: transformValue(index)|| "index",
+            label: transformLabel(index)|| "index"
+            };
+        });
+    });
+
+
     // Keep a list of actors that need to prepareData after 'ready' (generally those that rely on other actor data - passengers/mounts)
     game.postReadyPrepare = [];
 

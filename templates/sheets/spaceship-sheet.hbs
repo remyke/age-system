@@ -31,8 +31,7 @@
                     <a class="system-roll roll-maneuver data-sys-name={{sysName}}" data-sys-box="1"><i class="fas fa-dice"></i></a>
                 </p>
                 <select name="system.systems.{{sysName}}.operator" class="system-operator">
-                    <option value="crew"{{#if (eq "crew" system.operator)}} selected{{/if}}>{{localize "age-system.spaceship.crew"}}</option>
-                    {{selectOptions ../data.passengers selected=system.operator valueAttr="id" labelAttr="name"}}
+                    {{selectOptions ../data.config.spaceshipSystemOperators selected=system.operator localize=true}}
                 </select>
                 <select name="system.systems.{{sysName}}.useAbl" class="system-abl">
                     {{selectOptions ../data.config.abilities selected=system.useAbl localize=true}}
@@ -68,9 +67,7 @@
                     <div class="flexrow flex-align-center flex-justify-center crew-competence">
                         <label class="competence-label">{{localize "age-system.spaceship.competence"}}</label>
                         <select class="competence-list" name="system.crew.competence">
-                            {{#each data.config.spaceshipCrewCompetence as |compet competKey|}}
-                            <option value="{{compet}}"{{#if (eq compat system.crew.competencce)}} selected{{/if}}>{{localize (concat "age-system.spaceship.competenceLevel." competKey)}} (+{{compet}})</option>
-                            {{/each}}
+                            {{selectOptions spaceshipCrewCompetenceChoices selected=system.crew.competence localize=true}}
                         </select>
                     </div>
                 </div>
@@ -83,9 +80,7 @@
                     <div class="flexrow flex-align-center size">
                         <label class="hull-label">{{localize "age-system.spaceship.size"}}</label>
                         <select class="ship-size" name="system.size" class="dice-size">
-                            {{#each data.config.spaceshipSize as |size sizeKey|}}
-                            <option value="{{size}}"{{#if (eq size system.size)}} selected{{/if}}>{{localize (concat "age-system.spaceship.sizeType." sizeKey)}}</option>
-                            {{/each}}
+                            {{SelectOptions data.ageSpaceshipSheet system.size localize=true}}
                         </select>
                     </div>
                     <div class="flexrow flex-align-center">

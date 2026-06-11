@@ -7,8 +7,7 @@
             <li>
                 <label>{{localize "age-system.spaceship.qualityType"}}</label>
                 <select name="system.quality">
-                    <option value="quality"{{#if (eq "quality" system.quality)}} selected{{/if}}>{{localize "age-system.spaceship.quality"}}</option>
-                    <option value="flaw"{{#if (eq "flaw" system.quality)}} selected{{/if}}>{{localize "age-system.spaceship.flaw"}}</option>
+                    {{selectOptions spaceshipFeatureQualityChoices selected=system.quality localize=true}}
                 </select>
             </li>
 
