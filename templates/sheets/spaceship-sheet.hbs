@@ -31,7 +31,7 @@
                     <a class="system-roll roll-maneuver data-sys-name={{sysName}}" data-sys-box="1"><i class="fas fa-dice"></i></a>
                 </p>
                 <select name="system.systems.{{sysName}}.operator" class="system-operator">
-                    {{selectOptions ../data.config.spaceshipSystemOperators selected=system.operator localize=true}}
+                    {{selectOptions operatorChoices selected=system.operator localize=true}}
                 </select>
                 <select name="system.systems.{{sysName}}.useAbl" class="system-abl">
                     {{selectOptions ../data.config.abilities selected=system.useAbl localize=true}}
