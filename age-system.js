@@ -318,7 +318,7 @@ Hooks.once("init", function() {
             }));
     });
 
-    Handlebars.registerHelper("filterChoicesWithExternalAndValueExclude", function(items, options) {
+    Handlebars.registerHelper("filterChoicesWithExternalAndValueExclude", function(items, options = {}) {
         const value = options.hash.value || "value";
         const label = options.hash.label || "label";
 
@@ -350,7 +350,7 @@ Hooks.once("init", function() {
     });
 
     // Handlebar helper to create selectOptions choices
-    Handlebars.registerHelper("levelOptions", function (items, options) {
+    Handlebars.registerHelper("levelOptions", function (items, options = {}) {
         const transformValue = options.hash.transformValue;
         const transformLabel = options.hash.transformLabel;
 
