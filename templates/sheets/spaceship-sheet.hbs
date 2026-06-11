@@ -37,11 +37,13 @@
                 {{log "system.useAbl"}} {{log system.useAbl}}
                 {{log "data.config.abilities"}} {{log data.config.abilities}}
                 {{log "../data.config.abilities"}} {{log ../data.config.abilities}}
+                {{log "../"}} {{log ../}}
+                {{log "../operatorChoices"}} {{log ../operatorChoices}}
                 <select name="system.systems.{{sysName}}.operator" class="system-operator">
-                    {{selectOptions operatorChoices selected=system.operator localize=true}}
+                    {{selectOptions ../operatorChoices selected=system.operator localize=true}}
                 </select>
                 <select name="system.systems.{{sysName}}.useAbl" class="system-abl">
-                    {{selectOptions data.config.abilities selected=system.useAbl localize=true}}
+                    {{selectOptions ../data.config.abilities selected=system.useAbl localize=true}}
                 </select>
                 <input name="system.systems.{{sysName}}.useFocus" class="system-focus" type="text" value="{{system.useFocus}}" placeholder="{{localize "age-system.focus"}}" list="{{../this.actor.type}}-{{../this.actor.id}}-list"/>
             </li>
