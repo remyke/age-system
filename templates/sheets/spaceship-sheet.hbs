@@ -26,6 +26,7 @@
                 <p class="system-focus">{{localize "age-system.focus"}}</p>
             </li>
             {{#each system.systems as |system sysName|}}
+            {{log sysName}}
             <li class="feature-controls {{sysName}} flexrow" data-sys-name={{sysName}}>
                 <p class="system-role">{{localize (concat "age-system.spaceship.operator." sysName)}} 
                     <a class="system-roll roll-maneuver data-sys-name={{sysName}}" data-sys-box="1"><i class="fas fa-dice"></i></a>
@@ -34,7 +35,7 @@
                     {{selectOptions operatorChoices selected=system.operator localize=true}}
                 </select>
                 <select name="system.systems.{{sysName}}.useAbl" class="system-abl">
-                    {{selectOptions ../data.config.abilities selected=system.useAbl localize=true}}
+                    {{selectOptions data.config.abilities selected=system.useAbl localize=true}}
                 </select>
                 <input name="system.systems.{{sysName}}.useFocus" class="system-focus" type="text" value="{{system.useFocus}}" placeholder="{{localize "age-system.focus"}}" list="{{../this.actor.type}}-{{../this.actor.id}}-list"/>
             </li>
@@ -66,9 +67,9 @@
 
                     <div class="flexrow flex-align-center flex-justify-center crew-competence">
                         <label class="competence-label">{{localize "age-system.spaceship.competence"}}</label>
-                        <select class="competence-list" name="system.crew.competence">
+                        {{!-- <select class="competence-list" name="system.crew.competence">
                             {{selectOptions spaceshipCrewCompetenceChoices selected=system.crew.competence localize=true}}
-                        </select>
+                        </select> --}}
                     </div>
                 </div>
             </div>
@@ -79,9 +80,9 @@
                     <legend><a class="roll-hull"><i class="fas fa-dice"></i></a> {{localize "age-system.spaceship.hull"}}</legend>
                     <div class="flexrow flex-align-center size">
                         <label class="hull-label">{{localize "age-system.spaceship.size"}}</label>
-                        <select class="ship-size" name="system.size" class="dice-size">
+                        {{!-- <select class="ship-size" name="system.size" class="dice-size">
                             {{SelectOptions data.ageSpaceshipSheet system.size localize=true}}
-                        </select>
+                        </select> --}}
                     </div>
                     <div class="flexrow flex-align-center">
                         <label class="hull-label">{{localize "age-system.base"}}</label>
