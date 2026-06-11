@@ -37,8 +37,10 @@
                 {{log "system.useAbl"}} {{log system.useAbl}}
                 {{log "data.config.abilities"}} {{log data.config.abilities}}
                 {{log "../data.config.abilities"}} {{log ../data.config.abilities}}
-                {{log "../"}} {{log ../}}
+                {{!-- {{log "../"}} {{log ../}} --}}
                 {{log "../operatorChoices"}} {{log ../operatorChoices}}
+                {{log "../data"}} {{log ../data}}
+                {{log "../system"}} {{log ../system}}
                 <select name="system.systems.{{sysName}}.operator" class="system-operator">
                     {{selectOptions ../operatorChoices selected=system.operator localize=true}}
                 </select>
