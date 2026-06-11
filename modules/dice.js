@@ -582,7 +582,7 @@ export function isGMroll(event) {
 // Code to decide if roll is PUBLIC or BLIND TO GM
 export function setBlind(event) {
     if (event.shiftKey) {
-        return "blind";
+        return "blindroll";
     } else {
         return "roll";
     };

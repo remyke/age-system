@@ -61,6 +61,7 @@
                 {{/each}}
             </div>
             <div class="flexcol effect-operation">
+                {{log "effect" effect}}
                 {{#each effect.changes as |change|}}
                 <span>{{effectModeName change.type}}</span>
                 {{/each}}
