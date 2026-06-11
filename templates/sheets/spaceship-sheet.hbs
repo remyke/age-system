@@ -66,6 +66,8 @@
 
                     <div class="flexrow flex-align-center flex-justify-center crew-competence">
                         <label class="competence-label">{{localize "age-system.spaceship.competence"}}</label>
+                        {{log "spaceshipCrewCompetenceChoices" spaceshipCrewCompetenceChoices}}
+                        {{log "system.crew.competence" system.crew.competence}}
                         <select class="competence-list" name="system.crew.competence">
                             {{selectOptions spaceshipCrewCompetenceChoices selected=system.crew.competence localize=true}}
                         </select>
@@ -79,6 +81,8 @@
                     <legend><a class="roll-hull"><i class="fas fa-dice"></i></a> {{localize "age-system.spaceship.hull"}}</legend>
                     <div class="flexrow flex-align-center size">
                         <label class="hull-label">{{localize "age-system.spaceship.size"}}</label>
+                        {{log "system.size" system.size}}
+                        {{log "data.ageSpaceshipSheet" data.ageSpaceshipSheet}}
                         <select class="ship-size" name="system.size" class="dice-size">
                             {{SelectOptions data.ageSpaceshipSheet system.size localize=true}}
                         </select>
