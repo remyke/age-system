@@ -343,15 +343,19 @@ Hooks.once("init", function() {
         );
     });
 
+    const transform = {
+        levelarr: levelarr,
+    }
+
     // Handlebar helper to create selectOptions choices
     Handlebars.registerHelper("levelOptions", function (items, options) {
-        const transformValue = options.hash.transformValue;
-        const transformLabel = options.hash.transformLabel;
+        const transformValue = transform[options.hash.transformValue];
+        const transformLabel = transform[options.hash.transformLabel];
 
         return items.map((_, index) => {
             return {
-            value: transformValue(index)|| "index",
-            label: transformLabel(index)|| "index"
+            value: transformValue ? transformValue(index) : "index",
+            label: transformLabel ? transformLabel(index) : "index"
             };
         });
     });
