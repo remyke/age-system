@@ -346,7 +346,7 @@ Hooks.once("init", function() {
     // Handlebar helper to create selectOptions choices
     Handlebars.registerHelper("levelOptions", function (items, options) {
         const transform = {
-            levelarr: levelarr,
+            levelarr: handlebars.levelarr,
         }
 
         const transformValue = transform[options.hash.transformValue];
