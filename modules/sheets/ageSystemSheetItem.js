@@ -99,7 +99,7 @@ export default class ageSystemItemSheet extends ItemSheet {
                     label: game.i18n.localize(`age-system.spaceship.${feat}`)
                 });
             }
-            data.config.featuresTypeLocal = sortObjArrayByName(data.config.featuresTypeLocal, "name");
+            data.config.featuresTypeLocal = sortObjArrayByName(data.config.featuresTypeLocal, "label");
         };
 
         // Options Tab Preparation
