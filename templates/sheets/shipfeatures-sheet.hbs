@@ -8,13 +8,14 @@
                 <label>{{localize "age-system.spaceship.qualityType"}}</label>
                 {{log "shipFeaturesQualityChoices" shipFeaturesQualityChoices}}
                 {{log "system.quality" system.quality}}
-                {{!-- <select name="system.quality">
+                <select name="system.quality">
                     {{selectOptions shipFeaturesQualityChoices selected=system.quality localize=true}}
-                </select> --}}
+                </select>
             </li>
 
             {{!-- Value --}}
             <li>
+                {{log "system.type" system.type}}
                 {{#if (eq system.type "weapon")}}
                 <label>{{localize "age-system.item.damage"}}</label>
                 <input type="text" value="{{system.damage}}" name="system.damage" data-dtype="String" placeholder="{{localize "age-system.formulaExample"}}"/>
