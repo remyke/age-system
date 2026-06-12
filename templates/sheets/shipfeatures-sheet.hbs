@@ -6,7 +6,7 @@
             {{!-- Quality / Flaw Definition --}}
             <li>
                 <label>{{localize "age-system.spaceship.qualityType"}}</label>
-                {{log "spaceshipFeatureQualityChoices" config.spaceshipFeatureQualityChoices}}
+                {{log "spaceshipFeatureQualityChoices" spaceshipFeatureQualityChoices}}
                 {{log "system.quality" system.quality}}
                 {{!-- <select name="system.quality">
                     {{selectOptions spaceshipFeatureQualityChoices selected=system.quality localize=true}}
@@ -49,9 +49,9 @@
                 <label>{{localize "age-system.abl"}}</label>
                 {{log "config.abilities" config.abilities}}
                 {{log "system.useAbl" system.useAbl}}
-                {{!-- <select name="system.useAbl" class="data-input">
+                <select name="system.useAbl" class="data-input">
                     {{selectOptions config.abilities selected=system.useAbl localize=true}}
-                </select> --}}
+                </select>
                 {{/if}}
             </li>
 
@@ -72,9 +72,9 @@
                     <div class="flexcol minimum-length">
                         {{log "config.featuresTypeLocal" config.featuresTypeLocal}}
                         {{log "system.type" system.type}}
-                        {{!-- <select name="system.type" class="header-input">
+                        <select name="system.type" class="header-input">
                             {{selectOptions config.featuresTypeLocal selected=system.type valueAttr="key" labelAttr="label"}}
-                        </select> --}}
+                        </select>
                         <label class="label-under">{{localize "age-system.spaceship.featuresType"}}</label>
                     </div>
                 </div>
