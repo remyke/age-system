@@ -5,7 +5,7 @@
             <div class="flexrow flex-align-baseline option">
                 <label for=""><strong>{{localize "age-system.trait"}}</strong></label>
                 <select name="trait" class="header-input">
-                    {{selectOptions traitArr nameAttr="key" labelAttr="name"}}
+                    {{selectOptions traitArr valueAttr="key" labelAttr="name"}}
                 </select>
             </div>
             {{/if}}
@@ -45,6 +45,7 @@
             <div class="flexrow flex-align-baseline option">
                 <label for=""><strong>{{localize "age-system.itemProgression"}}</strong></label>
                 <div class="field-data flexrow flex-align-baseline">
+                    {{log "traitArr" traitArr}}
                     <select name="tType" class="header-input">
                         {{selectOptions (filterChoicesWithValueOrLabelExclude traitArr value="key" label="name" excludeValue="power") selected=tType}}
                     </select>
