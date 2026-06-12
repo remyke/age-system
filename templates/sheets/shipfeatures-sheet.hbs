@@ -6,8 +6,6 @@
             {{!-- Quality / Flaw Definition --}}
             <li>
                 <label>{{localize "age-system.spaceship.qualityType"}}</label>
-                {{log "shipFeaturesQualityChoices" shipFeaturesQualityChoices}}
-                {{log "system.quality" system.quality}}
                 <select name="system.quality">
                     {{selectOptions shipFeaturesQualityChoices selected=system.quality localize=true}}
                 </select>
@@ -48,8 +46,6 @@
                 
                 {{#if (eq system.type "rollable")}}
                 <label>{{localize "age-system.abl"}}</label>
-                {{log "config.abilities" config.abilities}}
-                {{log "system.useAbl" system.useAbl}}
                 <select name="system.useAbl" class="data-input">
                     {{selectOptions config.abilities selected=system.useAbl localize=true}}
                 </select>
@@ -71,8 +67,6 @@
                 {{!-- Feature Type --}}
                 <div class="sub-details flexrow">
                     <div class="flexcol minimum-length">
-                        {{log "config.featuresTypeLocal" config.featuresTypeLocal}}
-                        {{log "system.type" system.type}}
                         <select name="system.type" class="header-input">
                             {{selectOptions config.featuresTypeLocal selected=system.type valueAttr="key" labelAttr="label"}}
                         </select>
