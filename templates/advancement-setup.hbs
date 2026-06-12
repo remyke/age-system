@@ -5,7 +5,7 @@
             <div class="flexrow flex-align-baseline option">
                 <label for=""><strong>{{localize "age-system.trait"}}</strong></label>
                 <select name="trait" class="header-input">
-                    {{selectOptions traitArr valueAttr="key" labelAttr="name"}}
+                    {{selectOptions traitArr valueAttr="key" labelAttr="name" selected=tType}}
                 </select>
             </div>
             {{/if}}
