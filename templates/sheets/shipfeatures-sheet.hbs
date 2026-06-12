@@ -66,6 +66,7 @@
                 {{!-- Feature Type --}}
                 <div class="sub-details flexrow">
                     <div class="flexcol minimum-length">
+                        {{log "config.featuresTypeLocal" config.featuresTypeLocal}}
                         <select name="system.type" class="header-input">
                             {{selectOptions config.featuresTypeLocal selected=system.type valueAttr="key" labelAttr="name"}}
                         </select>
