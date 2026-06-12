@@ -18,6 +18,7 @@
             <h2>{{localize "age-system.parameters"}}</h2>
             <div class="flexrow conductor-selection">
                 <label class="conductor">{{localize "age-system.conductor"}}</label>
+                {{log "data.conductorChoices" data.conductorChoices}}
                 <select class="conductor" name="system.conductor">
                     {{selectOptions data.conductorChoices selected=system.conductor labelAttr=value valueAttr=key}}
                 </select>
