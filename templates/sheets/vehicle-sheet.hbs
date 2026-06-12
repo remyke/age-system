@@ -19,7 +19,7 @@
             <div class="flexrow conductor-selection">
                 <label class="conductor">{{localize "age-system.conductor"}}</label>
                 <select class="conductor" name="system.conductor">
-                    {{selectOptions data.conductorChoices selected=system.conductor}}
+                    {{selectOptions data.conductorChoices selected=system.conductor labelAttr=value valueAttr=key}}
                 </select>
             </div>
 
