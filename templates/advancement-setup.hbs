@@ -53,7 +53,8 @@
             {{/if}}
             <div class="flexrow flex-align-baseline option" {{#if (ne itemOption "multiple")}}style="display: none;"{{/if}}>
                 <label for=""><strong>{{localize "age-system.item.quantity"}}</strong></label>
-                {{rangePicker name="itemQtd" value=itemQtd min=0 max=itemArrSize step=1}}
+                {{!-- {{rangePicker name="itemQtd" value=itemQtd min=0 max=itemArrSize step=1}} --}}
+                <range-picker name="itemQtd" value="{{itemQtd}}" min="0" max="{{itemArrSize}}" step="1"></range-picker>
             </div>
             <div class="flexrow flex-align-baseline option">
                 <label for=""><strong>{{localize "age-system.alias"}}</strong></label>
@@ -63,7 +64,8 @@
                 <label for=""><strong>{{localize "age-system.image"}}</strong></label>
                 <div class="field-data flexrow flex-align-baseline">
                     <input type="text" class="" name="img" value="{{img}}" data-dtype="String" />
-                    {{filePicker type="image" target="img"}}
+                    {{!-- {{filePicker type="image" target="img"}} --}}
+                    <file-picker name="img" type="image"></file-picker>
                 </div>
             </div>
             {{#if (eq advType "item")}}
