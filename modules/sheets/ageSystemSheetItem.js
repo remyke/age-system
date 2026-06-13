@@ -1,7 +1,7 @@
 import {ageSystem} from "../config.js";
 import { modifiersList, sortObjArrayByName } from "../setup.js";
 import { focusList } from "../settings.js";
-import {AdvancementAdd} from "../advancement.js";
+import {AdvancementAdd, AdvancementSetup} from "../advancement.js";
 
 export default class ageSystemItemSheet extends ItemSheet {
     constructor(...args) {
@@ -182,6 +182,7 @@ export default class ageSystemItemSheet extends ItemSheet {
 
             // Class Item Type commands only
             html.find(".add-adv").click(this._onAddAdvance.bind(this));
+            html.find(".advance").click(this._onExistingAdvance.bind(this));
 
         };
         html.find(".find-reference").click(this._onOpenPDF.bind(this));
@@ -204,6 +205,10 @@ export default class ageSystemItemSheet extends ItemSheet {
 
     _onAddAdvance(e) {
         return new AdvancementAdd(this.document.uuid).render(true);
+    };
+
+    _onExistingAdvance(e) {
+        return new AdvancementSetup(this.document.uuid, 'existing').render(true);
     };
 
     _onOpenPDF(e) {
