@@ -208,7 +208,13 @@ export default class ageSystemItemSheet extends ItemSheet {
     };
 
     _onExistingAdvance(e) {
-        return new AdvancementSetup(this.document.uuid, 'existing').render(true);
+        // <li class="advance feature-controls flexrow" data-type="progressive" data-id="1" data-level="1">
+        //                     <img src="systems/age-system/resources/imgs/adv-icon/progression.svg">
+        //                     <span class="adv-name">aa</span>
+        //                 </li>
+        const currentDataset = e.currentTarget.dataset;
+        const currentData = this.object.system.advancements[currentDataset.type][currentDataset.id];
+        return new AdvancementSetup(this.document.uuid, currentDataset.type, currentData).render(true);
     };
 
     _onOpenPDF(e) {
