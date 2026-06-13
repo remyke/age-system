@@ -231,7 +231,7 @@ export class AdvancementSetup extends FormApplication {
 
   _valueChange(event) {
     const e = event.currentTarget;
-    const name = e.name;
+    const name = (e.parentElement?.localName === "range-picker") ? e.parentElement.name : e.name;
     const isCheckbox = e.type === "checkbox";
     const value = isCheckbox ? e.checked : e.value;
     this.advData[name] = value;

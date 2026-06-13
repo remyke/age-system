@@ -63,9 +63,9 @@
             <div class="flexrow flex-align-baseline option">
                 <label for=""><strong>{{localize "age-system.image"}}</strong></label>
                 <div class="field-data flexrow flex-align-baseline">
-                    <input type="text" class="" name="img" value="{{img}}" data-dtype="String" />
+                    {{!-- <input type="text" class="" name="img" value="{{img}}" data-dtype="String" /> --}}
                     {{!-- {{filePicker type="image" target="img"}} --}}
-                    <file-picker name="img" type="image"></file-picker>
+                    <file-picker name="img" type="image" target="{{img}}"></file-picker>
                 </div>
             </div>
             {{#if (eq advType "item")}}
