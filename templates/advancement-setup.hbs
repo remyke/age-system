@@ -1,6 +1,7 @@
 <form>
     <div class="">
         <section class="options-column">
+            {{#if (eq advType "progressive")}}
             {{log "advType" advType}}
             {{log "data" data}}
             {{log "system" system}}
@@ -17,19 +18,34 @@
             {{log "alias" alias}}
             {{log "img" img}}
             {{log "itemQtd" itemQtd}}
-            {{#if (eq advType "progressive")}}
             <div class="flexrow flex-align-baseline option">
                 <label for=""><strong>{{localize "age-system.trait"}}</strong></label>
                 <select name="trait" class="header-input">
-                    {{selectOptions traitArr valueAttr="key" labelAttr="name"}}
+                    {{selectOptions traitArr valueAttr="key" labelAttr="name" localize=true selected=itemOption}}
                 </select>
             </div>
             {{/if}}
             {{#if (eq advType "item")}}
+            {{log "advType" advType}}
+            {{log "data" data}}
+            {{log "system" system}}
+            {{log "config" config}}
+            {{log "traitArr" traitArr}}
+            {{log "itemOptionObj" itemOptionObj}}
+            {{log "itemOption" itemOption}}
+            {{log "itemArr" itemArr}}
+            {{log "itemArrSize" itemArrSize}}
+            {{log "tType" tType}}
+            {{log "level" level}}
+            {{log "advLabel" advLabel}}
+            {{log "adv" adv}}
+            {{log "alias" alias}}
+            {{log "img" img}}
+            {{log "itemQtd" itemQtd}}
             <div class="flexrow flex-align-baseline option">
                 <label for=""><strong>{{localize "age-system.type"}}</strong></label>
                 <select name="itemOption" class="header-input">
-                    {{selectOptions itemOptionObj selected=itemOption}}
+                    {{selectOptions itemOptionObj selected=itemOption localize=true}}
                 </select>
             </div> 
             {{/if}}
