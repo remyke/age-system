@@ -157,8 +157,10 @@ export class AdvancementSetup extends FormApplication {
     data.config = ageSystem;
     data.class = this.class;
     data.itemOptionObj = {
-      multiple: game.i18n.localize("age-system.itemOptionMultiple"),
-      all: game.i18n.localize("age-system.itemOptionAll"),
+      // multiple: game.i18n.localize("age-system.itemOptionMultiple"),
+      // all: game.i18n.localize("age-system.itemOptionAll"),
+      "multiple": "korte",
+      "all": "alma"
     };
     
     // Display data for Item Quantity in case of Multiple Item selection
