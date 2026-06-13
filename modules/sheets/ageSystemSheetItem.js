@@ -215,6 +215,7 @@ export default class ageSystemItemSheet extends ItemSheet {
         const currentDataset = e.currentTarget.dataset;
         const currentData = {};
         currentData.data = this.object.system.advancements[currentDataset.type][currentDataset.id];
+        currentData.index = {};
         currentData.index.level = currentDataset.level;
         currentData.index.id = currentDataset.id;
         return new AdvancementSetup(this.document.uuid, currentDataset.type, currentData).render(true);
