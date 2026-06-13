@@ -9,11 +9,18 @@
             {{log "itemOptionObj" itemOptionObj}}
             {{log "itemArr" itemArr}}
             {{log "itemArrSize" itemArrSize}}
+            {{log "tType" tType}}
+            {{log "level" level}}
+            {{log "advLabel" advLabel}}
+            {{log "adv" adv}}
+            {{log "alias" alias}}
+            {{log "img" img}}
+            {{log "itemQtd" itemQtd}}
             {{#if (eq advType "progressive")}}
             <div class="flexrow flex-align-baseline option">
                 <label for=""><strong>{{localize "age-system.trait"}}</strong></label>
                 <select name="trait" class="header-input">
-                    {{selectOptions traitArr valueAttr="key" labelAttr="name"}}
+                    {{selectOptions traitArr selected=tType valueAttr="key" labelAttr="name"}}
                 </select>
             </div>
             {{/if}}
