@@ -39,7 +39,7 @@
             <div class="flexrow flex-align-baseline option">
                 <label for=""><strong>{{localize "age-system.trait"}}</strong></label>
                 <select name="trait" class="header-input">
-                    {{selectOptions traitArr valueAttr="key" labelAttr="name" localize=true selected=tType}}
+                    {{selectOptions traitArr selected=tType valueAttr="key" labelAttr="name" localize=true}}
                 </select>
             </div>
             {{/if}}
