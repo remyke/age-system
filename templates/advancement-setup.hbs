@@ -1,11 +1,19 @@
 <form>
     <div class="">
         <section class="options-column">
+            {{log "advType" advType}}
+            {{log "data" data}}
+            {{log "system" system}}
+            {{log "config" config}}
+            {{log "traitArr" traitArr}}
+            {{log "itemOptionObj" itemOptionObj}}
+            {{log "itemArr" itemArr}}
+            {{log "itemArrSize" itemArrSize}}
             {{#if (eq advType "progressive")}}
             <div class="flexrow flex-align-baseline option">
                 <label for=""><strong>{{localize "age-system.trait"}}</strong></label>
                 <select name="trait" class="header-input">
-                    {{selectOptions traitArr valueAttr="key" labelAttr="name" selected=tType}}
+                    {{selectOptions traitArr valueAttr="key" labelAttr="name"}}
                 </select>
             </div>
             {{/if}}
@@ -35,6 +43,7 @@
             {{#if (eq advType "item")}}
             <div class="flexrow flex-align-baseline option">
                 <label for=""><strong>{{localize "age-system.level"}}</strong></label>
+                {{log "levelOptions" (levelOptions adv transformValue="levelarr" transformLabel="levelarr")}}
                 <select name="level" class="header-input">
                     {{selectOptions (levelOptions adv transformValue="levelarr" transformLabel="levelarr") selected=level}}
                 </select>
@@ -45,7 +54,7 @@
             <div class="flexrow flex-align-baseline option">
                 <label for=""><strong>{{localize "age-system.itemProgression"}}</strong></label>
                 <div class="field-data flexrow flex-align-baseline">
-                    {{log "traitArr" traitArr}}
+                    {{log "excludeValue=power" (filterChoicesWithValueOrLabelExclude traitArr value="key" label="name" excludeValue="power")}}
                     <select name="tType" class="header-input">
                         {{selectOptions (filterChoicesWithValueOrLabelExclude traitArr value="key" label="name" excludeValue="power") selected=tType}}
                     </select>
