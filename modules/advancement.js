@@ -550,7 +550,7 @@ export class AgeProgUI extends FormApplication { // Realizar adequação para le
   }
 
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['age-system-dialog', 'age-system', 'advancement-config'],
       template: 'systems/age-system/templates/advancement-level-pick-choice.hbs',
       resizable: false,
