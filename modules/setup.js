@@ -20,11 +20,11 @@ export function localizeConfig(toLocalize, noSort) {
 export function localizePower() {
     const pFlavor = game.settings.get("age-system", "powerFlavor");
     CONFIG.ageSystem.POWER_FLAVOR = {
-        name: game.i18n.localize(`age-system.powerFlavor.${pFlavor}.name`),
-        namePlural: game.i18n.localize(`age-system.powerFlavor.${pFlavor}.namePlural`),
-        force: game.i18n.localize(`age-system.powerFlavor.${pFlavor}.force`),
-        points: game.i18n.localize(`age-system.powerFlavor.${pFlavor}.points`),
-        index: game.i18n.localize(`age-system.powerFlavor.${pFlavor}.index`),
+        name: `age-system.powerFlavor.${pFlavor}.name`,
+        namePlural: `age-system.powerFlavor.${pFlavor}.namePlural`,
+        force: `age-system.powerFlavor.${pFlavor}.force`,
+        points: `age-system.powerFlavor.${pFlavor}.points`,
+        index: `age-system.powerFlavor.${pFlavor}.index`,
         key: pFlavor
     };
 }

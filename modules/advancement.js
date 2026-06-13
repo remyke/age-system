@@ -102,16 +102,16 @@ class AdvData {
       traitArrTypes.push(e)
       switch (e) {
         case 'health':
-          obj.name = ageSystem.healthSys.healthName
+          obj.name = ageSystem.healthSys.healthName;
           break;
         case 'powerPoints':
           obj.name = ageSystem.POWER_FLAVOR.points;
           break;
         case 'spec':
-          obj.name = game.i18n.localize("age-system.item.spec")
+          obj.name = "age-system.item.spec";
           break;
         default:
-          obj.name = game.i18n.localize(`age-system.${e}`)
+          obj.name = `age-system.${e}`;
           break;
       }
       traitArr.push(obj)
@@ -157,10 +157,6 @@ export class AdvancementSetup extends FormApplication {
     data.config = ageSystem;
     data.class = this.class;
     data.itemOptionObj = {
-      // multiple: game.i18n.localize("age-system.itemOptionMultiple"),
-      // all: game.i18n.localize("age-system.itemOptionAll"),
-      // "multiple": "korte",
-      // "all": "alma"
       multiple: "age-system.itemOptionMultiple",
       all: "age-system.itemOptionAll",
     };
