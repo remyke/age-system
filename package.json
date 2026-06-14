@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vkdolea/age-system.git"
+    "url": "git+https://github.com/remyke/age-system.git"
   },
-  "author": "vkdolea",
+  "author": "remyke",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/vkdolea/age-system/issues"
+    "url": "https://github.com/remyke/age-system/issues"
   },
-  "homepage": "https://github.com/vkdolea/age-system#readme",
+  "homepage": "https://github.com/remyke/age-system#readme",
   "devDependencies": {
     "gulp": "^5.0.1"
   }

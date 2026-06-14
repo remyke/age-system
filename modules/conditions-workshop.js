@@ -282,8 +282,8 @@ export default class ConditionsWorkshop extends Application {
         condition.changes[changeId].key = newValue;
         break;
       
-      case 'change-mode':
-        condition.changes[changeId].mode = newValue;
+      case 'change-type':
+        condition.changes[changeId].type = newValue;
         break;
 
       case 'change-value':
