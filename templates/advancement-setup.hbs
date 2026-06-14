@@ -2,24 +2,6 @@
     <div class="">
         <section class="options-column">
             {{#if (eq advType "progressive")}}
-            {{log "advType" advType}}
-            {{log "data" data}}
-            {{log "system" system}}
-            {{log "config" config}}
-            {{log "traitArr" traitArr}}
-            {{log "traitArrTypes" traitArrTypes}}
-            {{log "itemOptionObj" itemOptionObj}}
-            {{log "itemOption" itemOption}}
-            {{log "itemArr" itemArr}}
-            {{log "itemArrSize" itemArrSize}}
-            {{log "tType" tType}}
-            {{log "trait" trait}}
-            {{log "level" level}}
-            {{log "advLabel" advLabel}}
-            {{log "adv" adv}}
-            {{log "alias" alias}}
-            {{log "img" img}}
-            {{log "itemQtd" itemQtd}}
             <div class="flexrow flex-align-baseline option">
                 <label for=""><strong>{{localize "age-system.trait"}}</strong></label>
                 <select name="trait" class="header-input">
@@ -28,22 +10,6 @@
             </div>
             {{/if}}
             {{#if (eq advType "item")}}
-            {{log "advType" advType}}
-            {{log "data" data}}
-            {{log "system" system}}
-            {{log "config" config}}
-            {{log "traitArr" traitArr}}
-            {{log "itemOptionObj" itemOptionObj}}
-            {{log "itemOption" itemOption}}
-            {{log "itemArr" itemArr}}
-            {{log "itemArrSize" itemArrSize}}
-            {{log "tType" tType}}
-            {{log "level" level}}
-            {{log "advLabel" advLabel}}
-            {{log "adv" adv}}
-            {{log "alias" alias}}
-            {{log "img" img}}
-            {{log "itemQtd" itemQtd}}
             <div class="flexrow flex-align-baseline option">
                 <label for=""><strong>{{localize "age-system.type"}}</strong></label>
                 <select name="itemOption" class="header-input">
@@ -63,15 +29,12 @@
             <div class="flexrow flex-align-baseline option">
                 <label for=""><strong>{{localize "age-system.image"}}</strong></label>
                 <div class="field-data flexrow flex-align-baseline">
-                    {{!-- <input type="text" class="" name="img" value="{{img}}" data-dtype="String" /> --}}
-                    {{!-- {{filePicker type="image" target="img"}} --}}
                     <file-picker name="img" type="image" value="{{img}}"></file-picker>
                 </div>
             </div>
             {{#if (eq advType "item")}}
             <div class="flexrow flex-align-baseline option">
                 <label for=""><strong>{{localize "age-system.level"}}</strong></label>
-                {{log "levelOptions" (levelOptions adv transformValue="levelarr" transformLabel="levelarr")}}
                 <select name="level" class="header-input">
                     {{selectOptions (levelOptions adv transformValue="levelarr" transformLabel="levelarr") selected=level}}
                 </select>
@@ -82,7 +45,6 @@
             <div class="flexrow flex-align-baseline option">
                 <label for=""><strong>{{localize "age-system.itemProgression"}}</strong></label>
                 <div class="field-data flexrow flex-align-baseline">
-                    {{log "excludeValue=power" (filterChoicesWithValueOrLabelExclude traitArr value="key" label="name" excludeValue="power") localize=true}}
                     <select name="tType" class="header-input">
                         {{selectOptions (filterChoicesWithValueOrLabelExclude traitArr value="key" label="name" excludeValue="power") selected=tType localize=true}}
                     </select>

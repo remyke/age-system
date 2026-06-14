@@ -208,10 +208,6 @@ export default class ageSystemItemSheet extends ItemSheet {
     };
 
     _onExistingAdvance(e) {
-        // <li class="advance feature-controls flexrow" data-type="progressive" data-id="1" data-level="1">
-        //                     <img src="systems/age-system/resources/imgs/adv-icon/progression.svg">
-        //                     <span class="adv-name">aa</span>
-        //                 </li>
         const currentDataset = e.currentTarget.dataset;
         const currentData = {};
         currentData.data = this.object.system.advancements[currentDataset.type][currentDataset.id];
