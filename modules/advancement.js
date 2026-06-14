@@ -620,6 +620,9 @@ export class AgeProgUI extends FormApplication { // Realizar adequação para le
 
     // On pressing "Next"
     html.find("footer button.next").click(this._evalNextTrait.bind(this))
+
+    // On pressing "Cancel"
+    html.find("button.cancel").click(e => this.close());
   }
 
   async _rollHealth(e) {
@@ -627,7 +630,7 @@ export class AgeProgUI extends FormApplication { // Realizar adequação para le
     const helper = this.newLevel.helper.health; 
 		const roll = await new Roll(helper.formula).evaluate();
     helper.total = roll.total;
-		roll.toMessage({flavor: ageSystem.healthSys.healthName}, {messageMode: "publicroll"});
+		roll.toMessage({flavor: ageSystem.healthSys.healthName}, {messageMode: "public"});
     this.render(true);
   }
 
